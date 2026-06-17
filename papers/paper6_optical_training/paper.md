@@ -1,4 +1,4 @@
-# Camera-in-the-Loop Optical Training: Gradient Descent and the Perceptron Rule on a Smartphone Display–Camera Channel
+# Camera-in-the-Loop Optical Training of a Physical Diffractive Network on a Smartphone
 
 **Author:** Oleg Yuryevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
 **Series:** Svetoch, Paper VI of VI
@@ -12,10 +12,12 @@
 
 Paper I of this series showed that a smartphone's OLED screen, an ordinary mirror, and the
 front camera evaluate the forward pass of a neural network *in light*. Here we close the
-loop and **train**. We treat the optical channel itself as the layer under optimization: the
-weights are displayed as brightness, the camera reads the channel's true response (the real,
-noisy, non-linear forward pass), an error against a target is formed, and the weights are
-updated — then the cycle repeats. We demonstrate two on-device optical learners. (1) **Optical
+loop and **train**. We treat the optical channel itself — the smartphone's
+display→mirror→camera path, a **single-layer physical diffractive network** whose forward
+pass is carried by near-field (Talbot) diffraction and on-sensor integration — as the layer
+under optimization: the weights are displayed as brightness, the camera reads the channel's
+true response (the real, noisy, non-linear forward pass), an error against a target is formed,
+and the weights are updated — then the cycle repeats. We demonstrate two on-device optical learners. (1) **Optical
 gradient descent**: eight weights drawn as brightness columns are optimized by the delta rule
 `W ← W − η(y − ŷ)` (η = 0.7) using the camera-measured output `y`; over eight iterations the
 optically read mean-squared error falls by more than half, below a 0.05 pass threshold.
@@ -49,13 +51,26 @@ that minimizes the measured error learns weights that are correct *for the real 
 for an idealized model. This is the defining advantage of hardware-in-the-loop training:
 the physics is never approximated, because the physics is doing the forward pass.
 
+We call the trainable element a *physical diffractive network*: light from the displayed
+weights propagates through the air gap by near-field (Talbot) diffraction, reflects, and is
+integrated on the sensor, so the channel realizes one optical layer whose response we shape by
+training. We mean this in the literal, single-layer sense — **not** a multilayer diffractive
+deep neural network (D²NN) in the sense of Lin *et al.*; the distinction is made explicit
+in Section 7.
+
 This paper reports two working optical learners and one loss-measurement primitive, all
 runnable on the reference device, and is careful to separate the genuinely optical operations
 from the lightweight arithmetic that stays on the CPU.
 
 ---
 
-## 2. The optical channel as a trainable layer
+## 2. The optical channel as a physical diffractive network
+
+The trainable layer is the screen→mirror→camera channel of Paper I. Light leaving the
+displayed weights propagates through the air gap — where near-field (Talbot) diffraction sets
+the usable spatial bandwidth — reflects off the mirror, and is integrated on the sensor. That
+is a single physical diffractive layer: a fixed optical transform whose *inputs* (the displayed
+weights) we adjust by training, rather than a stack of learned phase masks.
 
 Encode a weight vector $\mathbf{w}$ as the brightness of a row of screen columns. From
 Paper I, the camera's integrated read-out of column $i$ against an input $x_i$ is, after
@@ -199,9 +214,17 @@ problem that plagues train-offline / deploy-on-hardware analog systems: the lear
 true optics. This is the same principle behind physics-aware and hardware-in-the-loop training
 of analog accelerators, here reduced to a phone and a mirror.
 
+**Scope of the "diffractive network" claim.** The trainable element here is a *single* physical
+diffractive layer (the display→mirror→camera channel), and what is optimized is the displayed
+input, not a stack of learned diffractive masks. This is deliberately weaker than a multilayer
+diffractive deep neural network (D²NN), which cascades several trained phase surfaces. We
+make no D²NN claim; the contribution is closing the *training* loop on one physical optical
+layer using commodity hardware.
+
 **Future work.** A fully optical update (e.g. accumulating the inverted-overlay residual back
-onto the displayed weights), optical batch normalization, and extending from a single layer to
-a trained optical MLP are natural next steps and are listed in the project roadmap.
+onto the displayed weights), optical batch normalization, stacking several diffractive layers
+toward a genuine multilayer optical network, and extending from a single layer to a trained
+optical MLP are natural next steps and are listed in the project roadmap.
 
 ---
 
@@ -241,6 +264,8 @@ the methods described. The author has elected not to seek patent protection.
    *Nature* **601**, 549 (2022).
 6. G. Wetzstein et al., "Inference in artificial intelligence with deep optics and photonics,"
    *Nature* **588**, 39 (2020).
+7. X. Lin et al., "All-optical machine learning using diffractive deep neural networks,"
+   *Science* **361**, 1004 (2018).
 
 ---
 

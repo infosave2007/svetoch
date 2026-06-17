@@ -120,6 +120,21 @@ Reference results on a Xiaomi 12 Lite (with mirror, ~37 mm gap): the optical cha
 
 ---
 
+## Publications (Zenodo)
+
+The methods are written up as **six scientific papers**, each published on Zenodo with a citable DOI (Markdown + LaTeX + PDF in [`papers/`](papers/README.md)). Author: **Oleg Yuryevich Kirichenko**.
+
+| # | Paper | DOI |
+|---|-------|-----|
+| I | Optical Neural Computation on a Commodity Smartphone: the OLED–Mirror–Camera Channel | [10.5281/zenodo.20729632](https://doi.org/10.5281/zenodo.20729632) |
+| II | Hardware Neural‑Network Primitives from Commodity Display Physics | [10.5281/zenodo.20730065](https://doi.org/10.5281/zenodo.20730065) |
+| III | A Thermo‑Optical Convection Layer above an OLED Display as a Programmable Analog Medium | [10.5281/zenodo.20730198](https://doi.org/10.5281/zenodo.20730198) |
+| IV | Classical Wave‑Optical Emulation of Quantum‑Gate Algebra on a Smartphone | [10.5281/zenodo.20730267](https://doi.org/10.5281/zenodo.20730267) |
+| V | Computational Optics for Liquid Microsampling: a Multi‑Channel Smartphone Sensing Platform | [10.5281/zenodo.20730337](https://doi.org/10.5281/zenodo.20730337) |
+| VI | Camera‑in‑the‑Loop Optical Training of a Physical Diffractive Network on a Smartphone | [10.5281/zenodo.20730393](https://doi.org/10.5281/zenodo.20730393) |
+
+---
+
 ## Repository layout
 
 ```
