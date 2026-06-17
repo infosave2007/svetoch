@@ -147,6 +147,7 @@ svetoch/
 | [docs/EXPERIMENTS.ru.md](docs/EXPERIMENTS.ru.md) · [en](docs/EXPERIMENTS.md) | Все 101 эксперимент с физикой и критериями прохождения |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Запланированные эксперименты и направления масштабирования |
 | [simulation/README.md](simulation/README.md) | Скрипты программной валидации |
+| [papers/](papers/README.md) | **Научные статьи (препринты для Zenodo)** — 5 полных статей (Markdown + LaTeX + PDF) с фигурами, для фиксации авторства/приоритета |
 
 ---
 

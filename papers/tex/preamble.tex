@@ -1,0 +1,40 @@
+% Shared preamble for the Svetoch papers.
+% Each paper.tex \input's this file (compile from inside the paper's folder):
+%     \documentclass[11pt]{article}
+%     \input{../tex/preamble.tex}
+% Figures live in ../figures/*.pdf  (graphicspath set below).
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{booktabs}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+% --- Minimal, siunitx-free unit support (so papers compile on any TeX install) ---
+\usepackage{textcomp}
+\newcommand{\SI}[2]{#1\,#2}
+\newcommand{\si}[1]{#1}
+\newcommand{\hertz}{Hz}
+\newcommand{\meter}{m}
+\newcommand{\centi}{c}
+\newcommand{\milli}{m}
+\newcommand{\micro}{\textmu}
+\newcommand{\second}{s}
+\newcommand{\kelvin}{K}
+% ---------------------------------------------------------------------------------
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{xcolor}
+\definecolor{accent}{HTML}{6366F1}
+
+% Common author block (edit name/affiliation/ORCID before publishing)
+\newcommand{\svetochauthor}{Oleg Yurevich\thanks{GitHub: \href{https://github.com/infosave2007}{@infosave2007}. Independent researcher. \emph{Confirm name, affiliation and ORCID before publication.}}}
+
+\newcommand{\svetochfooter}{%
+  \vspace{1em}\noindent\rule{\linewidth}{0.4pt}\\[2pt]
+  {\footnotesize Part of the \emph{Svetoch} series (defensive publication, not patented).
+  Project and code: \href{https://github.com/infosave2007/svetoch}{github.com/infosave2007/svetoch};
+  related VMF/NVG theory: \href{https://github.com/infosave2007/vmf}{github.com/infosave2007/vmf}.
+  Released for the public record to establish authorship and priority.}}

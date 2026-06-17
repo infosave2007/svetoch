@@ -14,6 +14,16 @@ __pycache__/
 venv/
 .env
 
+# LaTeX build artifacts (keep the compiled paper.pdf, drop the rest)
+*.aux
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+
 # OS / editor
 .DS_Store
 Thumbs.db

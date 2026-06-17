@@ -147,6 +147,7 @@ svetoch/
 | [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md) · [ru](docs/EXPERIMENTS.ru.md) | All 101 experiments with physics and pass criteria |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Planned experiments and scaling directions |
 | [simulation/README.md](simulation/README.md) | The pure‑software validation scripts |
+| [papers/](papers/README.md) | **Scientific papers (Zenodo preprints)** — 5 complete papers (Markdown + LaTeX + PDF) with figures, establishing authorship/priority |
 
 ---
 
