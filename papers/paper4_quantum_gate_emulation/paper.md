@@ -315,6 +315,8 @@ protection.
 
 ## References (indicative)
 
+**Companion paper (Svetoch I):** O. Yu. Kirichenko, "Optical Neural Computation on a Commodity Smartphone: the OLED–Mirror–Camera Channel as an Analog Matrix Engine," Zenodo (2026). https://doi.org/10.5281/zenodo.20729632
+
 1. R. J. C. Spreeuw, "A classical analogy of entanglement," *Found. Phys.* **28**, 361 (1998).
 2. J. W. Goodman, *Introduction to Fourier Optics*, 3rd ed., Roberts & Company, 2005.
 3. J. F. Clauser, M. A. Horne, A. Shimony, R. A. Holt, "Proposed experiment to test local

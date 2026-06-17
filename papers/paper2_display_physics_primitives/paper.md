@@ -313,6 +313,8 @@ seek patent protection.
 
 ## References (indicative)
 
+**Companion paper (Svetoch I):** O. Yu. Kirichenko, "Optical Neural Computation on a Commodity Smartphone: the OLED–Mirror–Camera Channel as an Analog Matrix Engine," Zenodo (2026). https://doi.org/10.5281/zenodo.20729632
+
 1. P. Ramachandran, B. Zoph, Q. V. Le, "Searching for activation functions," *arXiv:1710.05941*
    (2017) — Swish/SiLU.
 2. S. Hochreiter, J. Schmidhuber, "Long short-term memory," *Neural Computation* **9**, 1735

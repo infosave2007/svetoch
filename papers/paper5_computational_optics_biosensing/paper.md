@@ -302,6 +302,8 @@ protection.
 
 ## References (indicative)
 
+**Companion paper (Svetoch I):** O. Yu. Kirichenko, "Optical Neural Computation on a Commodity Smartphone: the OLED–Mirror–Camera Channel as an Analog Matrix Engine," Zenodo (2026). https://doi.org/10.5281/zenodo.20729632
+
 1. B. Edlén, "The refractive index of air," *Metrologia* **2**, 71 (1966).
 2. E. Hecht, *Optics*, 5th ed., Pearson, 2017 (Malus's law; polarimetry / saccharimetry).
 3. D. F. Swinehart, "The Beer–Lambert law," *J. Chem. Educ.* **39**, 333 (1962).

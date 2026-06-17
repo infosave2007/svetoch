@@ -38,7 +38,7 @@ figures, graphs and diagrams.
 
 | # | Title | Theme | Figures |
 |---|-------|-------|---------|
-| **I** | [Optical Neural Computation on a Commodity Smartphone: the OLED–Mirror–Camera Channel](paper1_optical_neural_computation/paper.md) | The core method: light as an analog matrix engine; channel calibration; dot product → MatVec → a full transformer layer; the falsification control | 1–9 |
+| **I** | [Optical Neural Computation on a Commodity Smartphone: the OLED–Mirror–Camera Channel](paper1_optical_neural_computation/paper.md) — [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20729632.svg)](https://doi.org/10.5281/zenodo.20729632) | The core method: light as an analog matrix engine; channel calibration; dot product → MatVec → a full transformer layer; the falsification control | 1–9 |
 | **II** | [Hardware Neural-Network Primitives from Commodity Display Physics](paper2_display_physics_primitives/paper.md) | "Free" ML operators from device physics: γ-curve activation, OLED-persistence recurrent memory, Bayer attention multiplexing, chromatic positional encoding | 3, 6, 12 |
 | **III** | [A Thermo-Optical Convection Layer above an OLED Display as a Programmable Analog Medium](paper3_thermo_optical_convection/paper.md) | The mirror-less thermal channel: boundary-layer theory, schlieren/BOS read-out, thermo-optical matrix multiply, convective actuation of aerosols | 1, 10, 11 |
 | **IV** | [Classical Wave-Optical Emulation of Quantum-Gate Algebra on a Smartphone, with a Falsification Protocol](paper4_quantum_gate_emulation/paper.md) | Honest framing of the "quantum" stages as **classical** wave-optical analogues; a rigorous mirror-less control that separates optical effects from software artifacts | 5, 9, 13 |
@@ -64,9 +64,16 @@ figures, graphs and diagrams.
 
 Both links are cited in every paper's header and "Data and code" section.
 
-## How to cite (placeholder)
+## Published records & how to cite
 
-> Kirichenko, O. Yu. (2026). *Svetoch: Optical Neural Computation on Commodity Smartphone
-> Hardware* (Series I–VI). Zenodo. https://doi.org/XX.XXXX/zenodo.XXXXXXX
+Papers are being deposited on Zenodo (citable DOI + timestamp). Published so far:
 
-Fill in the DOI after the first Zenodo upload.
+| Paper | DOI |
+|-------|-----|
+| **I** — Optical Neural Computation on a Commodity Smartphone | [10.5281/zenodo.20729632](https://doi.org/10.5281/zenodo.20729632) |
+
+> Kirichenko, O. Yu. (2026). *Optical Neural Computation on a Commodity Smartphone: the
+> OLED–Mirror–Camera Channel as an Analog Matrix Engine* (Svetoch, Paper I). Zenodo.
+> https://doi.org/10.5281/zenodo.20729632
+
+DOIs for Papers II–VI will be added to this table as they are deposited.

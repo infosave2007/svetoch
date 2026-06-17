@@ -4,7 +4,10 @@
 
 **Turn a phone, an everyday mirror, and the front camera into a working optical computer.**
 
-🇷🇺 [Русская версия](README.ru.md) · 📖 [Setup guide](docs/SETUP.md) · 🧪 [All 101 experiments](docs/EXPERIMENTS.md) · 🗺️ [Roadmap](docs/ROADMAP.md)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20729632.svg)](https://doi.org/10.5281/zenodo.20729632)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+
+🇷🇺 [Русская версия](README.ru.md) · 📖 [Setup guide](docs/SETUP.md) · 🧪 [All 101 experiments](docs/EXPERIMENTS.md) · 📄 [Papers](papers/README.md) · 🗺️ [Roadmap](docs/ROADMAP.md)
 
 </div>
 

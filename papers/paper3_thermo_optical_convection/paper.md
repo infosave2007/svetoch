@@ -364,6 +364,8 @@ seek patent protection.
 
 ## References (indicative)
 
+**Companion paper (Svetoch I):** O. Yu. Kirichenko, "Optical Neural Computation on a Commodity Smartphone: the OLED–Mirror–Camera Channel as an Analog Matrix Engine," Zenodo (2026). https://doi.org/10.5281/zenodo.20729632
+
 1. B. Edlén, "The refractive index of air," *Metrologia* **2**, 71 (1966).
 2. G. S. Settles, *Schlieren and Shadowgraph Techniques: Visualizing Phenomena in Transparent
    Media*, Springer, 2001.

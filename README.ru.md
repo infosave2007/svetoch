@@ -4,7 +4,10 @@
 
 **Превратите телефон, обычное зеркало и фронтальную камеру в работающий оптический компьютер.**
 
-🇬🇧 [English version](README.md) · 📖 [Инструкция по запуску](docs/SETUP.ru.md) · 🧪 [Все 101 эксперимент](docs/EXPERIMENTS.ru.md) · 🗺️ [Дорожная карта](docs/ROADMAP.md)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20729632.svg)](https://doi.org/10.5281/zenodo.20729632)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+
+🇬🇧 [English version](README.md) · 📖 [Инструкция по запуску](docs/SETUP.ru.md) · 🧪 [Все 101 эксперимент](docs/EXPERIMENTS.ru.md) · 📄 [Статьи](papers/README.md) · 🗺️ [Дорожная карта](docs/ROADMAP.md)
 
 </div>
 

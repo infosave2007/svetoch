@@ -227,6 +227,8 @@ the methods described. The author has elected not to seek patent protection.
 
 ## References (indicative)
 
+**Companion paper (Svetoch I):** O. Yu. Kirichenko, "Optical Neural Computation on a Commodity Smartphone: the OLED–Mirror–Camera Channel as an Analog Matrix Engine," Zenodo (2026). https://doi.org/10.5281/zenodo.20729632
+
 1. B. Widrow and M. E. Hoff, "Adaptive switching circuits," *IRE WESCON Conv. Rec.* **4**, 96 (1960).
 2. F. Rosenblatt, "The perceptron: a probabilistic model for information storage and
    organization in the brain," *Psychological Review* **65**, 386 (1958).
