@@ -162,10 +162,23 @@ Keep new code consistent with the existing modules in the same category.
 
 ---
 
-## License
+## ❤️ Support the project
 
-Released under the **[Apache License 2.0](LICENSE)** (see also [NOTICE](NOTICE)). Apache 2.0 is permissive and includes an explicit **patent grant**, which makes it well suited to a project with novel optical‑computing methods.
+If you find this project helpful, you can support its development with a donation via Tribute:
 
-**Using this commercially or in an institution?** Apache 2.0 already permits free commercial and educational use. If you need a separate **commercial license** — for support guarantees, indemnification, or terms beyond the Apache grant — contact the author to arrange dual licensing.
+👉 **https://t.me/tribute/app?startapp=dzX1**
+
+Every contribution helps fund more experiments, better hardware, and cross‑device validation. Thank you!
+
+---
+
+## License & commercial use
+
+Svetoch is **dual‑licensed**:
+
+- **Open‑source — [Apache License 2.0](LICENSE)** (see also [NOTICE](NOTICE)). Free for everyone, including **commercial and educational use**. Apache 2.0 is permissive and includes an explicit **patent grant**, which suits a project with novel optical‑computing methods.
+- **Commercial license — [COMMERCIAL-LICENSE.md](COMMERCIAL-LICENSE.md)**. Optional, for organizations that need warranty + indemnification, priority support/SLA, closed‑source embedding, custom experiments, or formal procurement paperwork.
+
+> **For institutions & businesses:** you can already use Svetoch for free under Apache 2.0. A commercial license is only needed when you want guarantees, support, closed‑source embedding, or contracts/invoicing. See the [tiers and how to get one](COMMERCIAL-LICENSE.md).
 
 This is a research proof‑of‑concept. Pass thresholds are calibrated for the reference device and conditions; your numbers will vary with phone model, mirror quality, ambient light, and geometry.
