@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Двухслойный перцептрон (MLP)",
+    "description": "Оптический инференс двухслойной полносвязной нейросети.",
+    "etap": "🏗️",
+    "sloy_wx": "Слой 1: W₁×x",
+    "sloy_wy": "Слой 2: W₂×σ(y₁)",
+    "sloynyy_mlp_rabotaet": "✅ 2-слойный MLP работает!",
+    "chastichno": "⚠️ Частично",
+    "kaskad_ne_rabotaet": "❌ Каскад не работает",
+    "res_row0": "Слой 1 корреляция",
+    "description_all": "Многослойный перцептрон (MLP).\n\n**Физический принцип:** (С зеркалом). Два подряд оптических матрично-векторных умножения (W₁ и W₂, 4×4) с промежуточной программной нелинейностью σ, прокручиваемых через один и тот же зеркальный экран-камерный тракт.\n**Алгоритмическая суть:** Слой 1: строки W₁·x выводятся блоками, камера измеряет оптический выход (нормировка по чёрному/белому, гамма-коррекция), он аффинно масштабируется под цифровой диапазон и считается корреляция со слоем 1. Затем софт применяет сигмоиду и растягивает z₁ в [0,1] для контраста. Слой 2: строки W₂·z₁ выводятся блоками, измеряются, масштабируются, и считаются финальная корреляция и NRMSE относительно цифрового двухслойного выхода.\n**Аналогия:** Двухтактный «двигатель» нейросети, где оба слоя физически прокручиваются через одну и ту же оптику смартфона.\n**Метрика:** итоговая корреляция полного MLP (порог corr > 0.3)."
+  },
+  "en": {
+    "name": "Two-Layer Perceptron (MLP)",
+    "description": "Optical inference of a two-layer fully-connected neural network.",
+    "etap": "🏗️",
+    "sloy_wx": "Layer 1: W₁×x",
+    "sloy_wy": "Layer 2: W₂×σ(y₁)",
+    "sloynyy_mlp_rabotaet": "✅ 2-layer MLP works!",
+    "chastichno": "⚠️ Partially",
+    "kaskad_ne_rabotaet": "❌ Cascade does not work",
+    "res_row0": "Layer 1 correlation",
+    "description_all": "Multi-Layer Perceptron (MLP).\n\n**Physical principle:** (With mirror). Two successive optical matrix-vector multiplications (W₁ and W₂, 4×4) with an intermediate software nonlinearity σ, run through one and the same mirrored screen-to-camera path.\n**Algorithmic essence:** Layer 1: the rows of W₁·x are shown as blocks, the camera measures the optical output (black/white-normalized, gamma-corrected), which is affine-scaled to the digital range and correlated with layer 1. The software then applies a sigmoid and stretches z₁ into [0,1] for contrast. Layer 2: the rows of W₂·z₁ are shown as blocks, measured, scaled, and the final correlation and NRMSE against the digital two-layer output are computed.\n**Analogy:** A two-stroke neural-network \"engine\" where both layers are physically cycled through the same smartphone optics.\n**Metric:** final correlation of the full MLP (pass threshold corr > 0.3)."
+  },
+  "mirrorless": false
+}

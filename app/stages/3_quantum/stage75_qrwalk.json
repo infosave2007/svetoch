@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "Квантовое блуждание",
+    "description": "Моделирование когерентного квантового блуждания с интерференцией вероятностей.",
+    "etap": "🎯",
+    "qrw_start": "Случайное блуждание...",
+    "qrw_classical": "Классическое: биномиальное...",
+    "qrw_optical": "Optical: профили распределений...",
+    "res_row0": "Quantum speedup",
+    "res_row1": "Optical corr",
+    "description_all": "Квантовое vs классическое блуждание (оптический аналог, 20 шагов).\n\n**Физический принцип:** (С зеркалом). Баллистическое квантовое блуждание против диффузного классического воспроизводится формой светового распределения на экране и камере телефона, а не на настоящих кубитах.\n**Алгоритмическая суть:** На CPU считаются два распределения по 41 позиции: классическое (биномиальные коэффициенты, σ≈√20) и квантовое (когерентное блуждание с монетой Адамара, комплексные амплитуды). Оба выводятся как 41 столбец яркости; камера снимает кадры (captureStable), строит профили (measureProfile) и считает корреляцию Пирсона с эталоном, а также проверяет, что у классического ярок центр, а у квантового — края. Ускорение оценивается как σ_q/σ_c.\n**Аналогия:** Квантовый пьяница чаще оказывается на краях улицы, чем в центре, и «расходится» быстрее обычного.\n**Метрика:** Ускорение speedup = σ_q/σ_c; успех (check) — speedup > 1.2."
+  },
+  "en": {
+    "name": "Quantum Walk",
+    "description": "Modeling a coherent quantum walk with interference of probabilities.",
+    "etap": "🎯",
+    "qrw_start": "Random walk...",
+    "qrw_classical": "Classical: binomial...",
+    "qrw_optical": "Optical: distribution profiles...",
+    "res_row0": "Quantum speedup",
+    "res_row1": "Optical corr",
+    "description_all": "Quantum vs Classical Random Walk (optical analog, 20 steps).\n\n**Physical principle:** (With mirror). A ballistic quantum walk versus a diffusive classical one is reproduced by the shape of the light distribution on the phone screen and camera, not with real qubits.\n**Algorithmic essence:** Two 41-position distributions are computed on the CPU: classical (binomial coefficients, σ≈√20) and quantum (a coherent Hadamard-coin walk with complex amplitudes). Both are shown as 41 brightness columns; the camera captures frames (captureStable), builds profiles (measureProfile), computes the Pearson correlation with the reference, and checks that the classical peak is at the center while the quantum peaks are at the edges. The speedup is estimated as σ_q/σ_c.\n**Analogy:** A quantum drunkard ends up at the edges of the street more often than at the center, and \"spreads out\" faster than usual.\n**Metric:** Speedup = σ_q/σ_c; pass (check) requires speedup > 1.2."
+  },
+  "mirrorless": false
+}

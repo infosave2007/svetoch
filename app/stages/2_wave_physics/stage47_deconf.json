@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Распад запутанности (CHSH↓)",
+    "description": "Эмуляция потери квантовой когерентности из-за шума тракта.",
+    "etap": "🔗",
+    "chsh_pri_kontraste": "CHSH при контрасте {var0}%...",
+    "dekonfaynment": "  Деконфайнмент: {var0}",
+    "s_pri_snr": "S↓ при SNR↓",
+    "net": "нет",
+    "nvg_smert_zaputannosti_pri_ttc": "✅ NVG #49: смерть запутанности при T>Tc!",
+    "dekonfaynment_ne_obnaruzhen": "⚠️ Деконфайнмент не обнаружен",
+    "res_row0": "S(max SNR)",
+    "description_all": "Деконфайнмент: S(CHSH) против SNR.\n\n**Физический принцип:** (С зеркалом). Снижение контраста паттерна имитирует рост «температуры»/шума тракта: чем слабее видность, тем сильнее разрушается квантово-подобная угловая корреляция. Это классический оптический прокси, а не настоящая запутанность.\n**Алгоритмическая суть:** Перебираются 4 уровня контраста (100%, 60%, 30%, 10%). Для каждого экран показывает косинусные паттерны под 4 углами (0, π/8, π/4, 3π/8), камера по 4 бинам считает видность V=(bMax−bMin)/(bMax+bMin), а упрощённый CHSH-параметр оценивается как S≈2√2·⟨V⟩.\n**Аналогия:** Наблюдение за тем, как падение «сигнал/шум» гасит хрупкий квантовый порядок: при высоком контрасте S велик, при низком — спадает.\n**Метрика:** Деконфайнмент засчитан при S(max) > 2·S(min) и S(max) > 0.1; отображается S(max)."
+  },
+  "en": {
+    "name": "Entanglement Decay (CHSH↓)",
+    "description": "Emulation of the loss of quantum coherence due to channel noise.",
+    "etap": "🔗",
+    "chsh_pri_kontraste": "CHSH with contrast {var0}%...",
+    "dekonfaynment": "Deconfinement: {var0}",
+    "s_pri_snr": "S↓ at SNR↓",
+    "net": "no",
+    "nvg_smert_zaputannosti_pri_ttc": "✅ NVG #49: death of entanglement at T>Tc!",
+    "dekonfaynment_ne_obnaruzhen": "⚠️ Deconfinement not detected",
+    "res_row0": "S(max SNR)",
+    "description_all": "Deconfinement: S(CHSH) vs SNR.\n\n**Physical principle:** (With mirror). Lowering the pattern contrast mimics a rising 'temperature'/channel noise: the weaker the visibility, the more the quantum-like angular correlation breaks down. This is a classical optical proxy, not genuine entanglement.\n**Algorithmic essence:** It sweeps 4 contrast levels (100%, 60%, 30%, 10%). For each, the screen shows cosine patterns at 4 angles (0, π/8, π/4, 3π/8); the camera measures visibility V=(bMax−bMin)/(bMax+bMin) over 4 bins, and a simplified CHSH parameter is estimated as S≈2√2·⟨V⟩.\n**Analogy:** Watching how a falling signal-to-noise ratio quenches fragile quantum order: at high contrast S is large, at low contrast it collapses.\n**Metric:** Deconfinement is counted when S(max) > 2·S(min) and S(max) > 0.1; the reported quantity is S(max)."
+  },
+  "mirrorless": false
+}

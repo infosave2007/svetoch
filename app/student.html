@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVG PoC — Student Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #04040c;
+  --card: rgba(18, 18, 36, 0.7);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(139, 92, 246, 0.4);
+  --text: #f1f1f7;
+  --dim: #9ca3af;
+  --accent: #a855f7;
+  --accent-glow: rgba(168, 85, 247, 0.3);
+  --cyan: #06b6d4;
+  --cyan-glow: rgba(6, 182, 212, 0.3);
+  --green: #10b981;
+  --red: #ef4444;
+  --orange: #f59e0b;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  background: radial-gradient(circle at 50% 0%, #151030 0%, var(--bg) 70%);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header ─── */
+.header {
+  backdrop-filter: blur(16px);
+  background: rgba(4, 4, 12, 0.6);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  z-index: 100;
+}
+.header h1 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--accent), var(--cyan));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.lang-select {
+  background: rgba(18,18,36,0.7);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+}
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--dim);
+}
+.status-dot.active { background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 2s infinite; }
+.status-dot.idle { background: var(--orange); box-shadow: 0 0 8px var(--orange); }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* ─── Progress strip ─── */
+.progress-strip {
+  flex-shrink: 0;
+  background: rgba(10, 10, 24, 0.8);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.progress-stage-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
+}
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 99px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
+  width: 0%;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px var(--accent);
+}
+.progress-pct {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  min-width: 50px;
+  text-align: right;
+}
+
+/* ─── Main content ─── */
+.main-area {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 0;
+  overflow: hidden;
+}
+@media (max-width: 900px) {
+  .main-area { grid-template-columns: 1fr; }
+  .screen-panel { max-height: 40vh; }
+}
+
+/* ─── Device screen (left, full height) ─── */
+.screen-panel {
+  background: rgba(8, 8, 20, 0.9);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.panel-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--cyan);
+  padding: 12px 16px 8px;
+  flex-shrink: 0;
+}
+.phone-frame {
+  flex: 1;
+  margin: 0 16px 16px;
+  border: 6px solid #2a2a42;
+  border-radius: 24px;
+  background: #000;
+  position: relative;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 0 0 16px var(--accent-glow);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60px; height: 12px;
+  background: #2a2a42;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  z-index: 10;
+}
+.screen-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.screen-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: none;
+}
+.screen-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--dim);
+  text-align: center;
+  font-size: 11px;
+  padding: 16px;
+}
+.spinner {
+  width: 28px; height: 28px;
+  border: 3px solid rgba(168, 85, 247, 0.1);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── Right column: logs + collapsible map ─── */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ─── Logs ─── */
+.logs-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.logs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px 8px;
+  flex-shrink: 0;
+}
+.logs-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logs-header .panel-label { padding: 0; }
+.log-count-badge {
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 2px 8px;
+  border-radius: 99px;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+#logs-container {
+  flex: 1;
+  overflow-y: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  background: rgba(0, 0, 0, 0.25);
+  margin: 0 16px 8px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+#logs-container::-webkit-scrollbar { width: 5px; }
+#logs-container::-webkit-scrollbar-track { background: transparent; }
+#logs-container::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.3); border-radius: 3px; }
+.log-entry { margin-bottom: 2px; display: flex; }
+.log-time { color: var(--dim); margin-right: 10px; flex-shrink: 0; font-size: 11px; }
+.log-msg { white-space: pre-wrap; word-break: break-word; }
+.log-ok { color: var(--green); }
+.log-warn { color: var(--orange); }
+.log-err { color: var(--red); }
+.log-dim { color: #888; font-style: italic; font-size: 0.92em; }
+
+/* ─── Inline stage result cards ─── */
+.stage-result-card {
+  margin: 8px 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  animation: cardSlideIn 0.3s ease-out;
+}
+@keyframes cardSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stage-result-card.pass {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.06);
+}
+.stage-result-card.fail {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.06);
+}
+.src-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.src-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.src-info {
+  flex: 1;
+  min-width: 0;
+}
+.src-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.src-metric {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--dim);
+  margin-top: 2px;
+}
+.src-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 99px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.src-badge.pass {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--green);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.src-badge.fail {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--red);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.src-chart {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(10, 10, 30, 0.6);
+}
+.src-chart img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+/* ─── Collapsible map + results ─── */
+.collapsible-section {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  background: rgba(8, 8, 20, 0.6);
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 400px;
+}
+.collapsible-section.collapsed {
+  max-height: 36px;
+}
+.collapse-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dim);
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border);
+  user-select: none;
+  transition: color 0.2s;
+}
+.collapse-toggle:hover { color: var(--text); }
+.collapse-toggle .arrow {
+  transition: transform 0.3s;
+  font-size: 10px;
+}
+.collapsible-section.collapsed .collapse-toggle .arrow {
+  transform: rotate(-90deg);
+}
+.collapsible-inner {
+  padding: 12px 16px;
+  max-height: 360px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 1100px) {
+  .collapsible-inner { grid-template-columns: 1fr; }
+}
+
+.panel {
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+.panel-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ─── Stages grid ─── */
+.categories-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.category-block {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.01);
+  overflow: hidden;
+}
+.category-header {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 6px 10px;
+  font-weight: 600;
+  font-size: 11px;
+  color: #fff;
+  border-bottom: 1px solid var(--border);
+}
+.stages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+  gap: 3px;
+  padding: 6px;
+}
+.stage-dot {
+  padding: 4px 2px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--dim);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.stage-dot:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+.stage-dot.pass {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: var(--green);
+  color: var(--green);
+  box-shadow: 0 0 4px rgba(16, 185, 129, 0.2);
+}
+.stage-dot.fail {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: var(--red);
+  color: var(--red);
+}
+.stage-dot.run {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+  animation: pulse 1.5s infinite;
+}
+
+/* ─── Results table ─── */
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.results-table th, .results-table td {
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+.results-table th {
+  color: var(--dim);
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.val-ok { color: var(--green); font-weight: 600; }
+.val-warn { color: var(--orange); }
+.val-fail { color: var(--red); }
+
+/* ─── Details button on result cards ─── */
+.src-details-btn {
+  flex: 0 0 auto;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid var(--border-hover);
+  color: var(--accent);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.src-details-btn:hover { background: rgba(168, 85, 247, 0.25); color: #fff; }
+
+/* ─── Details modal ─── */
+.details-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.details-modal.open { display: flex; }
+.details-modal-content {
+  background: var(--card);
+  border: 1px solid var(--border-hover);
+  border-radius: 14px;
+  max-width: 620px;
+  width: 100%;
+  max-height: 82vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+.details-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--card);
+  backdrop-filter: blur(8px);
+}
+.details-modal-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  flex: 1;
+  line-height: 1.3;
+}
+.details-modal-close {
+  flex: 0 0 auto;
+  background: none;
+  border: none;
+  color: var(--dim);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.details-modal-close:hover { color: var(--text); }
+.details-modal-body {
+  padding: 16px 18px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text);
+}
+.details-modal-body p { margin: 0 0 10px; }
+.details-modal-body p:last-child { margin-bottom: 0; }
+.details-modal-body strong { color: var(--cyan); font-weight: 700; }
+.details-modal-body code {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--orange);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <h1 id="lbl-title">⚛️ NVG PoC — Student Dashboard</h1>
+  <div class="header-right">
+    <select id="lang-select" class="lang-select" onchange="changeLang(this.value)">
+      <option value="ru">RU 🇷🇺</option>
+      <option value="en">EN 🇬🇧</option>
+    </select>
+    <div class="status-pill">
+      <span class="status-dot" id="state-dot"></span>
+      <span id="state-text">Offline</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROGRESS STRIP ═══ -->
+<div class="progress-strip">
+  <div style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;flex-shrink:0" id="lbl-cur-stage-hdr">CURRENT STAGE</div>
+  <div class="progress-stage-name" id="cur-stage">Waiting...</div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-bar"></div>
+  </div>
+  <div class="progress-pct" id="cur-pct">0.0%</div>
+</div>
+
+<!-- ═══ MAIN: SCREEN (left) + LOGS+MAP (right) ═══ -->
+<div class="main-area">
+  <!-- Device Screen — full height left -->
+  <div class="screen-panel">
+    <div class="panel-label">📱 <span id="lbl-screen-title">Device Screen</span></div>
+    <div class="phone-frame">
+      <div class="screen-content">
+        <div class="screen-placeholder" id="screen-placeholder">
+          <div class="spinner"></div>
+          <span id="lbl-placeholder-text">Waiting for patterns...</span>
+        </div>
+        <img class="screen-img" id="screen-img" src="" alt="Pattern">
+      </div>
+    </div>
+  </div>
+
+  <!-- Right column: Logs (main) + collapsible map/results -->
+  <div class="right-column">
+    <!-- Logs -->
+    <div class="logs-section">
+      <div class="logs-header">
+        <div class="logs-header-left">
+          <div class="panel-label">📝 <span id="lbl-logs-title">Execution Log</span></div>
+          <span class="log-count-badge" id="log-count">0</span>
+        </div>
+      </div>
+      <div id="logs-container"></div>
+    </div>
+
+    <!-- Collapsible: Map + Results (starts collapsed) -->
+    <div class="collapsible-section collapsed" id="collapsible-section">
+      <div class="collapse-toggle" onclick="toggleSection()">
+        <span class="arrow" id="section-arrow">▼</span>
+        <span>🗺️ <span id="lbl-map-title">Process Map</span> &amp; 🏆 <span id="lbl-results-title">Results</span></span>
+      </div>
+      <div class="collapsible-inner">
+        <!-- Stages grid -->
+        <div class="panel">
+          <div class="panel-title">🗺️ <span id="lbl-map-title2">Stages</span></div>
+          <div class="categories-container" id="categories-container"></div>
+        </div>
+        <!-- Results -->
+        <div class="panel" id="results-panel" style="display:none">
+          <div class="panel-title">🏆 <span id="lbl-results-title2">Results</span></div>
+          <div style="overflow-x:auto">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th id="lbl-th-id">#</th>
+                  <th id="lbl-th-name">Stage</th>
+                  <th id="lbl-th-metric">Key Metric</th>
+                  <th id="lbl-th-status">Status</th>
+                </tr>
+              </thead>
+              <tbody id="results-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+if (window.trustedTypes && window.trustedTypes.createPolicy) {
+  if (!window.trustedTypes.defaultPolicy) {
+    window.trustedTypes.createPolicy('default', {
+      createHTML: string => string,
+      createScript: string => string,
+      createScriptURL: string => string
+    });
+  }
+}
+let sectionsData = [];
+let stageMap = {};
+let stageStates = [];
+let lastLogCount = 0;
+let currentLang = 'ru';
+let TRANSLATIONS = {};
+let renderedStageResults = new Set();
+let lastLogStageHeader = null;
+let cachedStageResults = {};
+
+function toggleSection() {
+  document.getElementById('collapsible-section').classList.toggle('collapsed');
+}
+
+function initDashboard() {
+  fetch('student.json').then(r => r.json()).then(trans => {
+    TRANSLATIONS = trans;
+    fetch('/api/stages').then(r => r.json()).then(d => {
+      sectionsData = d.sections;
+      sectionsData.forEach(sec => {
+        sec.stages.forEach(stg => { stageMap[stg.id] = stg; });
+      });
+      const count = Object.keys(stageMap).length;
+      stageStates = new Array(count).fill('wait');
+
+      fetch('/api/state').then(r => r.json()).then(st => {
+        if (st.default_lang) {
+          currentLang = st.default_lang;
+          document.getElementById('lang-select').value = currentLang;
+        }
+        renderCategoryGrid();
+        translatePage();
+        pollState();
+        setInterval(pollState, 1000);
+      }).catch(() => {
+        renderCategoryGrid();
+        translatePage();
+        pollState();
+        setInterval(pollState, 1000);
+      });
+    });
+  }).catch(e => console.error("Failed to load student translations", e));
+}
+
+function renderCategoryGrid() {
+  const container = document.getElementById('categories-container');
+  container.innerHTML = '';
+  let serial = 1;
+  sectionsData.forEach(sec => {
+    const block = document.createElement('div');
+    block.className = 'category-block';
+    const header = document.createElement('div');
+    header.className = 'category-header';
+    header.textContent = sec.name[currentLang] || sec.name['ru'];
+    block.appendChild(header);
+    const grid = document.createElement('div');
+    grid.className = 'stages-grid';
+    sec.stages.forEach(stg => {
+      const dot = document.createElement('div');
+      dot.className = `stage-dot ${stageStates[serial-1] || 'wait'}`;
+      dot.id = `sd-${stg.id}`;
+      dot.textContent = `${serial}`;
+      dot.title = (stg.name[currentLang] || stg.name['ru']) + (currentLang === 'ru' ? ' — нажмите для описания' : ' — click for details');
+      dot.onclick = () => showStageDetails(stg.id);
+      grid.appendChild(dot);
+      serial++;
+    });
+    block.appendChild(grid);
+    container.appendChild(block);
+  });
+}
+
+function stageIdBySerial(num) {
+  let flat = [];
+  sectionsData.forEach(sec => sec.stages.forEach(stg => flat.push(stg)));
+  return flat[num - 1]?.id ?? null;
+}
+
+function updateStageDot(num, cls) {
+  let flatStages = [];
+  sectionsData.forEach(sec => {
+    sec.stages.forEach(stg => { flatStages.push(stg); });
+  });
+  const stg = flatStages[num - 1];
+  if (stg) {
+    const dot = document.getElementById(`sd-${stg.id}`);
+    if (dot) {
+      dot.className = `stage-dot ${cls}`;
+      stageStates[num-1] = cls;
+    }
+  }
+}
+
+function translatePage() {
+  const t = TRANSLATIONS[currentLang];
+  if (!t) return;
+  document.getElementById('lbl-title').textContent = t.title;
+  document.getElementById('lbl-cur-stage-hdr').textContent = t.cur_stage_hdr;
+  document.getElementById('lbl-map-title').textContent = t.map_title;
+  document.getElementById('lbl-map-title2').textContent = t.map_title;
+  document.getElementById('lbl-results-title').textContent = t.results_title;
+  document.getElementById('lbl-results-title2').textContent = t.results_title;
+  document.getElementById('lbl-screen-title').textContent = t.screen_title;
+  document.getElementById('lbl-placeholder-text').textContent = t.placeholder_text;
+  document.getElementById('lbl-logs-title').textContent = t.logs_title;
+  document.getElementById('lbl-th-id').textContent = t.th_id;
+  document.getElementById('lbl-th-name').textContent = t.th_name;
+  document.getElementById('lbl-th-metric').textContent = t.th_metric;
+  document.getElementById('lbl-th-status').textContent = t.th_status;
+}
+
+function addLog(msg, cls, time) {
+  // Detect stage result marker and render card instead of log line
+  if (msg && msg.startsWith('__SR__')) {
+    try {
+      const sr = JSON.parse(msg.substring(6));
+      renderStageResultCard(sr);
+      updateStageDot(sr.serialNum, sr.passed ? 'pass' : 'fail');
+    } catch(e) { console.error('Bad SR marker:', e); }
+    return;
+  }
+  const container = document.getElementById('logs-container');
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  const t = time ? new Date(time).toLocaleTimeString() : new Date().toLocaleTimeString();
+  entry.innerHTML = `<span class="log-time">${t}</span><span class="log-msg log-${cls||''}">${escHtml(msg)}</span>`;
+  container.appendChild(entry);
+  container.scrollTop = container.scrollHeight;
+  document.getElementById('log-count').textContent = container.children.length;
+}
+
+function renderStageResultCard(sr) {
+  const container = document.getElementById('logs-container');
+  const card = document.createElement('div');
+  const passed = sr.passed;
+  card.className = `stage-result-card ${passed ? 'pass' : 'fail'}`;
+  const name = sr.name?.[currentLang] || sr.name?.['ru'] || `Stage ${sr.serialNum}`;
+  const passLabel = currentLang === 'ru' ? (passed ? 'Пройден' : 'Не пройден') : (passed ? 'Passed' : 'Failed');
+  const stageLabel = TRANSLATIONS[currentLang]?.stage_label || 'Stage';
+  let chartHtml = '';
+  // Chart comes from server's stage_results (not from the lightweight __SR__ marker)
+  const chartSrc = sr.chart || cachedStageResults[sr.stageKey]?.chart;
+  if (chartSrc) {
+    chartHtml = `<div class="src-chart"><img src="${chartSrc}" alt="chart"></div>`;
+  } else if (sr.stageKey) {
+    // Chart might arrive on next poll — create placeholder with ID
+    chartHtml = `<div class="src-chart" id="src-chart-${sr.stageKey}"></div>`;
+  }
+  const detailsLabel = currentLang === 'ru' ? 'Подробнее' : 'Details';
+  const sId = stageIdBySerial(sr.serialNum);
+  const detailsBtn = sId != null
+    ? `<button class="src-details-btn" onclick="showStageDetails(${sId})">ℹ️ ${detailsLabel}</button>`
+    : '';
+  card.innerHTML = `
+    <div class="src-header">
+      <span class="src-icon">${passed ? '✅' : '❌'}</span>
+      <div class="src-info">
+        <div class="src-title">${stageLabel} ${sr.serialNum}: ${escHtml(name)}</div>
+        <div class="src-metric">${escHtml(sr.metric || '—')}</div>
+      </div>
+      <span class="src-badge ${passed ? 'pass' : 'fail'}">${passLabel}</span>
+      ${detailsBtn}
+    </div>
+    ${chartHtml}
+  `;
+  container.appendChild(card);
+  container.scrollTop = container.scrollHeight;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function showStageDetails(stageId) {
+  const stg = stageMap[stageId];
+  if (!stg) return;
+  const lang = currentLang;
+  const name = stg.name?.[lang] || stg.name?.['ru'] || `Stage ${stageId}`;
+  const stageLabel = TRANSLATIONS[lang]?.stage_label || (lang === 'ru' ? 'Этап' : 'Stage');
+  let content = (stg.description_all && (stg.description_all[lang] || stg.description_all['ru'])) || '';
+  if (!content) content = (stg.description && (stg.description[lang] || stg.description['ru'])) || '';
+  if (!content) content = lang === 'ru' ? 'Описание недоступно.' : 'No description available.';
+
+  // Escape HTML, then render minimal markdown (**bold**, `code`), newlines → paragraphs
+  const renderMd = (s) => escHtml(s)
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
+
+  document.getElementById('details-modal-title').textContent = `${stageLabel} ${stageId}: ${name}`;
+  document.getElementById('details-modal-body').innerHTML = content.split('\n').map(p => {
+    const tr = p.trim();
+    return tr ? `<p>${renderMd(tr)}</p>` : '';
+  }).join('');
+  document.getElementById('details-modal').classList.add('open');
+}
+
+function closeStageDetails() {
+  document.getElementById('details-modal').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeStageDetails(); });
+
+function setProgress(stage, pct) {
+  const formattedStage = translateStageName(stage);
+  document.getElementById('cur-stage').textContent = formattedStage;
+  document.getElementById('cur-pct').textContent = (pct||0).toFixed(1) + '%';
+  document.getElementById('progress-bar').style.width = Math.min(pct||0, 100) + '%';
+  const m = stage?.match(/(\d+)/);
+  if (m) {
+    const num = parseInt(m[1]);
+    for (let i = 1; i < num; i++) {
+      if (stageStates[i-1] === 'wait' || stageStates[i-1] === 'run')
+        updateStageDot(i, 'pass');
+    }
+    updateStageDot(num, 'run');
+  }
+}
+
+function translateStageName(stage) {
+  if (!stage) return TRANSLATIONS[currentLang]?.waiting || 'Waiting...';
+  const labels = Object.values(TRANSLATIONS).map(t => t.stage_label).filter(Boolean);
+  if (!labels.includes('Stage')) labels.push('Stage');
+  if (!labels.includes('Этап')) labels.push('Этап');
+  const escapedLabels = labels.map(l => l.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+  const regex = new RegExp(`(?:${escapedLabels.join('|')})\\s*(\\d+)`, 'i');
+  const m = stage.match(regex);
+  if (m) {
+    const num = parseInt(m[1]);
+    let flatStages = [];
+    sectionsData.forEach(sec => {
+      sec.stages.forEach(stg => { flatStages.push(stg); });
+    });
+    const stg = flatStages[num - 1];
+    if (stg) {
+      const prefix = TRANSLATIONS[currentLang]?.stage_label || (currentLang === 'ru' ? 'Этап' : 'Stage');
+      return `${prefix} ${num}: ${stg.name[currentLang] || stg.name['ru']}`;
+    }
+  }
+  return stage;
+}
+
+async function showResults(data) {
+  if (!data) return;
+  document.getElementById('results-panel').style.display = 'block';
+  const tbody = document.getElementById('results-tbody');
+  tbody.innerHTML = '';
+  let flatStages = [];
+  sectionsData.forEach(sec => {
+    sec.stages.forEach(stg => { flatStages.push(stg); });
+  });
+  const promises = flatStages.map(async stg => {
+    const stageKey = `stage${stg.id}`;
+    if (data[stageKey]) {
+      let ok = false;
+      let mText = '—';
+      try {
+        const mod = await import(stg.js_path);
+        if (mod.check) ok = mod.check(data[stageKey]);
+        if (mod.metric) mText = mod.metric(data[stageKey]);
+      } catch(e) {
+        console.error("Failed to load check/metric for stage:", stg.id, e);
+      }
+      return { stg, ok, mText, stageKey };
+    }
+    return null;
+  });
+  const results = await Promise.all(promises);
+  results.forEach(res => {
+    if (!res) return;
+    const { stg, ok, mText } = res;
+    const num = flatStages.indexOf(stg) + 1;
+    const row = document.createElement('tr');
+    const idTd = document.createElement('td'); idTd.textContent = num; row.appendChild(idTd);
+    const nameTd = document.createElement('td'); nameTd.textContent = stg.name[currentLang] || stg.name['ru']; row.appendChild(nameTd);
+    const metricTd = document.createElement('td'); metricTd.className = ok ? 'val-ok' : 'val-fail'; metricTd.textContent = mText; row.appendChild(metricTd);
+    const statusTd = document.createElement('td'); statusTd.textContent = ok ? '✅' : '❌'; row.appendChild(statusTd);
+    tbody.appendChild(row);
+    updateStageDot(num, ok ? 'pass' : 'fail');
+  });
+}
+
+function pollState() {
+  fetch('/api/state').then(r => r.json()).then(d => {
+    if (d.default_lang && d.default_lang !== currentLang) {
+      currentLang = d.default_lang;
+      document.getElementById('lang-select').value = currentLang;
+      translatePage();
+      renderCategoryGrid();
+    }
+    const stateText = document.getElementById('state-text');
+    const stateDot = document.getElementById('state-dot');
+    const t = TRANSLATIONS[currentLang];
+    if (d.running) {
+      stateText.textContent = t.running;
+      stateDot.className = 'status-dot active';
+    } else {
+      stateText.textContent = t.idle;
+      stateDot.className = 'status-dot idle';
+    }
+    if (d.running) {
+      setProgress(d.stage, d.progress);
+    } else {
+      document.getElementById('cur-stage').textContent = t.waiting;
+      document.getElementById('cur-pct').textContent = '0.0%';
+      document.getElementById('progress-bar').style.width = '0%';
+    }
+    const imgEl = document.getElementById('screen-img');
+    const placeholderEl = document.getElementById('screen-placeholder');
+    if (d.pattern) {
+      imgEl.src = d.pattern;
+      imgEl.style.display = 'block';
+      placeholderEl.style.display = 'none';
+    } else {
+      imgEl.style.display = 'none';
+      placeholderEl.style.display = 'flex';
+    }
+    if (d.logs && d.logs.length < lastLogCount) {
+      document.getElementById('logs-container').innerHTML = '';
+      document.getElementById('log-count').textContent = '0';
+      lastLogCount = 0;
+      renderedStageResults.clear();
+      lastLogStageHeader = null;
+    }
+    if (d.logs && d.logs.length > lastLogCount) {
+      const newLogs = d.logs.slice(lastLogCount);
+      newLogs.forEach(l => addLog(l.msg, l.cls, l.t));
+      lastLogCount = d.logs.length;
+    }
+    // Cache stage_results and fill chart placeholders
+    if (d.stage_results) {
+      cachedStageResults = d.stage_results;
+      for (const [key, sr] of Object.entries(d.stage_results)) {
+        if (!renderedStageResults.has(key)) {
+          updateStageDot(sr.serialNum, sr.passed ? 'pass' : 'fail');
+        }
+        // Fill chart placeholder if chart arrived after the card was rendered
+        if (sr.chart) {
+          const placeholder = document.getElementById(`src-chart-${key}`);
+          if (placeholder && !placeholder.querySelector('img')) {
+            placeholder.innerHTML = `<img src="${sr.chart}" alt="chart">`;
+          }
+        }
+      }
+    }
+    if (d.results) {
+      showResults(d.results);
+    } else {
+      document.getElementById('results-panel').style.display = 'none';
+    }
+  }).catch(() => {});
+}
+
+function changeLang(lang) {
+  fetch(`/api/set_lang?lang=${lang}`).then(r => r.json()).then(d => {
+    currentLang = d.lang;
+    translatePage();
+    renderCategoryGrid();
+    if (document.getElementById('results-panel').style.display !== 'none') {
+      fetch('/api/state').then(r => r.json()).then(st => {
+        if (st.results) showResults(st.results);
+      });
+    }
+  });
+}
+
+initDashboard();
+</script>
+<!-- ═══ DETAILS MODAL ═══ -->
+<div class="details-modal" id="details-modal" onclick="if(event.target===this)closeStageDetails()">
+  <div class="details-modal-content">
+    <div class="details-modal-header">
+      <h3 id="details-modal-title"></h3>
+      <button class="details-modal-close" onclick="closeStageDetails()" aria-label="Close">×</button>
+    </div>
+    <div class="details-modal-body" id="details-modal-body"></div>
+  </div>
+</div>
+
+</body>
+</html>

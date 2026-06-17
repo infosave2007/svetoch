@@ -1,0 +1,35 @@
+{
+  "ru": {
+    "name": "Разделение RGB-каналов",
+    "description": "Оптическое смешивание цветовых каналов и построение матрицы YUV.",
+    "etap": "🎨",
+    "krasnyy_kanal": "🔴 Красный канал...",
+    "zelyonyy_kanal": "🟢 Зелёный канал...",
+    "siniy_kanal": "🔵 Синий канал...",
+    "rgb_izolyatsiya_rdb_gdb_bdb": "RGB изоляция: R={var0}дБ G={var1}дБ B={var2}дБ",
+    "srednyaya_db": "Средняя: {var0} дБ",
+    "db": " дБ",
+    "rgbgolovy_izolirovany": "✅ RGB-головы изолированы!",
+    "chastichnaya_izolyatsiya": "⚠️ Частичная изоляция",
+    "kanaly_smeshivayutsya": "❌ Каналы смешиваются",
+    "res_row0": "R-канал изоляция",
+    "description_all": "RGB-каналы как параллельные головы внимания.\n\n**Физический принцип:** (С зеркалом). Субпиксели экрана независимо излучают в красном, зелёном и синем спектрах. Матрица камеры принимает их через фильтр Байера.\n**Алгоритмическая суть:** Поочерёдно выводятся белый (референс) и чистые R, G, B; камера измеряет средние RGB-отклики. Для каждого канала считается изоляция как отношение целевого отклика к сумме перекрёстных, переводится в децибелы (10·log₁₀), и берётся средняя изоляция по R/G/B. Заодно сохраняется нормированная 3×3 матрица смешения каналов.\n**Аналогия:** Калибровка цветового зрения нашего оптического процессора для будущих параллельных RGB-вычислений (три независимые «головы»).\n**Метрика:** средняя кросс-канальная изоляция в дБ (порог avg > 0 дБ)."
+  },
+  "en": {
+    "name": "RGB Channel Separation",
+    "description": "Optical mixing of color channels and construction of the YUV matrix.",
+    "etap": "🎨",
+    "krasnyy_kanal": "🔴 Red channel...",
+    "zelyonyy_kanal": "🟢 Green channel...",
+    "siniy_kanal": "🔵 Blue channel...",
+    "rgb_izolyatsiya_rdb_gdb_bdb": "RGB isolation: R={var0}dB G={var1}dB B={var2}dB",
+    "srednyaya_db": "Average: {var0} dB",
+    "db": "dB",
+    "rgbgolovy_izolirovany": "✅ RGB heads are isolated!",
+    "chastichnaya_izolyatsiya": "⚠️ Partial isolation",
+    "kanaly_smeshivayutsya": "❌ Channels are mixed",
+    "res_row0": "R-channel isolation",
+    "description_all": "RGB channels as parallel attention heads.\n\n**Physical principle:** (With mirror). The screen's subpixels emit independently in the red, green and blue spectra. The camera sensor receives them through the Bayer filter.\n**Algorithmic essence:** White (reference) and then pure R, G, B are shown in turn; the camera measures the mean RGB responses. For each channel the isolation is computed as the ratio of the target response to the sum of the cross responses, converted to decibels (10·log₁₀), and the average isolation across R/G/B is taken. A normalized 3×3 channel-mixing matrix is also stored.\n**Analogy:** Calibrating the color vision of our optical processor for future parallel RGB computation (three independent \"heads\").\n**Metric:** average cross-channel isolation in dB (pass threshold avg > 0 dB)."
+  },
+  "mirrorless": false
+}

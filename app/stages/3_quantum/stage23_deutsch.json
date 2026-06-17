@@ -1,0 +1,37 @@
+{
+  "ru": {
+    "name": "Алгоритм Дойча–Йожи",
+    "description": "Аппаратное вычисление баланса функции за счет оптической интерференции.",
+    "etap": "🎲",
+    "doychzhozha": "Дойч-Жожа...",
+    "fconstx_ves_ekran_yarkiy": "f_const(x)=0: весь экран яркий",
+    "bins_ratio": "  bins=[{var0}] ratio={var1} → {var2}",
+    "fbalanced_lyarkiy_rtyomnyy": "f_balanced: L=яркий R=тёмный",
+    "fconstx_ves_ekran_tyomnyy": "f_const(x)=1: весь экран тёмный",
+    "fbalanced_ltyomnyy_ryarkiy": "f_balanced: L=тёмный R=яркий",
+    "doychzhozha_za_zapros_kazhdyy": "Дойч-Жожа: {var0}% за 1 запрос каждый",
+    "doychzhozha_1": "✅ Дойч-Жожа 100%!",
+    "tochnost": "⚠️ 75% точность",
+    "ne_rabotaet": "❌ Не работает",
+    "res_row0": "f_const распознана",
+    "description_all": "Алгоритм Дойча-Йожи — оптический аналог.\n\n**Физический принцип:** Классическая модель на экране телефона с зеркалом и камерой. Функция над 2 бинами кодируется яркостным паттерном: константа — равномерный экран, сбалансированная — раздел «половина яркая / половина тёмная».\n**Алгоритмическая суть:** Показываются 4 случая (константа=0, константа=1 и две сбалансированные половины); для каждого measureNBins считывает 2 бина яркости и вычисляется контраст ratio = |b0−b1|/max. При ratio < 0.15 функция классифицируется как константная, при ratio > 0.15 — как сбалансированная. accuracy — доля верно классифицированных случаев из 4, каждый решается за один оптический замер.\n**Аналогия:** Тип функции определяется за один «запрос» по глобальному распределению света на матрице, а не перебором входов.\n**Метрика:** Точность классификации по 4 случаям accuracy; прохождение при accuracy ≥ 0.75."
+  },
+  "en": {
+    "name": "Deutsch–Jozsa Algorithm",
+    "description": "Hardware evaluation of a function's balance via optical interference.",
+    "etap": "🎲",
+    "doychzhozha": "Deutsch-Jozsa...",
+    "fconstx_ves_ekran_yarkiy": "f_const(x)=0: whole screen is bright",
+    "bins_ratio": "bins=[{var0}] ratio={var1} → {var2}",
+    "fbalanced_lyarkiy_rtyomnyy": "f_balanced: L=bright R=dark",
+    "fconstx_ves_ekran_tyomnyy": "f_const(x)=1: the whole screen is dark",
+    "fbalanced_ltyomnyy_ryarkiy": "f_balanced: L=dark R=bright",
+    "doychzhozha_za_zapros_kazhdyy": "Deutsch-Jozsa: {var0}% with 1 query each",
+    "doychzhozha_1": "✅ Deutsch-Jozsa 100%!",
+    "tochnost": "⚠️ 75% accuracy",
+    "ne_rabotaet": "❌ Doesn't work",
+    "res_row0": "f_const recognized",
+    "description_all": "Deutsch-Jozsa algorithm — optical analog.\n\n**Physical principle:** A classical model on a phone screen with mirror and camera. A function over 2 bins is encoded as a brightness pattern: a constant function is a uniform screen, a balanced one is a half-bright/half-dark split.\n**Algorithmic essence:** Four cases are shown (constant=0, constant=1 and two balanced halves); for each, measureNBins reads 2 brightness bins and the contrast ratio |b0−b1|/max is computed. ratio < 0.15 is classified as constant, ratio > 0.15 as balanced. accuracy is the fraction of the 4 cases classified correctly — each decided from a single optical capture.\n**Analogy:** The function type is determined in one 'query' from the global light distribution on the sensor, rather than by probing each input.\n**Metric:** Classification accuracy over 4 cases; passes when accuracy ≥ 0.75."
+  },
+  "mirrorless": false
+}

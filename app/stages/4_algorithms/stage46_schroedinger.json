@@ -1,0 +1,33 @@
+{
+  "ru": {
+    "name": "Уравнение Шрёдингера (собственные состояния)",
+    "description": "Аналоговое пошаговое распространение волновой функции (эволюция).",
+    "etap": "🌊",
+    "uravnenie_shryodingera_interfe": "Уравнение Шрёдингера: интерференция...",
+    "ortogonalnost": "Ортогональность ⟨ψ₁|ψ₂⟩...",
+    "shryodinger": "━━━ ШРЁДИНГЕР ━━━",
+    "srednyaya_oshibka": "  Средняя ошибка: {var0}%",
+    "ortogonalnost_1": "  Ортогональность: |⟨ψ₁|ψ₂⟩| = {var0}",
+    "schrdinger": "Schrödinger {var0}",
+    "shryodinger_reshyon_opticheski": "✅ Шрёдингер решён оптически!",
+    "chastichnoe_reshenie": "⚠️ Частичное решение",
+    "res_row0": "E₁ (основное)",
+    "description_all": "Собственные состояния потенциальной ямы и спектр энергий через оптику.\n\n**Физический принцип:** (С зеркалом). Собственные функции бесконечной ямы ψ_n = sin(nπx/L) выводятся на экран как стоячие волны яркости; камера измеряет их пространственную частоту, давая квантовое число n.\n**Алгоритмическая суть:** Для n=1..4 экран рисует ψ_n (n полных синусоидальных периодов), камера снимает кадр, извлекается 1D-профиль, убирается DC и DFT находит доминирующую частоту k=n. Отсюда энергия E_n ∝ n² и отношение E₂/E₁ (эталон 4.0). Отдельно проверяется ортогональность ⟨ψ₁|ψ₂⟩ по перекрёстному члену яркости наложения.\n**Аналогия:** Экран и камера разыгрывают «струну» квантовой частицы: каждая мода звучит на своей частоте, а энергии растут как n².\n**Метрика:** средняя ошибка измеренного n (%); зачёт при верном определении мод n=1 и n=2 (|n_изм − n| ≤ 1)."
+  },
+  "en": {
+    "name": "Schrödinger Equation (Eigenstates)",
+    "description": "Analog step-by-step propagation of the wave function (evolution).",
+    "etap": "🌊",
+    "uravnenie_shryodingera_interfe": "Schrödinger's equation: interference...",
+    "ortogonalnost": "Orthogonality ⟨ψ₁|ψ₂⟩...",
+    "shryodinger": "━━━ SCHRÖDINGER ━━━",
+    "srednyaya_oshibka": "Average error: {var0}%",
+    "ortogonalnost_1": "Orthogonality: |⟨ψ₁|ψ₂⟩| = {var0}",
+    "schrdinger": "Schrödinger {var0}",
+    "shryodinger_reshyon_opticheski": "✅ Schrödinger solved optically!",
+    "chastichnoe_reshenie": "⚠️ Partial solution",
+    "res_row0": "E₁ (ground state)",
+    "description_all": "Eigenstates of a potential well and the energy spectrum, through optics.\n\n**Physical principle:** (With mirror). The infinite-well eigenfunctions ψ_n = sin(nπx/L) are displayed as standing brightness waves; the camera measures their spatial frequency, yielding the quantum number n.\n**Algorithmic essence:** For n=1..4 the screen draws ψ_n (n full sinusoidal periods), the camera captures a frame, a 1D profile is extracted, DC is removed and a DFT finds the dominant frequency k=n. From this the energy E_n ∝ n² and the ratio E₂/E₁ (reference 4.0) follow. Orthogonality ⟨ψ₁|ψ₂⟩ is checked separately via the cross-term of the superposition brightness.\n**Analogy:** Screen and camera play the 'string' of a quantum particle: each mode rings at its own frequency, while energies grow as n².\n**Metric:** the average error of the measured n (%); passes when modes n=1 and n=2 are identified correctly (|n_meas − n| ≤ 1)."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Нормировка Softmax",
+    "description": "Аппаратно-программная реализация нормализации Softmax.",
+    "etap": "📊",
+    "osmoticheskiy_softmax": "Осмотический Softmax...",
+    "yarkost": "Яркость {var0}%",
+    "softmax": "Softmax {var0}",
+    "softmax_rabotaet": "✅ Softmax работает!",
+    "chastichnyy_softmax": "⚠️ Частичный Softmax",
+    "net_softmaxpovedeniya": "❌ Нет Softmax-поведения",
+    "res_row0": "KL-дивергенция",
+    "description_all": "Оптический Softmax.\n\n**Физический принцип:** Экран последовательно показывает 7 серых полей возрастающей яркости (от 5% до 95%), а камера измеряет среднюю оптическую яркость каждого из них.\n**Алгоритмическая суть:** Измеренные яркости нормируются в [0,1], после чего к ним применяется softmax с температурой 3.0 (оптический softmax). Параллельно вычисляется цифровой softmax исходных входов; считается корреляция Пирсона, KL-дивергенция и монотонность отклика.\n**Аналогия:** Проверка того, что аналоговый яркостной канал «экран→камера» сохраняет форму распределения softmax так же, как цифровая нормализация.\n**Метрика:** Корреляция оптического и цифрового softmax; прохождение при corr > 0.5 (corr > 0.7 — уверенно работает)."
+  },
+  "en": {
+    "name": "Softmax Normalization",
+    "description": "Hardware-software implementation of Softmax normalization.",
+    "etap": "📊",
+    "osmoticheskiy_softmax": "Osmotic Softmax...",
+    "yarkost": "Brightness {var0}%",
+    "softmax": "Softmax {var0}",
+    "softmax_rabotaet": "✅ Softmax works!",
+    "chastichnyy_softmax": "⚠️ Partial Softmax",
+    "net_softmaxpovedeniya": "❌ No Softmax behavior",
+    "res_row0": "KL divergence",
+    "description_all": "Optical Softmax.\n\n**Physical principle:** The screen sequentially displays 7 gray fields of increasing brightness (5% to 95%), and the camera measures the mean optical brightness of each.\n**Algorithmic essence:** The measured brightnesses are normalized to [0,1], then a softmax with temperature 3.0 is applied (optical softmax). In parallel, the digital softmax of the original inputs is computed; Pearson correlation, KL divergence and monotonicity are reported.\n**Analogy:** Checking that the analog brightness channel \"screen→camera\" preserves the shape of a softmax distribution just like digital normalization.\n**Metric:** Correlation between optical and digital softmax; passes when corr > 0.5 (corr > 0.7 means it works reliably)."
+  },
+  "mirrorless": false
+}

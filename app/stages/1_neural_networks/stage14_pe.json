@@ -1,0 +1,31 @@
+{
+  "ru": {
+    "name": "Позиционное кодирование",
+    "description": "Оптическая генерация позиционных эмбеддингов на основе 2D волн.",
+    "etap": "🌊",
+    "pozitsiya": "Позиция {var0}/{var1}",
+    "pe": "PE {var0}",
+    "da": "Да",
+    "net": "Нет",
+    "pozitsii_ortogonalny": "✅ Позиции ортогональны!",
+    "chastichnaya_razlichimost": "⚠️ Частичная различимость",
+    "pozitsii_nerazlichimy": "❌ Позиции неразличимы",
+    "res_row0": "Ортогональность",
+    "description_all": "Синусоидальное позиционное кодирование (PE).\n\n**Физический принцип:** Экран выводит синусоидальные полосы яркости; каждая из 4 позиций получает свой множитель частоты (1×, 1.5×, 2×, 3×) и свою фазу, кодируя позицию токена в пространственной частоте.\n**Алгоритмическая суть:** Для каждой позиции по 6 частотам камера измеряет контраст в 4 бинах, формируя 24-мерный PE-вектор. Между всеми парами позиций считается косинусная близость; позиция считается различимой, если |cos| < 0.8.\n**Аналогия:** Физическая визуализация классического синусоидального Positional Encoding из оригинального Трансформера.\n**Метрика:** Доля различимых пар позиций (distinguishability); прохождение при distinguishability > 0.3 (полная ортогональность при avgCosSim < 0.5)."
+  },
+  "en": {
+    "name": "Positional Encoding",
+    "description": "Optical generation of positional embeddings based on 2D waves.",
+    "etap": "🌊",
+    "pozitsiya": "Position {var0}/{var1}",
+    "pe": "PE {var0}",
+    "da": "Yes",
+    "net": "No",
+    "pozitsii_ortogonalny": "✅ Positions are orthogonal!",
+    "chastichnaya_razlichimost": "⚠️Partial discernibility",
+    "pozitsii_nerazlichimy": "❌ Positions are indistinguishable",
+    "res_row0": "Orthogonality",
+    "description_all": "Sinusoidal Positional Encoding (PE).\n\n**Physical principle:** The screen outputs sinusoidal brightness stripes; each of the 4 positions gets its own frequency multiplier (1×, 1.5×, 2×, 3×) and phase, encoding the token position in spatial frequency.\n**Algorithmic essence:** For each position, across 6 frequencies, the camera measures contrast in 4 bins, forming a 24-dimensional PE vector. Cosine similarity is computed between all position pairs; a position is deemed distinguishable when |cos| < 0.8.\n**Analogy:** A physical visualization of the classic sinusoidal Positional Encoding from the original Transformer.\n**Metric:** Fraction of distinguishable position pairs (distinguishability); passes when distinguishability > 0.3 (full orthogonality at avgCosSim < 0.5)."
+  },
+  "mirrorless": false
+}

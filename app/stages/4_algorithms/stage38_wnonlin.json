@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Нелинейность суперпозиции",
+    "description": "Анализ W-корреляций с учетом нелинейности матрицы камеры.",
+    "etap": "🔬",
+    "wnelineynost": "W-нелинейность...",
+    "wpole_i": "W-поле: δ ∝ I^{var0}",
+    "n_lineynaya_optika_n_nvg_w": "  n=1.0 → линейная оптика, n=2.0 → NVG |W|⁴",
+    "key": "  {var0}",
+    "nelineynost": "✅ Нелинейность!",
+    "lineynyy": "❌ Линейный",
+    "res_row0": "Экспонента",
+    "description_all": "Проверка нелинейности оптического тракта по нарушению суперпозиции.\n\n**Физический принцип:** (С зеркалом). В линейной оптике яркости складываются: отклик на сумму двух паттернов равен сумме откликов. Нелинейность тракта (или гамма-отклик CMOS-матрицы) нарушает это.\n**Алгоритмическая суть:** Для 5 уровней интенсивности экран по очереди показывает паттерн A (горизонтальные полосы), паттерн B (вертикальные полосы) и их наложение A+B (сетку). Камера измеряет среднюю яркость каждого; отклонение δ = I(A+B) − [I(A)+I(B)] от линейности фитируется степенным законом δ ∝ Iⁿ по методу наименьших квадратов в лог-координатах.\n**Аналогия:** Проверка того, «складываются» ли два источника света честно, или оптика телефона добавляет квадратичную (Iⁿ, n≈2) добавку.\n**Метрика:** показатель степени n; зачёт при n > 0.5 (обнаружено нелинейное отклонение от суперпозиции)."
+  },
+  "en": {
+    "name": "Superposition Nonlinearity",
+    "description": "Analysis of W-correlations accounting for the camera sensor's nonlinearity.",
+    "etap": "🔬",
+    "wnelineynost": "W-nonlinearity...",
+    "wpole_i": "W-field: δ ∝ I^{var0}",
+    "n_lineynaya_optika_n_nvg_w": "n=1.0 → linear optics, n=2.0 → NVG |W|⁴",
+    "key": "{var0}",
+    "nelineynost": "✅ Nonlinearity!",
+    "lineynyy": "❌ Linear",
+    "res_row0": "Exponent",
+    "description_all": "Probing the nonlinearity of the optical channel via superposition violation.\n\n**Physical principle:** (With mirror). In linear optics brightnesses add up: the response to the sum of two patterns equals the sum of the responses. A nonlinear channel (or the gamma response of the CMOS sensor) breaks this.\n**Algorithmic essence:** For 5 intensity levels the screen sequentially shows pattern A (horizontal stripes), pattern B (vertical stripes) and their overlay A+B (a grid). The camera measures the mean brightness of each; the deviation δ = I(A+B) − [I(A)+I(B)] from linearity is fit to a power law δ ∝ Iⁿ by least squares in log coordinates.\n**Analogy:** Testing whether two light sources 'add up' honestly, or whether the phone's optics inject a quadratic (Iⁿ, n≈2) term.\n**Metric:** the exponent n; passes when n > 0.5 (a nonlinear departure from superposition is detected)."
+  },
+  "mirrorless": false
+}

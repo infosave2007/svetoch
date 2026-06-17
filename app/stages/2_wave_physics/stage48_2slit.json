@@ -1,0 +1,33 @@
+{
+  "ru": {
+    "name": "Двухщелевой опыт Юнга",
+    "description": "Аппаратная реализация интерференции Юнга на пикселях экрана.",
+    "etap": "🌊",
+    "nvg_dvushchelevoy_opyt": "NVG: двущелевой опыт...",
+    "shchel_a": "Щель A...",
+    "shchel_b": "Щель B...",
+    "obe_shcheli_ab": "Обе щели A+B...",
+    "interferentsionnyy_chlen": "  Интерференционный член: {var0} ({var1}%)",
+    "nvg": "NVG #47 {var0}",
+    "nvg_iabiaib_osmoticheskoe_davl": "✅ NVG #47: I_AB≠I_A+I_B → осмотическое давление!",
+    "interferentsiya_slabaya": "⚠️ Интерференция слабая",
+    "res_row0": "Iₐ₂",
+    "description_all": "Двухщелевой эксперимент Юнга.\n\n**Физический принцип:** (С зеркалом). Экран работает как пространственный модулятор света (SLM): открываются две яркие вертикальные «щели» (ширина 8% экрана, разнос 30%), свет идёт до зеркала и обратно в камеру.\n**Алгоритмическая суть:** Камера последовательно снимает три конфигурации — только щель A, только щель B и обе щели A+B — и измеряет среднюю яркость I_A, I_B, I_AB. Считается интерференционный (перекрёстный) член I_AB−I_A−I_B и его нормированное значение normCross=(I_AB−I_A−I_B)/(I_A+I_B).\n**Аналогия:** Самый знаменитый эксперимент квантовой механики, воссозданный на столе с помощью дисплея телефона.\n**Метрика:** Интерференция засчитана при |normCross| > 0.02; отображается normCross в процентах."
+  },
+  "en": {
+    "name": "Young's Double-Slit Experiment",
+    "description": "Hardware realization of Young's interference on the screen's pixels.",
+    "etap": "🌊",
+    "nvg_dvushchelevoy_opyt": "NVG: double-slit experiment...",
+    "shchel_a": "Slit A...",
+    "shchel_b": "Slit B...",
+    "obe_shcheli_ab": "Both slits A+B...",
+    "interferentsionnyy_chlen": "Interference term: {var0} ({var1}%)",
+    "nvg": "NVG #47 {var0}",
+    "nvg_iabiaib_osmoticheskoe_davl": "✅ NVG #47: I_AB≠I_A+I_B → osmotic pressure!",
+    "interferentsiya_slabaya": "⚠️ Interference is weak",
+    "res_row0": "Iₐ₂",
+    "description_all": "Young's double-slit experiment.\n\n**Physical principle:** (With mirror). The screen acts as a spatial light modulator (SLM): it opens two bright vertical 'slits' (8% of screen width, 30% separation); light travels to the mirror and back into the camera.\n**Algorithmic essence:** The camera captures three configurations in turn — slit A only, slit B only, and both slits A+B — and measures the mean brightness I_A, I_B, I_AB. It computes the interference (cross) term I_AB−I_A−I_B and its normalized value normCross=(I_AB−I_A−I_B)/(I_A+I_B).\n**Analogy:** The most famous experiment of quantum mechanics, recreated on a tabletop with a phone display.\n**Metric:** Interference is counted when |normCross| > 0.02; the reported quantity is normCross in percent."
+  },
+  "mirrorless": false
+}

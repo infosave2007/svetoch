@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Интерференция Хонга–Оу–Мандела (HOM)",
+    "description": "Моделирование двухфотонной интерференции и измерения просадки ХОМ.",
+    "etap": "🌊",
+    "skanirovanie_i": "Сканирование: I=[{var0}]",
+    "vidnost_v_acdc": "Видность V={var0} (AC/DC={var1}/{var2})",
+    "korr_s_cos": "Корр. с cos: {var0}",
+    "hom": "HOM {var0}",
+    "hom_podtverzhdyon": "✅ HOM подтверждён",
+    "nizkaya_vidimost": "❌ Низкая видимость",
+    "res_row0": "Видимость",
+    "description_all": "Эффект Хонга-У-Мандела (HOM), оптический аналог.\n\n**Физический принцип:** (С зеркалом). Два наложенных синусоидальных паттерна полос (период 16px) складываются по амплитуде с относительным сдвигом Δx; при совпадении/расхождении фаз картина усиливается или гасится.\n**Алгоритмическая суть:** Сканируются 12 сдвигов Δx=0..period. Для каждого камера снимает кадр, и через DFT по горизонтальному профилю измеряется амплитуда полос. Алгоритм считает видность V=(Imax−Imin)/(Imax+Imin) по серии сдвигов и корреляцию профиля амплитуды с теоретическим |cos(πΔx/period)|.\n**Аналогия:** Настольная имитация знаменитого квантового эффекта, когда два фотона «слипаются» на светоделителе, — здесь через классическое сложение полос.\n**Метрика:** Засчитано при видности V > 0.3 и корреляции с косинусом > 0.5; отображается V."
+  },
+  "en": {
+    "name": "Hong–Ou–Mandel Interference (HOM)",
+    "description": "Modeling two-photon interference and measurement of the HOM dip.",
+    "etap": "🌊",
+    "skanirovanie_i": "Scan: I=[{var0}]",
+    "vidnost_v_acdc": "Visibility V={var0} (AC/DC={var1}/{var2})",
+    "korr_s_cos": "Corr. with cos: {var0}",
+    "hom": "HOM {var0}",
+    "hom_podtverzhdyon": "✅ HOM confirmed",
+    "nizkaya_vidimost": "❌ Low visibility",
+    "res_row0": "Visibility",
+    "description_all": "Hong-Ou-Mandel (HOM) effect, optical analog.\n\n**Physical principle:** (With mirror). Two overlaid sinusoidal stripe patterns (period 16px) add in amplitude with a relative shift Δx; depending on phase match they reinforce or cancel.\n**Algorithmic essence:** It scans 12 shifts Δx=0..period. For each, the camera grabs a frame and the stripe amplitude is measured via DFT of the horizontal profile. The algorithm computes visibility V=(Imax−Imin)/(Imax+Imin) across the shift series and the correlation of the amplitude profile with the theoretical |cos(πΔx/period)|.\n**Analogy:** A tabletop imitation of the famous quantum effect where two photons 'bunch' at a beamsplitter — here via classical addition of stripes.\n**Metric:** Counted when visibility V > 0.3 and correlation with the cosine > 0.5; the reported quantity is V."
+  },
+  "mirrorless": false
+}

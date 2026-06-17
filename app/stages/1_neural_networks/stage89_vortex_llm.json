@@ -1,0 +1,23 @@
+{
+  "ru": {
+    "name": "🌡️ Вихревой беззеркальный LLM",
+    "description": "Реализация полносвязного слоя LLM через параллельную 8-канальную шину тепловых вихрей.",
+    "vortex_llm_start": "Старт вихревого беззеркального LLM",
+    "vortex_llm_train": "Обучение модели (цифровое)",
+    "vortex_llm_inference": "Взаимодействие через тепловые вихревые отклики (BOS)",
+    "success": "Вихревой LLM функционирует. Сгенерирован текст: {var0}",
+    "fail": "Ошибка генерации: вихревой отклик не распознан",
+    "description_all": "Параллельный вихревой LLM (Vortex Mirrorless LLM).\n\n**Физический принцип:** (Без зеркала). На экране одновременно работают 8 вихревых тепловых ячеек. Интенсивность (opacity) кодирует абсолютное значение (logit), а хиральность вихря (по/против часовой) — знак веса; восходящая конвекция искривляет свет (BOS).\n**Алгоритмическая суть:** Цифрово обучается символьная модель, затем выполняется инференс: для каждого из 8 генерируемых символов запускается 4 пакета по 8 параллельных вихревых каналов, а камера через оптический поток вычисляет роторы (curl) векторных полей сдвига как логиты. Ротор инвариантен к масштабу и глобальным перекосам телефона, что делает суммы устойчивыми к помехам. Далее softmax и сэмплирование; сравнение с CPU.\n**Аналогия:** Матричное умножение слоя LLM выполняют 8 независимых тепловых «ядер», и камера за кадр считывает результаты вычислений прямо из воздуха.\n**Метрика:** Сгенерированный текст и доля совпадений с CPU; прохождение (pass) при длине оптического текста ≥ 6 символов."
+  },
+  "en": {
+    "name": "🌡️ Vortex Mirrorless LLM",
+    "description": "Implementation of a fully connected LLM layer via a parallel 8-channel thermal vortex bus.",
+    "vortex_llm_start": "Starting vortex mirrorless LLM",
+    "vortex_llm_train": "Training model (digital)",
+    "vortex_llm_inference": "Optical inference via thermal vortex curls (BOS)",
+    "success": "Vortex LLM functioning. Generated text: {var0}",
+    "fail": "Generation error: vortex response not recognized",
+    "description_all": "Vortex Mirrorless LLM.\n\n**Physical principle:** (Mirrorless). 8 thermal vortex cells operate simultaneously on the screen. Opacity encodes absolute magnitude (logit), while chirality (CW/CCW) encodes the sign of the weight; rising convection bends the light (BOS).\n**Algorithmic essence:** A character model is trained digitally, then inference runs: for each of the 8 generated characters, 4 batches of 8 parallel vortex channels are launched, and via optical flow the camera computes the curl of the displacement vector fields as logits. Curl is invariant to scale and global phone tilts, making the sums resilient to environmental noise. Softmax and sampling follow, with comparison against CPU.\n**Analogy:** The matrix multiplication of an LLM layer is performed by 8 independent thermal \"cores\", and the camera reads the computation results straight out of the air, frame by frame.\n**Metric:** Generated text and match rate against CPU; passes when the optical text is ≥ 6 characters long."
+  },
+  "mirrorless": true
+}

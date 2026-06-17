@@ -1,0 +1,31 @@
+{
+  "ru": {
+    "name": "Мини-трансформер (LLM)",
+    "description": "Гибридный расчет слоя трансформера (LLM) с оптическим сумматором.",
+    "etap": "🤖",
+    "llm_generiruet_opticheski": "✅ LLM генерирует оптически!",
+    "chastichno": "⚠️ Частично",
+    "tokeny_ne_sovpadayut": "❌ Токены не совпадают",
+    "ozhidanie_bbbr": "Ожидание: <b>{var0}</b><br>",
+    "tsifrovoy_bbbr": "Цифровой: <b>{var0}</b><br>",
+    "opticheskiy_bb": "Оптический: <b>{var0}</b>",
+    "brbrbvproektsiib": "<br><br><b>V-проекции:</b>",
+    "res_row0": "Токены совпали",
+    "description_all": "Оптический инференс слоя LLM.\n\n**Физический принцип:** (С зеркалом). Объединение оптического умножения из предыдущих этапов для вычисления слоя крошечного трансформера (d_model=4, словарь A/B/C/D).\n**Алгоритмическая суть:** Стартуя с токена 'A', за 3 шага генерируются токены. На каждом шаге элементы value-проекции W_V·x выводятся на экран по одному как яркость; камера их измеряет (нормировка по белому, гамма-коррекция), и argmax по оптическим логитам выбирает следующий токен. Параллельно считается то же цифровым путём, и сверяется совпадение токенов и корреляция V-проекций.\n**Аналогия:** Частичный перенос вычислений трансформера с процессора на оптику смартфона (оптический тензорный ускоритель).\n**Метрика:** число совпавших токенов оптической и цифровой генерации (порог совпадений ≥ 3 из 4)."
+  },
+  "en": {
+    "name": "Mini-Transformer (LLM)",
+    "description": "Hybrid computation of a Transformer (LLM) layer with an optical summator.",
+    "etap": "🤖",
+    "llm_generiruet_opticheski": "✅ LLM generates optically!",
+    "chastichno": "⚠️ Partially",
+    "tokeny_ne_sovpadayut": "❌ Tokens do not match",
+    "ozhidanie_bbbr": "Expected: <b>{var0}</b><br>",
+    "tsifrovoy_bbbr": "Digital: <b>{var0}</b><br>",
+    "opticheskiy_bb": "Optical: <b>{var0}</b>",
+    "brbrbvproektsiib": "<br><br><b>V-projections:</b>",
+    "res_row0": "Tokens matched",
+    "description_all": "Optical inference of an LLM layer.\n\n**Physical principle:** (With mirror). Combining the optical multiplication from the previous stages to compute a layer of a tiny Transformer (d_model=4, vocab A/B/C/D).\n**Algorithmic essence:** Starting from token 'A', 3 tokens are generated. At each step the value-projection elements W_V·x are shown on screen one by one as brightness; the camera measures them (white-normalized, gamma-corrected), and an argmax over the optical logits picks the next token. The same is computed digitally in parallel, then the token match and the V-projection correlation are checked.\n**Analogy:** Partial offloading of Transformer computation from the CPU to the smartphone optics (an optical tensor accelerator).\n**Metric:** number of matching tokens between optical and digital generation (pass threshold ≥ 3 of 4)."
+  },
+  "mirrorless": false
+}

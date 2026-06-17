@@ -1,0 +1,39 @@
+{
+  "ru": {
+    "name": "Оценка квантовой фазы (QPE)",
+    "description": "Аппаратное измерение сдвига фазы с субпиксельной точностью.",
+    "etap": "🎯",
+    "qpe_bit_otsenka_fazy_shor": "QPE 4-бит: оценка фазы → Shor...",
+    "kalibrovka_chastotnogo_masshta": "  Калибровка частотного масштаба...",
+    "qpe_bit": "━━━ QPE 4-бит ━━━",
+    "srednyaya_oshibka_shor_limit": "  Средняя ошибка: {var0} (Shor лимит: 0.0625)",
+    "tochnykh_popadaniy": "  Точных попаданий: {var0}/{var1}",
+    "shor_n": "  Shor N=15: {var0}",
+    "qpe": "QPE {var0}",
+    "bit_shor": "{var0} ({var1}-бит, Shor: {var2})",
+    "qpe_bit_shor_n_gotov": "✅ QPE 4-бит: Shor N=15 ГОТОВ!",
+    "qpe_fazy_izmereny_shor_trebuet": "✅ QPE: фазы измерены, Shor требует калибровки",
+    "qpe_chastichno": "⚠️ QPE частично",
+    "res_row0": "Фаза изм.",
+    "description_all": "Оценка фазы (QPE, 4 бита, оптический аналог).\n\n**Физический принцип:** (С зеркалом). Оценка фазы кодируется как пространственная частота косинусной решётки и считывается камерой; это классическая модель на экране и камере телефона, а не настоящий квантовый регистр.\n**Алгоритмическая суть:** Сначала выводится калибровочная решётка с известными 4 периодами, камера снимает кадр (captureStable), строит 1D-профиль и тонким DFT (шаг 0.25 бина) находит измеренную частоту, задавая масштаб freqScale. Затем для 6 тестовых фаз φ выводятся косинусные решётки с частотой φ·16; по пику DFT, скорректированному на freqScale, фаза округляется до ближайшего из 16 бинов, и считается ошибка относительно истинной φ.\n**Аналогия:** Скрытое число определяется по тому, насколько часто повторяются полоски на фотографии решётки.\n**Метрика:** Средняя ошибка avgError (бит фазы) и число точных попаданий; успех (check) — pass, то есть точных попаданий ≥ 4 (effectiveError < 0.001); готовность к Shor — avgError ≤ 0.0625."
+  },
+  "en": {
+    "name": "Quantum Phase Estimation (QPE)",
+    "description": "Hardware measurement of phase shift with subpixel precision.",
+    "etap": "🎯",
+    "qpe_bit_otsenka_fazy_shor": "QPE 4-bit: phase estimation → Shor...",
+    "kalibrovka_chastotnogo_masshta": "Frequency scale calibration...",
+    "qpe_bit": "━━━ QPE 4-bit ━━━",
+    "srednyaya_oshibka_shor_limit": "Average error: {var0} (Shor limit: 0.0625)",
+    "tochnykh_popadaniy": "Accurate hits: {var0}/{var1}",
+    "shor_n": "Shor N=15: {var0}",
+    "qpe": "QPE {var0}",
+    "bit_shor": "{var0} ({var1}-bit, Shor: {var2})",
+    "qpe_bit_shor_n_gotov": "✅ QPE 4-bit: Shor N=15 READY!",
+    "qpe_fazy_izmereny_shor_trebuet": "✅ QPE: phases measured, Shor requires calibration",
+    "qpe_chastichno": "⚠️ QPE partially",
+    "res_row0": "Measured phase",
+    "description_all": "Quantum Phase Estimation (QPE, 4-bit, optical analog).\n\n**Physical principle:** (With mirror). The phase estimate is encoded as the spatial frequency of a cosine grating and read out by the camera; this is a classical model on a phone screen and camera, not a real quantum register.\n**Algorithmic essence:** First a calibration grating with 4 known periods is shown; the camera captures a frame (captureStable), builds a 1D profile and finds the measured frequency via a fine DFT (0.25-bin step), setting the scale freqScale. Then, for 6 test phases φ, cosine gratings at frequency φ·16 are displayed; from the DFT peak corrected by freqScale, the phase is rounded to the nearest of 16 bins and the error relative to the true φ is computed.\n**Analogy:** A hidden number is determined from how frequently the stripes repeat in a photo of the grating.\n**Metric:** Average error avgError (phase bits) and number of exact hits; pass (check) requires pass, i.e. exact hits ≥ 4 (effectiveError < 0.001); Shor-readiness needs avgError ≤ 0.0625."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,37 @@
+{
+  "ru": {
+    "name": "Оптическое сжатие данных",
+    "description": "Оценка информационной энтропии оптического сигнала через дисперсию.",
+    "etap": "📦",
+    "opticheskoe_szhatie_bitov": "Оптическое сжатие битов...",
+    "n_opticheskaya_verifikatsiya": "\\n  Оптическая верификация ({var0}):",
+    "vkhod_b": "  Вход: [{var0}] ({var1}b)",
+    "kamera_bit": "  Камера: {var0}/{var1} бит ({var2}%) {var3}",
+    "szhatoe_b": "  Сжатое: [{var0}] ({var1}b, {var2}×)",
+    "szhatoe_bit": "  Сжатое: {var0}/{var1} бит ({var2}%) {var3}",
+    "opticheskoe_szhatie": "━━━ ОПТИЧЕСКОЕ СЖАТИЕ ━━━",
+    "dekompressiya": "  Декомпрессия: {var0}",
+    "szhatie": "Сжатие {var0}",
+    "szhatie_1": "✅ Сжатие: {var0} {var1}×",
+    "szhatie_2": "⚠️ Сжатие: {var0}×",
+    "description_all": "Сжатие информации без потерь.\n\n**Физический принцип:** (С зеркалом). Битовые потоки выводятся на экран как яркостные столбцы и считываются камерой чанками (16 бит, 3 кадра, голосование) для проверки оптического канала.\n**Алгоритмическая суть:** CPU применяет префиксно-свободное парное кодирование (00→0, 01→10, 10→110, 11→111) итеративно к 5 наборам по 64 бита (нули, разреженные 95/90%, структурный, случайный), останавливаясь при отсутствии выигрыша, и проверяет обратимость декомпрессией. Лучший случай дополнительно читается камерой.\n**Аналогия:** Белый шум сжать нельзя, а упорядоченные узоры укладываются в узкий поток — и это можно «прочитать» светом.\n**Метрика:** Лучший коэффициент сжатия bestRatio; зачёт при полной обратимости всех тестов И bestRatio > 1.2."
+  },
+  "en": {
+    "name": "Optical Data Compression",
+    "description": "Estimating the information entropy of an optical signal via dispersion.",
+    "etap": "📦",
+    "opticheskoe_szhatie_bitov": "Optical bit compression...",
+    "n_opticheskaya_verifikatsiya": "\\nOptical verification ({var0}):",
+    "vkhod_b": "Input: [{var0}] ({var1}b)",
+    "kamera_bit": "Camera: {var0}/{var1} bit ({var2}%) {var3}",
+    "szhatoe_b": "Compressed: [{var0}] ({var1}b, {var2}×)",
+    "szhatoe_bit": "Compressed: {var0}/{var1} bits ({var2}%) {var3}",
+    "opticheskoe_szhatie": "━━━ OPTICAL COMPRESSION ━━━",
+    "dekompressiya": "Decompression: {var0}",
+    "szhatie": "Compression {var0}",
+    "szhatie_1": "✅ Compression: {var0} {var1}×",
+    "szhatie_2": "⚠️ Compression: {var0}×",
+    "description_all": "Lossless information compression.\n\n**Physical principle:** (With mirror). Bit streams are shown on screen as brightness columns and read back by the camera in chunks (16 bits, 3 frames, majority vote) to verify the optical channel.\n**Algorithmic essence:** The CPU applies prefix-free pair coding (00→0, 01→10, 10→110, 11→111) iteratively to 5 sets of 64 bits (all-zeros, sparse 95/90%, structured, random), stopping when no further gain occurs, and confirms reversibility via decompression. The best case is additionally read by the camera.\n**Analogy:** White noise cannot be compressed, while ordered patterns collapse into a narrow stream — and this can be \"read\" with light.\n**Metric:** Best compression ratio bestRatio; pass when every test is fully reversible AND bestRatio > 1.2."
+  },
+  "mirrorless": false
+}

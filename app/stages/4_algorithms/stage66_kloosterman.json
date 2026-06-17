@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Суммы Клоостермана (граница Вейля)",
+    "description": "Аппаратная оценка тригонометрических сумм через интенсивность интерференции.",
+    "etap": "🎯",
+    "kloost_start": "Суммы Клостермана K(a,b;p)...",
+    "kalib": "Gamma-калибровка...",
+    "kloost_compute": "CPU: K(a,b;p) и оценка Вейля...",
+    "kloost_optical": "Optical: cos(2π(ax+bx⁻¹)/p) → камера...",
+    "res_row0": "Weil bound",
+    "res_row1": "Max |K|/2√p",
+    "res_row2": "Optical corr",
+    "description_all": "Суммы Клостермана и граница Вейля (Теория чисел).\n\n**Физический принцип:** (С зеркалом). Слагаемые cos(2π(ax+bx⁻¹)/p)∈[−1,+1] выводятся столбцами как непрерывная γ-калиброванная яркость, и камера измеряет среднюю яркость окна — оптическая сумма Re(K).\n**Алгоритмическая суть:** CPU считает K(a,b;p) для простых 5..97 и набора пар (a,b) и проверяет границу Вейля |K|≤2√p; оптически Re(K) для K(1,1;p), p≤47 считывается камерой и сверяется с CPU (корреляция Пирсона).\n**Аналогия:** Тригонометрические слагаемые превращаются в полоски света, чья суммарная яркость и есть значение суммы.\n**Метрика:** Максимум отношения |K|/2√p (maxRatio) и корреляция corr; зачёт при allWeilSatisfied — |K|≤2√p для всех троек (p,a,b)."
+  },
+  "en": {
+    "name": "Kloosterman Sums (Weil Bound)",
+    "description": "Optical Kloosterman sums verifying the Weil bound via cosine brightness encoding.",
+    "etap": "🎯",
+    "kloost_start": "Kloosterman sums K(a,b;p)...",
+    "kalib": "Gamma calibration...",
+    "kloost_compute": "CPU: K(a,b;p) and Weil bound...",
+    "kloost_optical": "Optical: cos(2π(ax+bx⁻¹)/p) → camera...",
+    "res_row0": "Weil bound",
+    "res_row1": "Max |K|/2√p",
+    "res_row2": "Optical corr",
+    "description_all": "Kloosterman sums and the Weil bound (Number theory).\n\n**Physical principle:** (With mirror). The terms cos(2π(ax+bx⁻¹)/p)∈[−1,+1] are shown as columns of continuous gamma-calibrated brightness, and the camera measures the mean window brightness — an optical sum Re(K).\n**Algorithmic essence:** The CPU computes K(a,b;p) for primes 5..97 and a set of pairs (a,b) and checks the Weil bound |K|≤2√p; optically Re(K) for K(1,1;p), p≤47 is read by the camera and compared to the CPU (Pearson correlation).\n**Analogy:** Trigonometric terms become stripes of light whose total brightness is the value of the sum.\n**Metric:** Maximum ratio |K|/2√p (maxRatio) and correlation corr; pass when allWeilSatisfied — |K|≤2√p for every (p,a,b) triple."
+  },
+  "mirrorless": false
+}

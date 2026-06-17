@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "🌡️ Ёмкость микровихревой сетки",
+    "description": "Оценка предельной емкости и разрешающей способности термической (BOS) сетки на смартфоне.",
+    "capacity_start": "Старт теста микровихревой емкости",
+    "test_8": "Тестирование сетки из 8 элементов (2-2-2-2)",
+    "test_6": "Тестирование сетки из 6 элементов (2-2-2)",
+    "test_4": "Тестирование сетки из 4 элементов (2-2)",
+    "test_2": "Тестирование сетки из 2 элементов (2)",
+    "test_1": "Тестирование 1 элемента (1)",
+    "success": "Разрешение сетки подтверждено. Успешно распознано ячеек: {var0}",
+    "fail": "Ошибка разрешения: не удалось надежно отследить микровихри",
+    "description_all": "Ёмкость микровихревой сетки (термооптический аналог).\n\n**Физический принцип:** (Без зеркала). Над экраном создаётся сетка из независимых тепловых микровихрей; чем плотнее сетка, тем сильнее перекрытие конвективных потоков. Это классическая термооптика.\n**Алгоритмическая суть:** По очереди выводятся паттерны с 1, 2, 4, 6 и 8 квадровихревыми ячейками поверх шахматной решётки-эталона. Для каждой ячейки камера снимает кадры (captureStable) и SAD-оптическим потоком (measureShiftVector) меряет локальный ротор curl = top.dx + right.dy − bottom.dx − left.dy. Тест уровня N считается пройденным, если у достаточного числа ячеек |curl| превышает порог, спадающий с плотностью (0.40σ для 1 до 0.15σ для 8); ёмкость = максимальный пройденный N.\n**Аналогия:** Стресс-тест: сколько независимых «тепловых процессоров» помещается в воздухе над одним экраном, пока они не сольются.\n**Метрика:** Ёмкость N = число разрешённых ячеек; успех (check) — pass, то есть разрешена хотя бы 1 ячейка (N ≥ 1)."
+  },
+  "en": {
+    "name": "🌡️ Micro-Vortex Grid Capacity",
+    "description": "Evaluating the ultimate capacity and resolution of the thermal (BOS) grid on the smartphone.",
+    "capacity_start": "Starting micro-vortex capacity test",
+    "test_8": "Testing grid of 8 elements (2-2-2-2)",
+    "test_6": "Testing grid of 6 elements (2-2-2)",
+    "test_4": "Testing grid of 4 elements (2-2)",
+    "test_2": "Testing grid of 2 elements (2)",
+    "test_1": "Testing 1 element (1)",
+    "success": "Grid resolution verified. Successfully resolved cells: {var0}",
+    "fail": "Resolution error: could not reliably track micro-vortices",
+    "description_all": "Micro-Vortex Grid Capacity (thermo-optical analog).\n\n**Physical principle:** (Mirrorless). A grid of independent thermal micro-vortices is created above the screen; the denser the grid, the more the convective flows overlap. This is classical thermo-optics.\n**Algorithmic essence:** Patterns with 1, 2, 4, 6 and 8 quad-vortex cells are shown in turn over a reference checkerboard grid. For each cell the camera captures frames (captureStable) and, via SAD optical flow (measureShiftVector), measures the local curl = top.dx + right.dy − bottom.dx − left.dy. A level-N test passes if enough cells have |curl| above a threshold that drops with density (0.40σ for 1 down to 0.15σ for 8); the capacity is the highest passing N.\n**Analogy:** A stress test: how many independent \"thermal processors\" fit in the air above one screen before they merge.\n**Metric:** Capacity N = number of resolved cells; pass (check) requires pass, i.e. at least 1 cell resolved (N ≥ 1)."
+  },
+  "mirrorless": true
+}

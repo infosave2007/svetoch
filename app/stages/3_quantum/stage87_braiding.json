@@ -1,0 +1,23 @@
+{
+  "ru": {
+    "name": "🌡️ Топологическое плетение (брейдинг)",
+    "description": "Вычисление топологических зацеплений (Braiding) путем пространственного вращения тепловых вихрей на экране.",
+    "braiding_start": "Косоплетение: запуск динамического плетения",
+    "weaving_cw": "Динамический сдвиг: вращение по часовой стрелке (CW)",
+    "weaving_ccw": "Динамический сдвиг: вращение против часовой стрелки (CCW)",
+    "success": "Косоплетение верифицировано: обнаружена петля гистерезиса",
+    "fail": "Недостаточный отклик: тепловой гистерезис ниже уровня шума",
+    "description_all": "Топологическое косоплетение (термооптический аналог).\n\n**Физический принцип:** (Без зеркала). Вихревые паттерны, расставленные по кольцу, вращаются по экрану (угол 0→π/2→π и обратно), создавая движущиеся источники тепла; их затухающий конвективный след играет роль «памяти среды». Это классическая термооптика, а не настоящая неабелева статистика.\n**Алгоритмическая суть:** Для углов 0, π/2, π выводится паттерн косоплетения (drawBraiding), поверх — шахматная решётка-эталон. Камера снимает кадры (captureStable) и SAD-оптическим потоком (measureShiftVector) меряет поле сдвигов BOS в центральных квадрантах, из которого считается ротор curl = top.dx + right.dy − bottom.dx − left.dy. Прямой проход (0→π) и обратный (π→0) выполняются без охлаждения, и площадь гистерезиса оценивается как |curl_прямой − curl_обратный| на угле π/2.\n**Аналогия:** Топологический компьютер сплетает траектории частиц; здесь сплетаются тёплые воздушные потоки, а остаточный гистерезис — след этого «зацепления».\n**Метрика:** Площадь гистерезиса H = |curl_CW − curl_CCW| (px) и её значимость в σ; успех (check) — pass, то есть H > 0.25·noiseSigma."
+  },
+  "en": {
+    "name": "🌡️ Topological Braiding Gate",
+    "description": "Computing topological braiding operations by spatially rotating thermal vortices on the screen.",
+    "braiding_start": "Braiding: starting dynamic weaving",
+    "weaving_cw": "Dynamic shift: clockwise rotation (CW)",
+    "weaving_ccw": "Dynamic shift: counter-clockwise rotation (CCW)",
+    "success": "Braiding verified: hysteresis loop detected",
+    "fail": "Insufficient response: thermal hysteresis below noise level",
+    "description_all": "Topological Braiding Gate (thermo-optical analog).\n\n**Physical principle:** (Mirrorless). Vortex patterns arranged around a ring rotate on the screen (angle 0→π/2→π and back), creating moving heat sources whose decaying convective trail acts as \"environmental memory\". This is classical thermo-optics, not real non-Abelian statistics.\n**Algorithmic essence:** For angles 0, π/2, π a braiding pattern is shown (drawBraiding), with a reference checkerboard grid on top. The camera captures frames (captureStable) and, via SAD optical flow (measureShiftVector), measures the BOS displacement field in the central quadrants, from which the curl = top.dx + right.dy − bottom.dx − left.dy is computed. The forward sweep (0→π) and reverse sweep (π→0) run without cooling, and the hysteresis area is estimated as |curl_forward − curl_reverse| at angle π/2.\n**Analogy:** A topological computer braids particle trajectories; here warm air currents are braided, and the residual hysteresis is the trace of that \"linking\".\n**Metric:** Hysteresis area H = |curl_CW − curl_CCW| (px) and its significance in σ; pass (check) requires pass, i.e. H > 0.25·noiseSigma."
+  },
+  "mirrorless": true
+}

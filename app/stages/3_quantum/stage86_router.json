@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "🌡️ Оптический роутер на кутрите",
+    "description": "Демонстрация маршрутизации сигнала через волноводы, образованные тепловыми градиентами (BOS).",
+    "router_start": "Оптический роутер: начало коммутации",
+    "route_left": "Маршрутизация влево (состояние |1⟩, l = +1)",
+    "route_center": "Маршрутизация прямо (состояние |0⟩, l = 0)",
+    "route_right": "Маршрутизация вправо (состояние |2⟩, l = -1)",
+    "success": "Маршрутизатор функционирует корректно: все 3 канала разделены",
+    "fail": "Ошибка маршрутизации: перекрытие или низкий контраст каналов",
+    "description_all": "Оптический роутер на кутрите (термооптический аналог).\n\n**Физический принцип:** (Без зеркала). Управляющий термоконвективный вихрь с заданной хиральностью искривляет тепловой поток над дисплеем, эмулируя коммутацию трёх каналов; это классическая термооптика, а не настоящий кутрит.\n**Алгоритмическая суть:** Для трёх состояний-команд по очереди выводится паттерн (чистая линза |0⟩ → центр, лево/право-винтовые вихри |1⟩/|2⟩ → влево/вправо), затем поверх — шахматная решётка-эталон. Камера снимает кадры (captureStable) и SAD-оптическим потоком (measureShiftVector) меряет поле сдвигов BOS в четырёх центральных квадрантах; из него для каждого канала считается ротор curl = top.dx + right.dy − bottom.dx − left.dy. Проверяется порядок curl[1] > curl[0] > curl[2] и разделимость каналов относительно шума.\n**Аналогия:** Оптический стрелочный перевод, где «стрелку» переключает направление закрутки тёплого воздуха.\n**Метрика:** Разделение каналов Δ = |curl₁ − curl₂| (px) и его значимость в σ; успех (check) — pass, то есть верный порядок curl и Δ > 2·noiseSigma."
+  },
+  "en": {
+    "name": "🌡️ Qutrit Optical Router",
+    "description": "Demonstration of signal routing through waveguides formed by thermal gradients (BOS).",
+    "router_start": "Optical router: starting switching",
+    "route_left": "Routing Left (state |1⟩, l = +1)",
+    "route_center": "Routing Center (state |0⟩, l = 0)",
+    "route_right": "Routing Right (state |2⟩, l = -1)",
+    "success": "Router is functioning correctly: all 3 channels are resolved",
+    "fail": "Routing error: overlap or low channel contrast",
+    "description_all": "Qutrit Optical Router (thermo-optical analog).\n\n**Physical principle:** (Mirrorless). A controlling thermo-convective vortex with a defined chirality bends the heat flow above the display, emulating the switching of three channels; this is classical thermo-optics, not a real qutrit.\n**Algorithmic essence:** For three command states in turn a pattern is shown (a pure lens |0⟩ → center, left/right-handed vortices |1⟩/|2⟩ → left/right), then a reference checkerboard grid on top. The camera captures frames (captureStable) and, via SAD optical flow (measureShiftVector), measures the BOS displacement field in four central quadrants; from it the curl = top.dx + right.dy − bottom.dx − left.dy is computed for each channel. The order curl[1] > curl[0] > curl[2] and the separability of channels relative to noise are checked.\n**Analogy:** An optical track switch where the \"switch\" is toggled by the swirl direction of warm air.\n**Metric:** Channel separation Δ = |curl₁ − curl₂| (px) and its significance in σ; pass (check) requires pass, i.e. correct curl order and Δ > 2·noiseSigma."
+  },
+  "mirrorless": true
+}

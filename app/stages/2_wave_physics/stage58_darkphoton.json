@@ -1,0 +1,31 @@
+{
+  "ru": {
+    "name": "Поиск тёмного фотона",
+    "description": "Анализ аномальных оптических утечек и неучтенного кросс-толка тракта.",
+    "etap": "🔮",
+    "dark_photon_sdvig_massy_mezona": "Dark Photon: сдвиг массы ρ-мезона...",
+    "mezon_vakuum_f": "  ρ-мезон (вакуум): f₀ = {var0}",
+    "vakuum_kmeas": "  Вакуум: k_meas = {var0}",
+    "mezon_n_f_f": "  ρ-мезон (2n₀): f* = f₀×(1-0.20) = {var0}",
+    "sreda_kmeas": "  Среда:  k_meas = {var0}",
+    "predskazanie_nvg": "  Предсказание NVG: {var0}%",
+    "oshibka": "  Ошибка: {var0}%",
+    "dark_photon": "Dark Photon {var0}",
+    "description_all": "Тёмный фотон: сдвиг массы ρ-мезона в плотной среде.\n\n**Физический принцип:** (С зеркалом). По модели NVG связь с тёмным сектором перенормирует вакуумный конденсат, и при плотности 2n₀ масса ρ-мезона падает на ≈20%. Сдвиг массы кодируется как сдвиг пространственной частоты.\n**Алгоритмическая суть:** На экран выводится синусоидальный паттерн яркости cos(2π·f·x) сначала на «вакуумной» частоте f₀=8, затем на «средовой» f*=f₀·(1−0.20)=6.4. Камера снимает оба кадра, по горизонтальному профилю строится точная DFT (k=1…20 с шагом 0.25), находятся пики k₀ и k₁, и вычисляется измеренный относительный сдвиг Δk/k₀.\n**Аналогия:** Как тон струны понижается при утяжелении, так «облегчённый» мезон в плотной среде даёт более низкую пространственную частоту полос на матрице.\n**Метрика:** Измеренный сдвиг Δm/m ≈ Δk/k₀; зачёт при |Δk/k₀ − (−0.20)| < 0.10."
+  },
+  "en": {
+    "name": "Dark Photon Search",
+    "description": "Analysis of anomalous optical leakage and unaccounted-for path cross-talk.",
+    "etap": "🔮",
+    "dark_photon_sdvig_massy_mezona": "Dark Photon: ρ-meson mass shift...",
+    "mezon_vakuum_f": "ρ-meson (vacuum): f₀ = {var0}",
+    "vakuum_kmeas": "Vacuum: k_meas = {var0}",
+    "mezon_n_f_f": "ρ-meson (2n₀): f* = f₀×(1-0.20) = {var0}",
+    "sreda_kmeas": "Medium: k_meas = {var0}",
+    "predskazanie_nvg": "NVG Prediction: {var0}%",
+    "oshibka": "Error: {var0}%",
+    "dark_photon": "Dark Photon {var0}",
+    "description_all": "Dark photon: ρ-meson mass shift in dense medium.\n\n**Physical principle:** (With mirror). In the NVG model, coupling to the dark sector renormalizes the vacuum condensate, so at density 2n₀ the ρ-meson mass drops by ≈20%. This mass shift is encoded as a shift in spatial frequency.\n**Algorithmic essence:** A sinusoidal brightness pattern cos(2π·f·x) is shown first at the \"vacuum\" frequency f₀=8, then at the \"in-medium\" f*=f₀·(1−0.20)=6.4. The camera captures both frames, builds a fine DFT (k=1…20, step 0.25) of the horizontal profile, locates the peaks k₀ and k₁, and computes the measured relative shift Δk/k₀.\n**Analogy:** Just as a string's pitch drops when it is loaded, the \"lightened\" meson in a dense medium produces a lower spatial fringe frequency on the sensor.\n**Metric:** Measured Δm/m ≈ Δk/k₀; passes when |Δk/k₀ − (−0.20)| < 0.10."
+  },
+  "mirrorless": false
+}

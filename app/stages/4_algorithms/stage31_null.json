@@ -1,0 +1,41 @@
+{
+  "ru": {
+    "name": "Контроль фона (Null-тест)",
+    "description": "Калибровка фоновой засветки и теплового шума матрицы кадра.",
+    "etap": "🚫",
+    "nulltest_proverka_bez_patterno": "NULL-TEST: проверка без паттернов...",
+    "vse_testy_dolzhny_provalitsya_": "Все тесты должны ПРОВАЛИТЬСЯ. Если что-то проходит — тест невалиден.",
+    "null_kontrast": "Null: контраст...",
+    "kontrast_na_serom": "  Контраст на сером: {var0} {var1}",
+    "lr_raznitsa": "  L-R разница: {var0} {var1}",
+    "rgb_spred": "  RGB спред: {var0} {var1}",
+    "prostranstvennaya": "  Пространственная σ²: {var0} {var1}",
+    "korr_s_random": "  Корр. с random: {var0} {var1}",
+    "nulltest_lozhnopozitivnykh": "Null-test: {var0}/{var1} ложно-позитивных",
+    "tselostnost": "Целостность: {var0}% {var1}",
+    "nulevoy_test_proyden": "✅ Нулевой тест пройден",
+    "lozhnye_srabatyvaniya": "❌ Ложные срабатывания",
+    "res_row0": "Ложных срабатываний",
+    "description_all": "Нулевой контрольный тест (Null Test).\n\n**Физический принцип:** (С зеркалом). Экран выводит однородный серый (#808080) без всяких паттернов — детектор НЕ должен видеть никакого сигнала.\n**Алгоритмическая суть:** На сером кадре запускаются 5 проверок, каждая ДОЛЖНА провалиться: контраст полос, разница яркости лево/право, разброс RGB, пространственная дисперсия по 8 бинам и корреляция 4 бинов со случайным вектором. Каждое превышение порога считается ложно-позитивным; целостность = 1 − FP/5.\n**Аналогия:** Контроль «пустого опыта» в физической лаборатории: прибор не должен «находить» сигнал там, где его нет.\n**Метрика:** целостность теста (доля проверок без ложного срабатывания); зачёт при integrity ≥ 0.8 (не более 1 из 5 FP)."
+  },
+  "en": {
+    "name": "Null Test (Background)",
+    "description": "Calibration of background illumination and thermal noise of the frame sensor.",
+    "etap": "🚫",
+    "nulltest_proverka_bez_patterno": "NULL-TEST: testing without patterns...",
+    "vse_testy_dolzhny_provalitsya_": "All tests must FAIL. If something passes, the test is invalid.",
+    "null_kontrast": "Null: contrast...",
+    "kontrast_na_serom": "Gray Contrast: {var0} {var1}",
+    "lr_raznitsa": "L-R difference: {var0} {var1}",
+    "rgb_spred": "RGB spread: {var0} {var1}",
+    "prostranstvennaya": "Spatial σ²: {var0} {var1}",
+    "korr_s_random": "Corr. with random: {var0} {var1}",
+    "nulltest_lozhnopozitivnykh": "Null-test: {var0}/{var1} false positives",
+    "tselostnost": "Integrity: {var0}% {var1}",
+    "nulevoy_test_proyden": "✅ Zero test passed",
+    "lozhnye_srabatyvaniya": "❌ False positives",
+    "res_row0": "False positives",
+    "description_all": "Null control test.\n\n**Physical principle:** (With mirror). The screen displays a uniform gray (#808080) with no patterns at all — the detector should see NO signal.\n**Algorithmic essence:** On the gray frame 5 checks are run, each of which MUST fail: stripe contrast, left/right brightness difference, RGB spread, spatial variance over 8 bins, and correlation of 4 bins with a random vector. Every threshold crossing counts as a false positive; integrity = 1 − FP/5.\n**Analogy:** A blank-experiment control in a physics lab: the instrument must not 'detect' a signal where none exists.\n**Metric:** test integrity (fraction of checks with no false positive); passes when integrity ≥ 0.8 (at most 1 of 5 FP)."
+  },
+  "mirrorless": false
+}

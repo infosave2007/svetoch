@@ -1,0 +1,37 @@
+{
+  "ru": {
+    "name": "Вентиль Адамара (H)",
+    "description": "Оптическая генерация суперпозиции (Hadamard) через смешивание света.",
+    "etap": "🔲",
+    "ventil_adamara_h": "Вентиль Адамара H...",
+    "levyy_kvadrant": "|0⟩: левый квадрант",
+    "h_reshyotka": "H|0⟩: решётка 45°",
+    "pravyy_kvadrant": "|1⟩: правый квадрант",
+    "h_reshyotka_1": "H|1⟩: решётка 135°",
+    "adamar_sredniy_balans_ideal": "Адамар: средний баланс={var0} (идеал=1.0)",
+    "h": "H {var0}",
+    "h_sozdayot_superpozitsiyu": "✅ H создаёт суперпозицию!",
+    "chastichnyy_adamar": "⚠️ Частичный Адамар",
+    "net_superpozitsii": "❌ Нет суперпозиции",
+    "res_row0": "|0⟩ → баланс",
+    "description_all": "Вентиль Адамара (Hadamard Gate) — оптический аналог.\n\n**Физический принцип:** Классическая модель на экране телефона с зеркалом и камерой. Базисные состояния |0⟩ и |1⟩ задаются яркой половиной экрана (левый/правый квадрант), а действие H — синусоидальной решёткой под 45°/135°, переводящей сфокусированную яркость в равномерно распределённый полутон.\n**Алгоритмическая суть:** Для входов |0⟩ и |1⟩ камера снимает кадр после решётки, функция quadrantMean измеряет среднюю яркость левого и правого квадрантов и считает баланс = min(L,R)/max(L,R). Идеальная «суперпозиция» даёт равные L и R (баланс→1). Возвращается средний баланс по двум входам (avgBalance).\n**Аналогия:** Решётка играет роль делителя, «размазывающего» яркую половину на оба квадранта поровну — оптический образ равновероятной суперпозиции |0⟩+|1⟩.\n**Метрика:** Средний баланс яркости квадрантов avgBalance = (balance0+balance1)/2; прохождение при avgBalance > 0.5."
+  },
+  "en": {
+    "name": "Hadamard Gate (H)",
+    "description": "Optical generation of superposition (Hadamard) via light mixing.",
+    "etap": "🔲",
+    "ventil_adamara_h": "Hadamard gate H...",
+    "levyy_kvadrant": "|0⟩: left quadrant",
+    "h_reshyotka": "H|0⟩: 45° grating",
+    "pravyy_kvadrant": "|1⟩: right quadrant",
+    "h_reshyotka_1": "H|1⟩: 135° grating",
+    "adamar_sredniy_balans_ideal": "Hadamard: average balance={var0} (ideal=1.0)",
+    "h": "H{var0}",
+    "h_sozdayot_superpozitsiyu": "✅ H creates a superposition!",
+    "chastichnyy_adamar": "⚠️Partial Hadamard",
+    "net_superpozitsii": "❌ No superposition",
+    "res_row0": "|0⟩ → balance",
+    "description_all": "Hadamard Gate — optical analog.\n\n**Physical principle:** A classical model on a phone screen with mirror and camera. Basis states |0⟩ and |1⟩ are encoded as a bright screen half (left/right quadrant); the H action is a 45°/135° sinusoidal grating that spreads the focused brightness into an even halftone.\n**Algorithmic essence:** For inputs |0⟩ and |1⟩ the camera captures a frame after the grating, quadrantMean measures the mean brightness of the left and right quadrants, and balance = min(L,R)/max(L,R) is computed. An ideal 'superposition' gives equal L and R (balance→1). The average balance over both inputs (avgBalance) is returned.\n**Analogy:** The grating acts as a splitter that smears the bright half evenly across both quadrants — an optical image of the equiprobable superposition |0⟩+|1⟩.\n**Metric:** Mean quadrant-brightness balance avgBalance = (balance0+balance1)/2; passes when avgBalance > 0.5."
+  },
+  "mirrorless": false
+}

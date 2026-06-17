@@ -1,0 +1,28 @@
+{
+  "strings": {
+    "ru": {
+      "etap": "🌡️ Этап 84",
+      "air_bench_start": "Инструментальная база воздушных элементов"
+    },
+    "en": {
+      "etap": "🌡️ Stage 84",
+      "air_bench_start": "Air Elements Instrumentation Bench"
+    }
+  },
+  "meta": {
+    "name": "AirElementsBench",
+    "description": "BOS instrumentation suite for Stage 82 air elements with active air-settle/coldFrame refresh between tests: differential, multi-band, lens, prism, grating, axicon, vortex, memory, nonlinearity, frequency response, reservoir features, follow-up drift/repeatability, vertical layer multiplexing, channel capacity, spatial Talbot layering, free convection double-slit, entanglement decay, and phase coherence collapse"
+  },
+  "html": "<div class='stage'><h3>🌡️ Air Elements Bench</h3><p>Инструментальная база для Stage 82: камера измеряет реальные BOS-сдвиги всех воздушных элементов над OLED</p><div class='rv'><span class='rl'>Рабочие элементы</span><span id='rv-s84-usable' class='rval'>—</span></div><div class='rv'><span class='rl'>Шум baseline</span><span id='rv-s84-noise' class='rval'>—</span></div><div class='rv'><span class='rl'>Дифференциал</span><span id='rv-s84-diff' class='rval'>—</span></div><div class='rv'><span class='rl'>4-band matrix</span><span id='rv-s84-band' class='rval'>—</span></div><div class='rv'><span class='rl'>Память</span><span id='rv-s84-memory' class='rval'>—</span></div><div class='rv'><span class='rl'>Частота</span><span id='rv-s84-freq' class='rval'>—</span></div><p id='g-s84' class='grade'>…</p></div>",
+  "ru": {
+    "name": "🌡️ Стенд воздушных элементов",
+    "description_all": "Измерительный стенд воздушных элементов (Air Elements Bench).\n\n**Физический принцип:** (Без зеркала). На экране последовательно генерируются различные паттерны (линза, призма, решётка, аксикон, вихрь и др.), которые локальным нагревом OLED создают тепловые структуры в воздухе, искривляющие проходящий свет (BOS).\n**Алгоритмическая суть:** Фронтальная камера дифференциальным оптическим потоком измеряет для каждого из 11 элементов уровень шума (baseline), амплитуду теплового BOS-сдвига (в σ над шумом), 4-полосную матрицу, частотный отклик и время релаксации (память) воздуха после выключения паттерна; между тестами выполняется продувка/охлаждение.\n**Аналогия:** Лабораторный стенд (бенчмарк) для калибровки «воздушных оптических деталей» перед тем, как собирать из них более сложные вычислительные схемы (Stage 82).\n**Метрика:** Число рабочих элементов (сигнал > 3σ) и дифференциал в σ; прохождение при usableElementCount ≥ 3 из 11.",
+    "description": "Инструментальная база (Bench) для измерения параметров базовых воздушных элементов: тепловых линз, призм и решеток."
+  },
+  "en": {
+    "name": "🌡️ Air-Elements Instrumentation Bench",
+    "description_all": "Air Elements Benchmark.\n\n**Physical principle:** (Mirrorless). The screen generates various patterns (lens, prism, grating, axicon, vortex and more) that, through localized OLED heating, create thermal structures in the air which bend passing light (BOS).\n**Algorithmic essence:** Using differential optical flow, the front camera measures, for each of the 11 elements, the noise baseline, the thermal BOS shift amplitude (in σ above noise), a 4-band matrix, frequency response, and the air's relaxation time (memory) after the pattern turns off; an air-settle/cooldown runs between tests.\n**Analogy:** A laboratory testbed used to calibrate fundamental \"air-optic components\" before assembling them into more complex computational circuits (Stage 82).\n**Metric:** Number of usable elements (signal > 3σ) and the differential in σ; passes when usableElementCount ≥ 3 of 11.",
+    "description": "Instrumentation bench for measuring basic air elements: thermal lenses, prisms, and gratings."
+  },
+  "mirrorless": true
+}

@@ -1,0 +1,36 @@
+{
+  "ru": {
+    "title": "⚛️ NVG PoC — Панель Ученика",
+    "running": "Вычисление...",
+    "idle": "Ожидание запуска",
+    "cur_stage_hdr": "ТЕКУЩИЙ ЭТАП",
+    "waiting": "Ожидание запуска...",
+    "map_title": "Карта процессов по разделам",
+    "results_title": "Детализация результатов",
+    "screen_title": "Экран устройства (оптические паттерны)",
+    "placeholder_text": "Ожидание optical сигналов...",
+    "logs_title": "Лог вычислений",
+    "th_id": "#",
+    "th_name": "Этап",
+    "th_metric": "Ключевая метрика",
+    "th_status": "Статус",
+    "stage_label": "Этап"
+  },
+  "en": {
+    "title": "⚛️ NVG PoC — Student Dashboard",
+    "running": "Computing...",
+    "idle": "Waiting to start",
+    "cur_stage_hdr": "CURRENT STAGE",
+    "waiting": "Waiting to start...",
+    "map_title": "Process Map by Categories",
+    "results_title": "Results Details",
+    "screen_title": "Device Screen (Optical Patterns)",
+    "placeholder_text": "Waiting for optical signals...",
+    "logs_title": "Execution Log",
+    "th_id": "#",
+    "th_name": "Stage",
+    "th_metric": "Key Metric",
+    "th_status": "Status",
+    "stage_label": "Stage"
+  }
+}

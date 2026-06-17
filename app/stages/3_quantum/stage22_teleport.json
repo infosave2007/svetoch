@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Квантовая телепортация",
+    "description": "Симуляция телепортации состояния между цветовыми каналами экрана.",
+    "etap": "📡",
+    "kvantovaya_teleportatsiya": "Квантовая телепортация...",
+    "teleport": "Телепорт {var0}",
+    "s_output_const_corrrb_thispear": "s output\n    const corrRB = this.pearsonCorr(aliceR, bobB);\n    // Proper quantum fidelity: F = (1 + |r|) / 2 ∈ [0, 1]\n    // |r| because anti-correlation = inverted but valid transfer\n    const fidelity = (1 + Math.abs(corrRB)) / 2;\n    const inverted = corrRB < 0; // γ<0 causes channel inversion\n\n    // θ-phase channel quality\n    const thetaChannel = this.pearsonCorr(aliceR, bobG);\n\n    // R→B transfer coefficient\n    const rbCorr = this.pearsonCorr(\n      states.map(s => s.r / 255),\n      bobB\n    );\n\n    this.log(`Fidelity R→B: ${fidelity.toFixed(3)} (кв. предел 0.667)${inverted?",
+    "thislogkorrelyatsiya_inverted": "}`);\n    this.log(`Корреляция: ${corrRB.toFixed(3)}${inverted?",
+    "thislogkanal_rg_thislogtelepor": "}`);\n    this.log(`θ-канал (R→G): ${thetaChannel.toFixed(3)}`);\n    this.log(`Телепортация ${fidelity > 0.67 ? ",
+    "res_row0": "Fidelity",
+    "description_all": "Квантовая телепортация — оптический аналог.\n\n**Физический принцип:** Классическая модель на экране телефона с зеркалом и камерой. Цветовые каналы R и G играют роль «запутанной» Белл-пары: входное состояние Алисы кодируется яркостью красного канала, а зелёный канал выступает посредником связи.\n**Алгоритмическая суть:** На экран последовательно выводятся 4 «состояния» |0⟩,|1⟩,|+⟩,|−⟩ разной яркости красного, regionMeanRGB снимает средние R, G, B кадра. Считается корреляция Пирсона между входом Алисы (R) и выходом Боба (B); fidelity = |corrRB|, а корреляция R→G оценивает качество θ-канала. Отрицательная корреляция трактуется как инвертированный, но валидный перенос.\n**Аналогия:** Перенос «состояния» из одного цветового канала в другой имитирует телепортацию, где запутанность заменена цветовым мультиплексированием RGB.\n**Метрика:** Достоверность переноса fidelity = |corr(Alice R, Bob B)|; прохождение при fidelity > 0.5."
+  },
+  "en": {
+    "name": "Quantum Teleportation",
+    "description": "State teleportation simulation between the screen's color channels.",
+    "etap": "📡",
+    "kvantovaya_teleportatsiya": "Quantum teleportation...",
+    "teleport": "Teleport {var0}",
+    "s_output_const_corrrb_thispear": "s output\n    const corrRB = this.pearsonCorr(aliceR, bobB);\n    // Proper quantum fidelity: F = (1 + |r|) / 2 ∈ [0, 1]\n    // |r| because anti-correlation = inverted but valid transfer\n    const fidelity = (1 + Math.abs(corrRB)) / 2;\n    const inverted = corrRB < 0; // γ<0 causes channel inversion\n\n    // θ-phase channel quality\n    const thetaChannel = this.pearsonCorr(aliceR, bobG);\n\n    // R→B transfer coefficient\n    const rbCorr = this.pearsonCorr(\n      states.map(s => s.r / 255),\n      bobB\n    );\n\n    this.log(`Fidelity R→B: ${fidelity.toFixed(3)} (sq. limit 0.667)${inverted?",
+    "thislogkorrelyatsiya_inverted": "}`);\n    this.log(`Correlation: ${corrRB.toFixed(3)}${inverted?",
+    "thislogkanal_rg_thislogtelepor": "}`);\n    this.log(`θ-channel (R→G): ${thetaChannel.toFixed(3)}`);\n    this.log(`Teleportation ${fidelity > 0.67 ?",
+    "res_row0": "Fidelity",
+    "description_all": "Quantum teleportation — optical analog.\n\n**Physical principle:** A classical model on a phone screen with mirror and camera. The R and G color channels play the role of an 'entangled' Bell pair: Alice's input state is encoded in the brightness of the red channel, while the green channel acts as the link mediator.\n**Algorithmic essence:** Four 'states' |0⟩, |1⟩, |+⟩, |−⟩ of differing red brightness are shown in turn, and regionMeanRGB reads the frame's mean R, G, B. The Pearson correlation between Alice's input (R) and Bob's output (B) is computed; fidelity = |corrRB|, while the R→G correlation gauges the θ-channel quality. A negative correlation is treated as an inverted but valid transfer.\n**Analogy:** Carrying a 'state' from one color channel to another mimics teleportation, with entanglement replaced by RGB color multiplexing.\n**Metric:** Transfer fidelity = |corr(Alice R, Bob B)|; passes when fidelity > 0.5."
+  },
+  "mirrorless": false
+}

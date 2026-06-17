@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Сгруппированное внимание (GQA)",
+    "description": "Параллельное вычисление Attention голов через RGB-мультиплексирование.",
+    "etap": "🔀",
+    "gqa_token": "GQA токен {var0}",
+    "gqa": "GQA {var0}",
+    "gqa_rabotaet": "✅ GQA работает!",
+    "chastichnaya_gqa": "⚠️ Частичная GQA",
+    "gqa_ne_rabotaet": "❌ GQA не работает",
+    "res_row0": "Q-голова R",
+    "description_all": "Цветовое Grouped Query Attention (GQA).\n\n**Физический принцип:** Байеровский фильтр камеры аппаратно разделяет красный и зелёный каналы, что позволяет одновременно передавать два независимых потока через один оптический канал.\n**Алгоритмическая суть:** Для 3 токенов экран рисует Key-веса в красном канале и V-веса (сдвинутые) в зелёном. Камера считывает R- и G-каналы как две Q-головы, после вычитания фона и нормировки берётся argmax каждой головы и сверяется с ожидаемым выбором токена; считается корреляция KV.\n**Аналогия:** Цветные светофильтры передают два независимых потока внимания нейросети параллельно по одному физическому каналу.\n**Метрика:** Сумма совпадений R-головы и G-головы (по 3 токена каждая); прохождение при headR_match + headG_match ≥ 3 из 6."
+  },
+  "en": {
+    "name": "Grouped-Query Attention (GQA)",
+    "description": "Parallel computation of Attention heads via RGB multiplexing.",
+    "etap": "🔀",
+    "gqa_token": "GQA token {var0}",
+    "gqa": "GQA {var0}",
+    "gqa_rabotaet": "✅ GQA works!",
+    "chastichnaya_gqa": "⚠️ Partial GQA",
+    "gqa_ne_rabotaet": "❌ GQA doesn't work",
+    "res_row0": "Q-head R",
+    "description_all": "Color Grouped Query Attention (GQA).\n\n**Physical principle:** The camera's Bayer filter separates the red and green channels in hardware, letting two independent streams travel through one optical channel at once.\n**Algorithmic essence:** For 3 tokens the screen paints Key weights in the red channel and (shifted) V weights in the green channel. The camera reads the R and G channels as two Q-heads; after baseline subtraction and normalization, each head's argmax is compared against the expected token selection, and KV correlation is computed.\n**Analogy:** Color filters carry two independent attention streams of the network in parallel over a single physical channel.\n**Metric:** Sum of R-head and G-head matches (3 tokens each); passes when headR_match + headG_match ≥ 3 of 6."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,101 @@
+{
+  "default": "xiaomi_12lite",
+  "devices": {
+    "xiaomi_12lite": {
+      "name": "Xiaomi 12 Lite",
+      "oled_pitch_um": 63.2,
+      "sensor_pitch_um": 0.8,
+      "recommended_dist_mm": 37.0
+    },
+    "iphone_16promax": {
+      "name": "iPhone 16 Pro Max",
+      "oled_pitch_um": 55.2,
+      "sensor_pitch_um": 1.0,
+      "recommended_dist_mm": 28.7
+    },
+    "iphone_15pro": {
+      "name": "iPhone 15 Pro",
+      "oled_pitch_um": 55.2,
+      "sensor_pitch_um": 1.0,
+      "recommended_dist_mm": 28.7
+    },
+    "iphone_14pro": {
+      "name": "iPhone 14 Pro",
+      "oled_pitch_um": 55.2,
+      "sensor_pitch_um": 1.0,
+      "recommended_dist_mm": 28.7
+    },
+    "samsung_s25ultra": {
+      "name": "Samsung Galaxy S25 Ultra",
+      "oled_pitch_um": 51.0,
+      "sensor_pitch_um": 1.12,
+      "recommended_dist_mm": 24.5
+    },
+    "samsung_s24ultra": {
+      "name": "Samsung Galaxy S24 Ultra",
+      "oled_pitch_um": 50.3,
+      "sensor_pitch_um": 1.12,
+      "recommended_dist_mm": 23.9
+    },
+    "samsung_s23": {
+      "name": "Samsung Galaxy S23",
+      "oled_pitch_um": 59.8,
+      "sensor_pitch_um": 1.12,
+      "recommended_dist_mm": 33.7
+    },
+    "google_pixel9proxl": {
+      "name": "Google Pixel 9 Pro XL",
+      "oled_pitch_um": 52.3,
+      "sensor_pitch_um": 0.7,
+      "recommended_dist_mm": 25.8
+    },
+    "google_pixel8pro": {
+      "name": "Google Pixel 8 Pro",
+      "oled_pitch_um": 51.9,
+      "sensor_pitch_um": 1.22,
+      "recommended_dist_mm": 25.4
+    },
+    "google_pixel7": {
+      "name": "Google Pixel 7",
+      "oled_pitch_um": 61.1,
+      "sensor_pitch_um": 1.22,
+      "recommended_dist_mm": 35.2
+    },
+    "honor_magic7pro": {
+      "name": "Honor Magic 7 Pro",
+      "oled_pitch_um": 56.1,
+      "sensor_pitch_um": 0.6,
+      "recommended_dist_mm": 29.7
+    },
+    "xiaomi_15pro": {
+      "name": "Xiaomi 15 Pro",
+      "oled_pitch_um": 48.7,
+      "sensor_pitch_um": 0.7,
+      "recommended_dist_mm": 22.4
+    },
+    "xiaomi_14pro": {
+      "name": "Xiaomi 14 Pro",
+      "oled_pitch_um": 48.7,
+      "sensor_pitch_um": 0.7,
+      "recommended_dist_mm": 22.4
+    },
+    "oukitel_k10000pro": {
+      "name": "Oukitel K10000 Pro",
+      "oled_pitch_um": 63.3,
+      "sensor_pitch_um": 1.12,
+      "recommended_dist_mm": 37.8
+    },
+    "xiaomi_11t": {
+      "name": "Xiaomi 11T",
+      "oled_pitch_um": 64.4,
+      "sensor_pitch_um": 0.7,
+      "recommended_dist_mm": 38.0
+    },
+    "xiaomi_redminote14pro4g": {
+      "name": "Xiaomi Redmi Note 14 Pro 4G",
+      "oled_pitch_um": 64.3,
+      "sensor_pitch_um": 0.7,
+      "recommended_dist_mm": 38.0
+    }
+  }
+}

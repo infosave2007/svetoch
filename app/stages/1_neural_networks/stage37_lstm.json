@@ -1,0 +1,31 @@
+{
+  "ru": {
+    "name": "Память LSTM (послесвечение OLED)",
+    "description": "Оптическая эмуляция вентилей памяти рекуррентной нейросети.",
+    "etap": "🧠",
+    "a_goriz": "A (гориз.)",
+    "b_vertik": "B (вертик.)",
+    "c_diag": "C (диаг.)",
+    "bystryy": "Быстрый",
+    "sredniy": "Средний",
+    "medlennyy": "Медленный",
+    "rezhim_tms": "--- {var0} режим (Δt={var1}ms) ---",
+    "res_row0": "Персистентность",
+    "description_all": "Оптическая LSTM память.\n\n**Физический принцип:** Послесвечение OLED-пикселей и инерция тракта «экран→камера» физически удерживают остаточный образ после погасания экрана, играя роль ячейки памяти с забыванием (forget gate).\n**Алгоритмическая суть:** На трёх скоростях (Δt=50/200/1000 мс) последовательно показываются 3 ортогональных паттерна (горизонтальные, вертикальные, диагональные полосы). Затем экран гасится в чёрный, и через 0/50/100/200/400 мс камера снимает кадры; спектральный отпечаток (spatialFingerprint) каждого кадра коррелируется с тремя эталонами. По спаду корреляции последнего паттерна оценивается персистентность и постоянная времени памяти τ (по уровню 1/e).\n**Аналогия:** Ячейка LSTM, хранящая скрытое состояние не в конденсаторах, а в затухающем послесвечении света, которое со временем «забывается».\n**Метрика:** Персистентность (|corr| последнего паттерна сразу после погасания) и τ; прохождение при persistence > 0.1, хронологическом порядке и τ > 30 мс."
+  },
+  "en": {
+    "name": "LSTM Memory (OLED Afterglow)",
+    "description": "Optical emulation of the memory gates of a recurrent neural network.",
+    "etap": "🧠",
+    "a_goriz": "A (horizontal)",
+    "b_vertik": "B (vertical)",
+    "c_diag": "C (diag.)",
+    "bystryy": "Fast",
+    "sredniy": "Medium",
+    "medlennyy": "Slow",
+    "rezhim_tms": "--- {var0} mode (Δt={var1}ms) ---",
+    "res_row0": "Persistence",
+    "description_all": "Optical LSTM memory.\n\n**Physical principle:** The afterglow of OLED pixels and the latency of the \"screen→camera\" path physically hold a residual image after the screen goes dark, acting as a memory cell with a forget gate.\n**Algorithmic essence:** At three speeds (Δt=50/200/1000 ms) three orthogonal patterns (horizontal, vertical, diagonal stripes) are shown in sequence. The screen then goes black, and at 0/50/100/200/400 ms the camera captures frames; the spatial fingerprint of each frame is correlated against the three references. From the decay of the last pattern's correlation, the persistence and the memory time constant τ (at the 1/e level) are estimated.\n**Analogy:** An LSTM cell that stores its hidden state not in capacitors but in the fading afterglow of light, which is \"forgotten\" over time.\n**Metric:** Persistence (|corr| of the last pattern right after blackout) and τ; passes when persistence > 0.1, the order is chronological, and τ > 30 ms."
+  },
+  "mirrorless": false
+}

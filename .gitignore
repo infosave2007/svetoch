@@ -1,0 +1,21 @@
+# Self-signed TLS material — generated at runtime, never commit
+app/cert.pem
+app/key.pem
+
+# Runtime / generated
+app/server.log
+logs/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

@@ -1,0 +1,37 @@
+{
+  "ru": {
+    "name": "Суперпозиция амплитуд (ψ)",
+    "description": "Аппаратная проверка линейности сложения оптических амплитуд.",
+    "etap": "⚛️",
+    "superpozitsiya": "ψ-Суперпозиция...",
+    "a_poloski_faza": "ψ_A: полоски фаза=0",
+    "b_poloski_faza": "ψ_B: полоски фаза=π/2",
+    "ab_superpozitsiya": "ψ_A+ψ_B: суперпозиция",
+    "klassich_izmer": "Классич: {var0}, Измер: {var1}",
+    "interf_otkl_vidnost": "Интерф. откл: {var0}%, Видность: {var1}",
+    "superpozitsiya_1": "Суперпозиция {var0}",
+    "interferentsiya": "✅ ψ-интерференция!",
+    "slabaya_interferentsiya": "⚠️ Слабая интерференция",
+    "klassicheskoe_slozhenie": "❌ Классическое сложение",
+    "res_row0": "Интерференция |ψ_A+ψ_B|²",
+    "description_all": "Суперпозиция световых волн.\n\n**Физический принцип:** (С зеркалом). На экран выводятся два синусоидальных паттерна полос — ψ_A (фаза 0) и ψ_B (фаза π/2) — а затем их суперпозиция (ψ_A+ψ_B)/2 при 50% интенсивности каждого.\n**Алгоритмическая суть:** Камера замеряет среднюю яркость каждого паттерна и сравнивает яркость суммы I(A+B) с классическим ожиданием (I_A+I_B)/2. Считаются относительное отклонение от классики в % и видность V=(I_max−I_min)/(I_max+I_min) по горизонтальному профилю.\n**Аналогия:** Экспериментальное наблюдение того, что два паттерна света из экрана складываются на матрице как классические оптические амплитуды.\n**Метрика:** Суперпозиция подтверждена при относительном отклонении dev > 3%; отображается dev в процентах."
+  },
+  "en": {
+    "name": "Amplitude Superposition (ψ)",
+    "description": "Hardware test of the linearity of optical amplitude addition.",
+    "etap": "⚛️",
+    "superpozitsiya": "ψ-Superposition...",
+    "a_poloski_faza": "ψ_A: stripes phase=0",
+    "b_poloski_faza": "ψ_B: stripes phase=π/2",
+    "ab_superpozitsiya": "ψ_A+ψ_B: superposition",
+    "klassich_izmer": "Classic: {var0}, Measured: {var1}",
+    "interf_otkl_vidnost": "Interf. dev: {var0}%, Visibility: {var1}",
+    "superpozitsiya_1": "Superposition {var0}",
+    "interferentsiya": "✅ ψ interference!",
+    "slabaya_interferentsiya": "⚠️ Weak interference",
+    "klassicheskoe_slozhenie": "❌ Classic addition",
+    "res_row0": "Interference |ψ_A+ψ_B|²",
+    "description_all": "Superposition of light waves.\n\n**Physical principle:** (With mirror). The screen shows two sinusoidal stripe patterns — ψ_A (phase 0) and ψ_B (phase π/2) — then their superposition (ψ_A+ψ_B)/2 at 50% intensity each.\n**Algorithmic essence:** The camera measures the mean brightness of each pattern and compares the brightness of the sum I(A+B) against the classical expectation (I_A+I_B)/2. It computes the relative deviation from classical in %, and visibility V=(I_max−I_min)/(I_max+I_min) from the horizontal profile.\n**Analogy:** An experimental observation that two screen-light patterns add on the sensor like classical optical amplitudes.\n**Metric:** Superposition is confirmed when the relative deviation dev > 3%; the reported quantity is dev in percent."
+  },
+  "mirrorless": false
+}

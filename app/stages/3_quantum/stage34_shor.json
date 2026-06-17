@@ -1,0 +1,31 @@
+{
+  "ru": {
+    "name": "Алгоритм Шора (факторизация)",
+    "description": "Поиск множителей числа через пространственно-частотный анализ.",
+    "etap": "🔓",
+    "shor_faktorizatsiya_a": "Shor: факторизация {var0}, a={var1}",
+    "posledovatelnost_ax_mod": "  Последовательность a^x mod {var0}: [{var1}]",
+    "naydeno_po_piku_k_r": "  Найдено по пику k={var0} (r={var1}): {var2} = {var3} × {var4} ✓",
+    "pik_na_k_effective_period_r": "  Пик на k={var0} (effective={var1}) → период r={var2}",
+    "shor": "Shor {var0}",
+    "naydeno": "✅ 15=3×5 найдено!",
+    "faktorizatsiya_ne_udalas": "❌ Факторизация не удалась",
+    "res_row0": "Факторизация 15",
+    "description_all": "Алгоритм Шора (оптический аналог, N=15).\n\n**Физический принцип:** (С зеркалом). Оптическое выявление скрытых пространственных периодов через захват и спектральный анализ яркостной решётки. Это классическая модель на экране телефона и камере, а не настоящий квантовый процессор.\n**Алгоритмическая суть:** Последовательность 7^x mod 15 (период r=4) выводится как 8 контрастных столбцов яркости. Камера снимает кадр (captureStable), измеряет 8 бинов (measureNBins), вычитается линейный тренд (детрендинг от виньетирования), затем по 8 бинам считается дискретное преобразование Фурье. По пику |QFT| (ожидаемо k=2) определяется период r, и факторы ищутся как gcd(7^(r/2)±1, 15).\n**Аналогия:** Превращение задачи факторизации в задачу поиска полосатого узора на фотографии.\n**Метрика:** Успех (check) — корректная факторизация correctFactors, то есть 15 = 3 × 5; метрика выводит найденный период r."
+  },
+  "en": {
+    "name": "Shor's Algorithm (Factoring)",
+    "description": "Finding factors of a number via spatial-frequency analysis.",
+    "etap": "🔓",
+    "shor_faktorizatsiya_a": "Shor: factorization {var0}, a={var1}",
+    "posledovatelnost_ax_mod": "Sequence a^x mod {var0}: [{var1}]",
+    "naydeno_po_piku_k_r": "Found from peak k={var0} (r={var1}): {var2} = {var3} × {var4} ✓",
+    "pik_na_k_effective_period_r": "Peak at k={var0} (effective={var1}) → period r={var2}",
+    "shor": "Shor {var0}",
+    "naydeno": "✅ 15=3×5 found!",
+    "faktorizatsiya_ne_udalas": "❌ Factorization failed",
+    "res_row0": "Factorization of 15",
+    "description_all": "Shor's Algorithm (optical analog, N=15).\n\n**Physical principle:** (With mirror). Optical detection of hidden spatial periods by capturing and spectrally analyzing a brightness grating. This is a classical model on a phone screen and camera, not a real quantum processor.\n**Algorithmic essence:** The sequence 7^x mod 15 (period r=4) is shown as 8 high-contrast brightness columns. The camera captures a frame (captureStable), measures 8 bins (measureNBins), a linear trend is subtracted (detrending against vignetting), then a discrete Fourier transform is computed over the 8 bins. From the |QFT| peak (expected k=2) the period r is found, and factors are extracted as gcd(7^(r/2)±1, 15).\n**Analogy:** Turning factorization into finding a striped pattern in a photo.\n**Metric:** Pass (check) requires correct factorization correctFactors, i.e. 15 = 3 × 5; the metric reports the found period r."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Космологический отскок (Big Bounce)",
+    "description": "Симуляция космологического отскока (модифицированное уравнение Фридмана).",
+    "etap": "🌌",
+    "nvg_bounce_modifitsirovannyy_f": "NVG Bounce: модифицированный Фридман...",
+    "fridman_h_g_c": "  Фридман: H² = (8πG/3)·ρ·(1 - ρ/ρ_c)",
+    "bauns_amin_shagov": "  Баунс: a_min = 0.3, {var0} шагов",
+    "baunstochka_t_centerdist": "  Баунс-точка: t[{var0}], center_dist={var1}",
+    "simmetriya": "  Симметрия: {var0}%",
+    "korrelyatsiya_atteoriya": "  Корреляция a(t)↔теория: {var0}",
+    "nvg_bauns": "NVG Баунс {var0}",
+    "description_all": "Космологический отскок (Big Bounce).\n\n**Физический принцип:** (С зеркалом). Модифицированное уравнение Фридмана H²=(8πG/3)·ρ·(1−ρ/ρ_c) даёт не сингулярность, а минимальный масштабный фактор: Вселенная «сжимается» до a_min и снова расширяется. Это оптическая визуализация, а не реальная космология.\n**Алгоритмическая суть:** Профиль a(t)=a_min+(1−a_min)·t² (a_min=0.3) на 16 шагах кодируется яркостью экрана. Камера измеряет калиброванную яркость каждого уровня, нормирует к [0,1] и проверяет: положение минимума (V-образность), симметрию левой/правой ветвей и корреляцию Пирсона измеренного a(t) с теорией.\n**Аналогия:** Оптический «вдох-выдох» Вселенной: яркость гаснет к моменту отскока и снова разгорается.\n**Метрика:** Отскок засчитан при corr > 0.8, V-образной форме (центр-дист < 0.3) и симметрии > 0.5; отображается corr."
+  },
+  "en": {
+    "name": "Cosmological Big Bounce",
+    "description": "Simulation of a cosmological bounce (modified Friedmann equation).",
+    "etap": "🌌",
+    "nvg_bounce_modifitsirovannyy_f": "NVG Bounce: Modified Friedman...",
+    "fridman_h_g_c": "Friedman: H² = (8πG/3) ρ (1 - ρ/ρ_c)",
+    "bauns_amin_shagov": "Bounce: a_min = 0.3, {var0} steps",
+    "baunstochka_t_centerdist": "Bounce point: t[{var0}], center_dist={var1}",
+    "simmetriya": "Symmetry: {var0}%",
+    "korrelyatsiya_atteoriya": "Correlation a(t)↔theory: {var0}",
+    "nvg_bauns": "NVG Bounce {var0}",
+    "description_all": "Cosmological bounce (Big Bounce).\n\n**Physical principle:** (With mirror). The modified Friedmann equation H²=(8πG/3)·ρ·(1−ρ/ρ_c) yields a minimal scale factor instead of a singularity: the universe 'contracts' to a_min and re-expands. This is an optical visualization, not real cosmology.\n**Algorithmic essence:** The profile a(t)=a_min+(1−a_min)·t² (a_min=0.3) over 16 steps is encoded as screen brightness. The camera measures the calibrated brightness of each level, normalizes to [0,1], and checks: the position of the minimum (V-shape), left/right branch symmetry, and the Pearson correlation of the measured a(t) with theory.\n**Analogy:** An optical 'breath' of the universe: brightness dims toward the bounce and brightens again.\n**Metric:** The bounce is counted when corr > 0.8, the shape is V-like (center-dist < 0.3), and symmetry > 0.5; the reported quantity is corr."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Анализатор биожидкостей",
+    "description": "Медицинский анализ (моча, кровь, слюна).",
+    "etap": "🩺",
+    "analyzing_bio": "Био-анализ...",
+    "liquid_res": "Диагноз: {var0}",
+    "rezonans_nayden": "✅ Анализ завершен!",
+    "slabyy_rezonans": "⚠️ Ошибка анализа",
+    "net_rezonansa": "❌ Нет капли",
+    "res_row0": "Оценка плотности",
+    "description_all": "Клинический Смартфон-Рефрактометр.\n\n**Важно (Гигиена):** Наклейте на фронтальную камеру кусочек прозрачного канцелярского скотча или отрезок пищевой плёнки и капните биожидкость на плёнку.\n\n**Физический принцип:** Колориметрия плюс дисперсионная рефрактометрия. Пигмент жидкости задаёт спектр поглощения (гемоглобин, уробилин), а её плотность — хроматическую дисперсию (число Аббе), не зависящую от размера капли.\n**Алгоритмическая суть:** Фаза 1 — белая вспышка экрана, камера измеряет средние R/G/B в центральном круге и классифицирует жидкость как Кровь, Моча или Слюна по относительному поглощению пигмента. Фаза 2 — спекл-паттерн, и в течение 8 с считается индекс дисперсии D = Cr / Cb с поправкой на термодрейф. Фаза 3 — по типу жидкости и D ставится диагноз: для мочи рассчитывается удельный вес (SG) и уровень гидратации, для крови — уровень плазменных белков, для слюны — осмоляльность.\n**Аналогия:** Карманная клиническая лаборатория, заменяющая тест-полоски и рефрактометр оптикой смартфона.\n**Метрика:** Термокомпенсированный индекс дисперсии D = Cr / Cb (плюс производный SG для мочи). При D<0.975 — нет жидкости/воздух; иначе этап зачётный (pass=true)."
+  },
+  "en": {
+    "name": "Bio-Fluid Analyzer",
+    "description": "Medical analysis (urine, blood, saliva).",
+    "etap": "🩺",
+    "analyzing_bio": "Bio-analysis...",
+    "liquid_res": "Diagnosis: {var0}",
+    "rezonans_nayden": "✅ Analysis complete!",
+    "slabyy_rezonans": "⚠️ Analysis error",
+    "net_rezonansa": "❌ No drop",
+    "res_row0": "Density Estimate",
+    "description_all": "Clinical Smartphone Refractometer.\n\n**Important (Hygiene):** Place a piece of transparent tape or plastic wrap over the front camera and put the biological fluid drop on the film.\n\n**Physical principle:** Colorimetry plus dispersive refractometry. The fluid's pigment sets its absorption spectrum (hemoglobin, urobilin), while its density sets the chromatic dispersion (Abbe number), which is independent of drop size.\n**Algorithmic essence:** Phase 1 — a white screen flash, the camera measures mean R/G/B in a central disc and classifies the fluid as Blood, Urine or Saliva from relative pigment absorption. Phase 2 — a speckle pattern, and over 8 s the dispersion index D = Cr / Cb is computed with a thermal-drift correction. Phase 3 — from fluid type and D a diagnosis is made: for urine the Specific Gravity (SG) and hydration level are derived, for blood the plasma-protein level, for saliva the osmolality.\n**Analogy:** A pocket clinical lab that replaces test strips and a bench refractometer with the smartphone's optics.\n**Metric:** Thermally-corrected dispersion index D = Cr / Cb (plus derived SG for urine). D<0.975 means no fluid/air; otherwise the stage passes (pass=true)."
+  },
+  "mirrorless": true
+}

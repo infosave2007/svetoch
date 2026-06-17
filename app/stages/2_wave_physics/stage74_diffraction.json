@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "Дифракция на одиночной щели",
+    "description": "Аппаратная фиксация дифракции света от узкой щели на экране.",
+    "etap": "🎯",
+    "diff_start": "Дифракция Фраунгофера...",
+    "diff_single": "Одна щель: sinc²(πax/λ)...",
+    "diff_double": "Двойная щель Юнга...",
+    "res_row0": "sinc² correlation",
+    "res_row1": "Young fringes",
+    "description_all": "Дифракция Фраунгофера: профиль sinc² и опыт Юнга.\n\n**Физический принцип:** (С зеркалом). Дифракция на одиночной щели в дальней зоне даёт распределение интенсивности I=sinc²(πa·sinθ/λ) — это фурье-образ апертуры; две щели добавляют множитель cos² (интерференция Юнга).\n**Алгоритмическая суть:** Профиль sinc² (для щелей шириной 0.3/0.2/0.1) и профиль Юнга sinc²·cos² рассчитываются на CPU и выводятся как яркость 40 столбцов экрана. Камера снимает картину, усредняет по 40 бинам, нормирует и считает корреляцию Пирсона с эталоном; дополнительно проверяется максимум в центре и число интерференционных полос Юнга.\n**Аналогия:** Демонстрация волновой природы света и связи дифракции с преобразованием Фурье без лазера — только экраном, зеркалом и камерой.\n**Метрика:** Средняя корреляция sinc²-профиля; зачёт при avgCorr > 0.5."
+  },
+  "en": {
+    "name": "Single-Slit Diffraction",
+    "description": "Hardware capture of light diffraction from a narrow slit on the screen.",
+    "etap": "🎯",
+    "diff_start": "Fraunhofer diffraction...",
+    "diff_single": "Single slit: sinc²(πax/λ)...",
+    "diff_double": "Young's double slit...",
+    "res_row0": "sinc² correlation",
+    "res_row1": "Young fringes",
+    "description_all": "Fraunhofer diffraction: sinc² profile and Young's experiment.\n\n**Physical principle:** (With mirror). Single-slit diffraction in the far field gives intensity I=sinc²(πa·sinθ/λ) — the Fourier transform of the aperture; two slits add a cos² interference factor (Young's pattern).\n**Algorithmic essence:** The sinc² profile (for slit widths 0.3/0.2/0.1) and the Young sinc²·cos² profile are computed on CPU and displayed as the brightness of 40 screen columns. The camera captures the pattern, averages into 40 bins, normalizes, and computes the Pearson correlation with the reference; it also checks that the center is a maximum and counts Young interference fringes.\n**Analogy:** A laser-free demonstration of the wave nature of light and the diffraction–Fourier connection — using only a screen, mirror, and camera.\n**Metric:** Mean correlation of the sinc² profile; passes when avgCorr > 0.5."
+  },
+  "mirrorless": false
+}

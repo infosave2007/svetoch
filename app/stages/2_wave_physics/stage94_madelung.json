@@ -1,0 +1,21 @@
+{
+  "ru": {
+    "name": "🔀 Двухщелевая интерференция Маделунга",
+    "description": "Эмуляция гидродинамики квантовых жидкостей (уравнения Маделунга) через конвекцию.",
+    "madelung_start": "Старт двухщелевой интерференции Маделунга",
+    "measuring_profile": "Измерение конвективного профиля плотности...",
+    "success": "Интерференционная картина подтверждена. Корреляция с теорией r = {var0}",
+    "fail": "Ошибка анализа: интерференционный профиль размыт или утерян в шуме",
+    "description_all": "Двухщелевая интерференция Маделунга (корреляция профиля).\n\n**Физический принцип:** (Без зеркала). Уравнение Шредингера представимо как течение квантовой жидкости (формализм Маделунга); двухщелевая интерференционная картина — её наблюдаемая плотность вероятности.\n**Алгоритмическая суть:** Экран рисует теоретический профиль I(x) = cos²(5πx)·sinc²(1.35πx). Камера снимает кадр и извлекает горизонтальный и вертикальный профили яркости, после чего перебором масштаба, сдвига и гауссова размытия ищется максимум коэффициента корреляции Пирсона между измеренным и эталонным профилем.\n**Аналогия:** Визуализация абстрактной волновой функции как реальной, измеряемой интерференционной полосчатости.\n**Метрика:** Коэффициент корреляции r с двухщелевым профилем. Зачёт при r > 0.75."
+  },
+  "en": {
+    "name": "🔀 Madelung Double-Slit Interference",
+    "description": "Emulation of quantum fluid hydrodynamics (Madelung equations) via convection.",
+    "madelung_start": "Starting Madelung double-slit interference",
+    "measuring_profile": "Measuring convective density profile...",
+    "success": "Interference pattern confirmed. Correlation with theory r = {var0}",
+    "fail": "Analysis error: interference profile blurred or lost in noise",
+    "description_all": "Madelung Double-Slit Interference (profile correlation).\n\n**Physical principle:** (Mirrorless). The Schrödinger equation can be formulated as a quantum-fluid flow (Madelung formalism); the double-slit interference pattern is its observable probability density.\n**Algorithmic essence:** The screen draws the theoretical profile I(x) = cos²(5πx)·sinc²(1.35πx). The camera captures a frame and extracts horizontal and vertical brightness profiles, then searches over scale, translation offset and Gaussian blur to find the maximum Pearson correlation between the measured and reference profiles.\n**Analogy:** Rendering the abstract wave function as a real, measurable interference fringe pattern.\n**Metric:** Correlation coefficient r against the double-slit profile. Pass when r > 0.75."
+  },
+  "mirrorless": true
+}

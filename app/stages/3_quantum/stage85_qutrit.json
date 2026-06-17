@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "🌡️ Эмулятор кутрита",
+    "description": "Эмуляция кутрита (трехзначной логики) через анализ хиральности термооптического вихря.",
+    "qutrit_start": "Эмуляция кутрита: считывание фазовых состояний",
+    "state0": "Состояние |0⟩: чистое линзирование (l = 0)",
+    "state1": "Состояние |1⟩: левовинтовая закрутка (l = +1)",
+    "state2": "Состояние |2⟩: правовинтовая закрутка (l = -1)",
+    "success": "Эмулятор кутрита функционирует корректно: состояния разделимы",
+    "fail": "Ошибка эмуляции: высокий уровень шума или перекрытие состояний",
+    "description_all": "Трёхуровневый эмулятор кутрита (термооптический аналог).\n\n**Физический принцип:** (Без зеркала). На экране выводятся спиральные вихревые паттерны с заданной хиральностью (l=0,+1,−1), индуцирующие термоконвективный вихрь над дисплеем; это классическая термооптика, а не настоящий кутрит.\n**Алгоритмическая суть:** Для каждого из трёх состояний выводится паттерн (чистая линза |0⟩, лево/право-винтовые вихри |1⟩/|2⟩), затем поверх — шахматная решётка-эталон. Камера снимает кадры (captureStable) и блочным сопоставлением (SAD-оптический поток, measureShiftVector) меряет поле сдвигов BOS в четырёх центральных квадрантах; из него считается ротор curl = top.dx + right.dy − bottom.dx − left.dy для каждого состояния. Проверяется порядок curl[1] > curl[0] > curl[2] и разделимость состояний относительно шума.\n**Аналогия:** Трёхуровневый логический элемент, где «цифра» задаётся направлением закрутки тёплого воздуха.\n**Метрика:** Разделение состояний Δ = |curl₁ − curl₂| (px) и его значимость в σ; успех (check) — pass, то есть верный порядок curl и Δ > 2·noiseSigma."
+  },
+  "en": {
+    "name": "🌡️ Qutrit Emulator",
+    "description": "Emulation of a qutrit (ternary logic) via chirality analysis of a thermo-optic vortex.",
+    "qutrit_start": "Qutrit emulation: reading phase states",
+    "state0": "State |0⟩: pure lensing (l = 0)",
+    "state1": "State |1⟩: left-handed spiral (l = +1)",
+    "state2": "State |2⟩: right-handed spiral (l = -1)",
+    "success": "Qutrit emulator is functioning: states are separable",
+    "fail": "Emulation error: high noise or state overlap",
+    "description_all": "Three-State Qutrit Emulator (thermo-optical analog).\n\n**Physical principle:** (Mirrorless). The screen shows spiral vortex patterns with a defined chirality (l=0,+1,−1), inducing a thermo-convective vortex above the display; this is classical thermo-optics, not a real qutrit.\n**Algorithmic essence:** For each of the three states a pattern is shown (a pure lens |0⟩, left/right-handed vortices |1⟩/|2⟩), then a reference checkerboard grid on top. The camera captures frames (captureStable) and, via block matching (SAD optical flow, measureShiftVector), measures the BOS displacement field in four central quadrants; from it the curl = top.dx + right.dy − bottom.dx − left.dy is computed for each state. The order curl[1] > curl[0] > curl[2] and the separability of states relative to noise are checked.\n**Analogy:** A three-level logic element where the \"digit\" is set by the swirl direction of warm air.\n**Metric:** State separation Δ = |curl₁ − curl₂| (px) and its significance in σ; pass (check) requires pass, i.e. correct curl order and Δ > 2·noiseSigma."
+  },
+  "mirrorless": true
+}

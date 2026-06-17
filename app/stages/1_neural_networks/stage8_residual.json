@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Остаточные связи (Residual)",
+    "description": "Оптическая эмуляция остаточных связей (Skip Connection).",
+    "etap": "➕",
+    "test": "Тест {var0}/{var1}: {var2}",
+    "superpozitsiya": "Суперпозиция {var0}",
+    "superpozitsiya_lineyna": "✅ Суперпозиция линейна!",
+    "chastichnaya_lineynost": "⚠️ Частичная линейность",
+    "superpozitsiya_nelineyna": "❌ Суперпозиция нелинейна",
+    "res_row0": "Суперпозиция R²",
+    "description_all": "Остаточные связи (Residual Connection).\n\n**Физический принцип:** (С зеркалом). Эмуляция skip-связи ResNet через линейность оптической суперпозиции: яркости двух сигналов A и B складываются на экран-камерном тракте.\n**Алгоритмическая суть:** Для 6 пар уровней (A, B) камера отдельно измеряет яркость A, яркость B и яркость объединённого A+B (нормировка по чёрному и белому). Затем строится линейная регрессия measured(A+B) ≈ α·(measured_A + measured_B) + β и оценивается коэффициент детерминации R², показывающий, насколько сумма откликов аддитивна.\n**Аналогия:** Отработка остаточной связи ResNet: проверка того, что оптический тракт складывает сигналы линейно, без потерь и искажений.\n**Метрика:** R² линейности суперпозиции (порог R² > 0.4)."
+  },
+  "en": {
+    "name": "Residual Connections",
+    "description": "Optical emulation of residual (skip) connections.",
+    "etap": "➕",
+    "test": "Test {var0}/{var1}: {var2}",
+    "superpozitsiya": "Superposition {var0}",
+    "superpozitsiya_lineyna": "✅ Superposition is linear!",
+    "chastichnaya_lineynost": "⚠️ Partial linearity",
+    "superpozitsiya_nelineyna": "❌ Superposition is nonlinear",
+    "res_row0": "Superposition R²",
+    "description_all": "Residual Connection.\n\n**Physical principle:** (With mirror). Emulating a ResNet skip connection through the linearity of optical superposition: the brightnesses of two signals A and B add up along the screen-to-camera path.\n**Algorithmic essence:** For 6 level pairs (A, B) the camera separately measures the brightness of A, of B, and of the combined A+B (black- and white-normalized). A linear regression measured(A+B) ≈ α·(measured_A + measured_B) + β is then fitted, and the coefficient of determination R² is reported, showing how additive the optical responses are.\n**Analogy:** Exercising the ResNet residual connection: verifying that the optical path adds signals linearly, without loss or distortion.\n**Metric:** R² of superposition linearity (pass threshold R² > 0.4)."
+  },
+  "mirrorless": false
+}

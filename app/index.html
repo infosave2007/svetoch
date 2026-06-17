@@ -1,0 +1,3084 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0a1a">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<link rel="manifest" href="manifest.json">
+<title>NVG PureField PoC v3</title>
+<style>
+:root {
+  --bg: #0a0a1a; --card: rgba(20,20,45,0.85); --border: rgba(100,120,255,0.15);
+  --text: #e8e8f0; --dim: #8888aa; --accent: #6366f1; --glow: rgba(99,102,241,0.3);
+  --ok: #22c55e; --warn: #f59e0b; --err: #ef4444; --cyan: #06b6d4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+body::before{content:'';position:fixed;inset:0;background:
+  radial-gradient(ellipse at 30% 20%,rgba(99,102,241,.08) 0%,transparent 50%),
+  radial-gradient(ellipse at 70% 80%,rgba(6,182,212,.06) 0%,transparent 50%);
+  pointer-events:none;z-index:0}
+
+.screen{display:none;position:relative;z-index:1;min-height:100vh;padding:20px;
+  animation:fadeIn .4s ease}
+.screen.active{display:flex;flex-direction:column}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:20px;margin-bottom:16px;backdrop-filter:blur(20px)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;border:none;border-radius:10px;font-size:16px;font-weight:600;
+  cursor:pointer;transition:all .2s;width:100%;margin-top:12px}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#818cf8);color:#fff;
+  box-shadow:0 4px 20px var(--glow)}
+.btn-primary:active{transform:scale(.97)}
+.btn-success{background:linear-gradient(135deg,#16a34a,var(--ok));color:#fff}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn:disabled{opacity:.4;pointer-events:none}
+.btn-sm{padding:8px 16px;font-size:13px;margin-top:8px}
+
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+h2{font-size:20px;font-weight:600;margin-bottom:12px;color:var(--cyan)}
+h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.sub{color:var(--dim);font-size:14px;line-height:1.6}
+.text-center{text-align:center}
+.mt-8{margin-top:8px}.mt-16{margin-top:16px}.mb-8{margin-bottom:8px}
+
+.logo{width:80px;height:80px;margin:40px auto 20px;
+  background:linear-gradient(135deg,var(--accent),var(--cyan));border-radius:24px;
+  display:flex;align-items:center;justify-content:center;font-size:36px;
+  box-shadow:0 8px 32px var(--glow);animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 8px 32px var(--glow)}
+  50%{box-shadow:0 8px 48px rgba(99,102,241,.5)}}
+
+.diagram{background:rgba(10,10,30,.8);border:1px solid var(--border);border-radius:10px;
+  padding:16px;font-family:monospace;font-size:12px;line-height:1.6;color:var(--dim);
+  white-space:pre;overflow-x:auto;margin:12px 0}
+
+/* Camera preview */
+.cam-wrap{width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;
+  background:#000;position:relative;margin:12px 0;border:2px solid var(--border)}
+.cam-wrap video{width:100%;height:100%;object-fit:cover}
+.cam-label{position:absolute;bottom:8px;left:8px;font-size:11px;
+  color:rgba(255,255,255,.8);background:rgba(0,0,0,.6);padding:4px 10px;border-radius:6px}
+.cam-ok{border-color:var(--ok)}
+
+/* Progress */
+.progress-bar{width:100%;height:6px;background:rgba(100,120,255,.1);
+  border-radius:3px;overflow:hidden;margin:12px 0}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--cyan));
+  border-radius:3px;transition:width .3s;width:0%}
+
+/* Countdown */
+.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+  flex-direction:column;z-index:100;background:var(--bg);text-align:center;padding:40px}
+.overlay.active{display:flex}
+.cd-num{font-size:120px;font-weight:800;color:var(--accent);
+  text-shadow:0 0 60px var(--glow);animation:cpulse 1s ease infinite}
+@keyframes cpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.cd-text{font-size:18px;color:var(--dim);margin-top:20px}
+
+/* Running */
+.run-info{margin-top:16px}
+.run-stage{font-size:24px;font-weight:700}
+.run-step{color:var(--dim);margin-top:8px}
+.run-log{margin-top:20px;text-align:left;font-family:monospace;font-size:12px;
+  color:var(--dim);max-height:200px;overflow-y:auto;line-height:1.8}
+.log-ok{color:var(--ok)}.log-warn{color:var(--warn)}.log-err{color:var(--err)}.log-dim{color:#888;font-style:italic;font-size:0.92em}
+
+/* Results */
+.result-row{display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid rgba(100,120,255,.08)}
+.result-row:last-child{border-bottom:none}
+.rv{font-weight:700;font-size:15px}
+.rv.ok{color:var(--ok)}.rv.warn{color:var(--warn)}.rv.bad{color:var(--err)}
+.badge{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:12px;
+  font-weight:600;margin-bottom:12px}
+.badge.cal{background:rgba(245,158,11,.15);color:var(--warn)}
+.badge.s1{background:rgba(6,182,212,.15);color:var(--cyan)}
+.badge.s2{background:rgba(99,102,241,.15);color:var(--accent)}
+.badge.s3{background:rgba(34,197,94,.15);color:var(--ok)}
+
+.grade{display:flex;align-items:center;justify-content:center;width:100%;padding:20px;
+  margin:12px 0;border-radius:16px;font-size:20px;font-weight:800}
+.grade.pass{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--ok)}
+.grade.partial{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:var(--warn)}
+.grade.fail{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:var(--err)}
+
+.chart-wrap{width:100%;height:140px;margin:12px 0}
+.chart-wrap canvas{width:100%;height:100%;border-radius:10px}
+
+/* Hidden */
+#cam-vid{position:fixed;top:0;left:0;width:100%;height:100%;opacity:0.001;pointer-events:none;z-index:-10}
+#cap-canvas{display:none}
+#exp-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;
+  width:100dvw;height:100dvh;z-index:200;display:none}
+body.pattern-active .screen,
+body.pattern-active .overlay {
+  display: none !important;
+}
+</style>
+</head>
+<body>
+
+<video id="cam-vid" autoplay playsinline muted></video>
+<canvas id="cap-canvas"></canvas>
+<canvas id="exp-canvas"></canvas>
+
+<!-- ═══ SCREEN 1: WELCOME ═══ -->
+<div id="s-welcome" class="screen active">
+  <div class="logo">⚡</div>
+  <h1 class="text-center">NVG PureField v3</h1>
+  <p class="sub text-center" id="welcome_sub">Optical Neurocomputing<br>Proof of Concept</p>
+
+  <div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-top:12px;margin-bottom:8px">
+    <button class="btn btn-outline btn-sm" onclick="app.setLang('ru')" style="padding:4px 8px;font-size:12px;cursor:pointer">RU 🇷🇺</button>
+    <button class="btn btn-outline btn-sm" onclick="app.setLang('en')" style="padding:4px 8px;font-size:12px;cursor:pointer">EN 🇬🇧</button>
+    <select id="device-select" onchange="app.setDevice(this.value)" style="padding:4px 8px;font-size:12px;cursor:pointer;background:var(--card-bg);color:var(--text);border:1px solid var(--border);border-radius:8px;outline:none;max-width:180px;"></select>
+  </div>
+
+  <div class="card mt-16">
+    <h3 id="welcome_needed_title">Requirements</h3>
+    <p class="sub" id="welcome_needed_list">✅ Xiaomi 12 Lite (this phone)<br>
+    🪞 Mirror ~10×10 cm<br>
+    📚 Stand 3.7 cm / 37 mm (books)</p>
+  </div>
+
+  <div class="card">
+    <h3 id="welcome_diagram_title">Setup Diagram</h3>
+    <div class="diagram" id="welcome_diagram_text">   ┌──────────────────────┐
+   │ [Camera]   Screen    │ ← Phone screen down ↓
+   └──────────────────────┘
+             │ 37 mm
+   ╔══════════════════════╗
+   ║      MIRROR          ║ ← on the table
+   ╚══════════════════════╝
+
+   Camera sees the REFLECTION of the screen</div>
+  </div>
+
+  <div class="card">
+    <h3 id="welcome_works_title">How it Works</h3>
+    <p class="sub" id="welcome_works_list">
+      1️⃣ <b>Setup</b> — check that the camera sees the mirror<br>
+      2️⃣ <b>Place phone</b> — screen down on the stand<br>
+      3️⃣ <b>Auto-calibration</b> — phone displays white/black/gray, captures reflections, calculates γ and DR<br>
+      4️⃣ <b>Tests</b> — strips, patterns, dot product<br>
+      5️⃣ <b>Results</b> — vibration, pick up, view results
+    </p>
+  </div>
+
+  <button class="btn btn-primary" id="welcome_start_btn" onclick="app.goSetup()">Start →</button>
+</div>
+
+<!-- ═══ SCREEN 2: SETUP (camera check, phone face UP) ═══ -->
+<div id="s-setup" class="screen">
+  <h2 id="setup_title">📷 Setup</h2>
+  <p class="sub mb-8" id="setup_sub">Hold the phone over the mirror. Make sure you see the reflection of the screen.</p>
+
+  <div class="card">
+    <h3 id="setup_cam_title">Camera (front)</h3>
+    <div class="cam-wrap" id="cam-wrapper">
+      <video id="preview-vid" autoplay playsinline muted></video>
+      <div class="cam-label" id="cam-info">Loading...</div>
+    </div>
+    <button class="btn btn-outline btn-sm" id="setup_cam_restart" onclick="app.retryCamera()">🔄 Restart Camera</button>
+  </div>
+
+  <div class="card">
+    <h3 id="setup_checklist_title">Checklist</h3>
+    <p class="sub" id="setup_checklist_list">
+      ⬜ Camera is working<br>
+      ⬜ Mirror / reflection visible<br>
+      ⬜ Distance 3-8 cm
+    </p>
+    <p class="sub mt-8" id="setup_checklist_warn" style="color:var(--warn)">⚠️ Calibration is NOT performed at this stage.<br>
+    Just make sure the setup is assembled correctly.</p>
+  </div>
+
+  <div class="card">
+    <h3 id="setup_next_title">What Happens Next</h3>
+    <p class="sub" id="setup_next_text">After pressing 'Start':<br>
+    — 5 sec countdown<br>
+    — <b>Place the phone screen down</b><br>
+    — Automatic calibration + tests (~30 sec)<br>
+    — Vibration = ready, pick it up</p>
+  </div>
+
+  <button class="btn btn-success" onclick="app.startRun()" id="setup_start_btn" disabled>
+    🚀 Start: Calibration + Tests
+  </button>
+  <button class="btn btn-outline" id="setup_back_btn" onclick="app.goTo('welcome')">← Back</button>
+</div>
+
+<!-- ═══ COUNTDOWN ═══ -->
+<div id="overlay-cd" class="overlay">
+  <div class="cd-num" id="cd-num">5</div>
+  <div class="cd-text" id="cd_text">Place the phone <b>screen down</b> on the mirror</div>
+</div>
+
+<!-- ═══ RUNNING (phone is face down, but shows status anyway) ═══ -->
+<div id="overlay-run" class="overlay">
+  <div class="run-info">
+    <div class="run-stage" id="run-stage">🔬 Calibration</div>
+    <div class="run-step" id="run-step">Preparing...</div>
+    <div class="progress-bar mt-16"><div class="progress-fill" id="run-bar"></div></div>
+    <div class="run-log" id="run-log"></div>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 3: RESULTS ═══ -->
+<div id="s-results" class="screen">
+  <h1 id="results-title">📊 Results</h1>
+  <p class="sub mb-8" id="res-time"></p>
+
+  <div class="card stage-card" id="card-stage-0">
+    <span class="badge cal" id="res-badge-cal">Optical Channel CALIBRATION</span>
+    <div class="result-row"><span id="res-cal-row0">White (OLED→mirror→camera)</span><span class="rv" id="rv-white">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-1">
+    <span class="badge s1" id="res-badge-s1">STAGE 1 — Channel</span>
+    <div class="result-row"><span id="res-s1-row0">Contrast of 32px stripes</span><span class="rv" id="rv-c32">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-2">
+    <span class="badge s2" id="res-badge-s2">STAGE 2 — DotProd</span>
+    <div class="result-row"><span id="res-s2-row0">Intensity corr. (10 tests)</span><span class="rv" id="rv-corr">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-3">
+    <span class="badge s3" id="res-badge-s3">STAGE 3 — MatVec</span>
+    <div class="result-row"><span id="res-s3-row0">MatVec correlation</span><span class="rv" id="rv-mvcorr">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-4">
+    <span class="badge s4" id="res-badge-s4" style="background:rgba(168,85,247,.15);color:#a855f7">STAGE 4 — Logic</span>
+    <div class="result-row"><span id="res-s4-row0">AND accuracy</span><span class="rv" id="rv-and-acc">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-5">
+    <span class="badge s5" id="res-badge-s5" style="background:rgba(236,72,153,.15);color:#ec4899">STAGE 5 — LLM</span>
+    <div class="result-row"><span id="res-s5-row0">Tokens matched</span><span class="rv" id="rv-llm-match">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-6">
+    <span class="badge s6" id="res-badge-s6" style="background:rgba(239,68,68,.15);color:#ef4444">STAGE 6 — RGB Attention</span>
+    <div class="result-row"><span id="res-s6-row0">R-channel isolation</span><span class="rv" id="rv-r-iso">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-7">
+    <span class="badge s7" id="res-badge-s7" style="background:rgba(16,185,129,.15);color:#10b981">STAGE 7 — SiLU Activation</span>
+    <div class="result-row"><span id="res-s7-row0">Correlation with SiLU</span><span class="rv" id="rv-silu-corr">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-8">
+    <span class="badge s8" id="res-badge-s8" style="background:rgba(245,158,11,.15);color:#f59e0b">STAGE 8 — Residual Connection</span>
+    <div class="result-row"><span id="res-s8-row0">Superposition R²</span><span class="rv" id="rv-res-r2">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-9">
+    <span class="badge s9" id="res-badge-s9" style="background:rgba(139,92,246,.15);color:#8b5cf6">STAGE 9 — Dropout Robustness</span>
+    <div class="result-row"><span id="res-s9-row0">Corr. at 10% dropout</span><span class="rv" id="rv-drop10">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-10">
+    <span class="badge s10" id="res-badge-s10" style="background:rgba(14,165,233,.15);color:#0ea5e9">STAGE 10 — 2-Layer MLP</span>
+    <div class="result-row"><span id="res-s10-row0">Layer 1 correlation</span><span class="rv" id="rv-mlp-l1">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-11">
+    <span class="badge s11" id="res-badge-s11" style="background:rgba(217,70,239,.15);color:#d946ef">STAGE 11 — Chromatic RoPE</span>
+    <div class="result-row"><span id="res-s11-row0">Phase shift R/G</span><span class="rv" id="rv-rope-rg">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-12">
+    <span class="badge s12" id="res-badge-s12" style="background:rgba(251,146,60,.15);color:#fb923c">STAGE 12 — Osmotic Softmax</span>
+    <div class="result-row"><span id="res-s12-row0">KL divergence</span><span class="rv" id="rv-sm-kl">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-13">
+    <span class="badge s13" id="res-badge-s13" style="background:rgba(168,85,247,.15);color:#a855f7">STAGE 13 — Grouped Query Attention</span>
+    <div class="result-row"><span id="res-s13-row0">Q-head R</span><span class="rv" id="rv-gqa-r">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-14">
+    <span class="badge s14" id="res-badge-s14" style="background:rgba(14,165,233,.15);color:#0ea5e9">STAGE 14 — Positional Encoding</span>
+    <div class="result-row"><span id="res-s14-row0">Orthogonality</span><span class="rv" id="rv-pe-orth">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-15">
+    <span class="badge s15" id="res-badge-s15" style="background:rgba(234,179,8,.15);color:#eab308">STAGE 15 — Fabry-Perot Resonance</span>
+    <div class="result-row"><span id="res-s15-row0">Contrast peak</span><span class="rv" id="rv-fp-peak">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-16">
+    <span class="badge s16" id="res-badge-s16" style="background:rgba(139,92,246,.15);color:#8b5cf6">STAGE 16 — ψ-Superposition</span>
+    <div class="result-row"><span id="res-s16-row0">Interference |ψ_A+ψ_B|²</span><span class="rv" id="rv-qs-interf">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-17">
+    <span class="badge s17" id="res-badge-s17" style="background:rgba(236,72,153,.15);color:#ec4899">STAGE 17 — VMF Coherence</span>
+    <div class="result-row"><span id="res-s17-row0">S (VMF) = 2√2·C</span><span class="rv" id="rv-bell-s">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-18">
+    <span class="badge s18" id="res-badge-s18" style="background:rgba(20,184,166,.15);color:#14b8a6">STAGE 18 — θ-Collapse</span>
+    <div class="result-row"><span id="res-s18-row0">τ_decoherence</span><span class="rv" id="rv-col-tau">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-19">
+    <span class="badge s19" id="res-badge-s19" style="background:rgba(124,58,237,.15);color:#7c3aed">STAGE 19 — Hadamard H</span>
+    <div class="result-row"><span id="res-s19-row0">|0⟩ → balance</span><span class="rv" id="rv-had-bal">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-20">
+    <span class="badge s20" id="res-badge-s20" style="background:rgba(217,70,239,.15);color:#d946ef">STAGE 20 — Quantum Fourier QFT</span>
+    <div class="result-row"><span id="res-s20-row0">Fourier correlation</span><span class="rv" id="rv-qft-corr">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-21">
+    <span class="badge s21" id="res-badge-s21" style="background:rgba(249,115,22,.15);color:#f97316">STAGE 21 — Grover Search</span>
+    <div class="result-row"><span id="res-s21-row0">Target element</span><span class="rv" id="rv-grov-target">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-22">
+    <span class="badge s22" id="res-badge-s22" style="background:rgba(6,182,212,.15);color:#06b6d4">STAGE 22 — Quantum Teleportation</span>
+    <div class="result-row"><span id="res-s22-row0">Fidelity</span><span class="rv" id="rv-tp-fid">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-23">
+    <span class="badge s23" id="res-badge-s23" style="background:rgba(168,85,247,.15);color:#a855f7">STAGE 23 — Deutsch-Jozsa</span>
+    <div class="result-row"><span id="res-s23-row0">f_const recognized</span><span class="rv" id="rv-dj-const">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-24">
+    <span class="badge s24" id="res-badge-s24" style="background:rgba(244,63,94,.15);color:#f43f5e">STAGE 24 — Error Correction QEC</span>
+    <div class="result-row"><span id="res-s24-row0">Fidelity before error</span><span class="rv" id="rv-qec-pre">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-25">
+    <span class="badge s25" id="res-badge-s25" style="background:rgba(34,197,94,.15);color:#22c55e">STAGE 25 — CNOT Gate</span>
+    <div class="result-row"><span id="res-s25-row0">|00⟩→|00⟩</span><span class="rv" id="rv-cnot-00">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-26">
+    <span class="badge s26" id="res-badge-s26" style="background:rgba(99,102,241,.15);color:#6366f1">STAGE 26 — W-bit Qubits</span>
+    <div class="result-row"><span id="res-s26-row0">Qubits ≥75% fidelity</span><span class="rv" id="rv-qub-usable">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-27">
+    <span class="badge s27" id="res-badge-s27" style="background:rgba(236,72,153,.15);color:#ec4899">STAGE 27 — CHSH Statistics</span>
+    <div class="result-row"><span id="res-s27-row0">Mean S</span><span class="rv" id="rv-chsh50-s">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-28">
+    <span class="badge s28" id="res-badge-s28" style="background:rgba(14,165,233,.15);color:#0ea5e9">STAGE 28 — Optical Matrix</span>
+    <div class="result-row"><span id="res-s28-row0">Rank</span><span class="rv" id="rv-mat-rank">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-29">
+    <span class="badge s29" id="res-badge-s29" style="background:rgba(234,179,8,.15);color:#eab308">STAGE 29 — Fidelity</span>
+    <div class="result-row"><span id="res-s29-row0">Mean fidelity</span><span class="rv" id="rv-f10-mean">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-30">
+    <span class="badge s30" id="res-badge-s30" style="background:rgba(168,85,247,.15);color:#a855f7">STAGE 30 — HOM Interference</span>
+    <div class="result-row"><span id="res-s30-row0">Visibility</span><span class="rv" id="rv-hom-vis">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-31">
+    <span class="badge s31" id="res-badge-s31" style="background:rgba(107,114,128,.15);color:#6b7280">STAGE 31 — Null Test</span>
+    <div class="result-row"><span id="res-s31-row0">False positives</span><span class="rv" id="rv-null-fp">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-32">
+    <span class="badge s32" id="res-badge-s32" style="background:rgba(34,197,94,.15);color:#22c55e">STAGE 32 — 🎲 QRNG</span>
+    <div class="result-row"><span id="res-s32-row0">NIST tests</span><span class="rv" id="rv-qrng-nist">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-33">
+    <span class="badge s33" id="res-badge-s33" style="background:rgba(244,63,94,.15);color:#f43f5e">STAGE 33 — Tomography ρ</span>
+    <div class="result-row"><span id="res-s33-row0">Purity Tr(ρ²)</span><span class="rv" id="rv-tomo-pur">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-34">
+    <span class="badge s34" id="res-badge-s34" style="background:rgba(249,115,22,.15);color:#f97316">STAGE 34 — Shor's Algorithm</span>
+    <div class="result-row"><span id="res-s34-row0">Factorization of 15</span><span class="rv" id="rv-shor-fac">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-35">
+    <span class="badge s35" id="res-badge-s35" style="background:rgba(99,102,241,.15);color:#6366f1">STAGE 35 — Optical CNN</span>
+    <div class="result-row"><span id="res-s35-row0">|conv correlation|</span><span class="rv" id="rv-cnn-conv">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-36">
+    <span class="badge s36" id="res-badge-s36" style="background:rgba(236,72,153,.15);color:#ec4899">STAGE 36 — BB84 QKD</span>
+    <div class="result-row"><span id="res-s36-row0">QBER</span><span class="rv" id="rv-bb84-qber">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-37">
+    <span class="badge s37" id="res-badge-s37" style="background:rgba(14,165,233,.15);color:#0ea5e9">STAGE 37 — Optical LSTM</span>
+    <div class="result-row"><span id="res-s37-row0">Persistence</span><span class="rv" id="rv-lstm-pers">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-38">
+    <span class="badge s38" id="res-badge-s38" style="background:rgba(234,179,8,.15);color:#eab308">STAGE 38 — W-Nonlinearity</span>
+    <div class="result-row"><span id="res-s38-row0">Exponent</span><span class="rv" id="rv-entgl-exp">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-39">
+    <span class="badge s39" id="res-badge-s39" style="background:rgba(168,85,247,.15);color:#a855f7">STAGE 39 — Poisson Distribution</span>
+    <div class="result-row"><span id="res-s39-row0">Power law n</span><span class="rv" id="rv-pois-n">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-40">
+    <span class="badge s40" id="res-badge-s40" style="background:rgba(34,197,94,.15);color:#22c55e">STAGE 40 — Frequency Scanning</span>
+    <div class="result-row"><span id="res-s40-row0">Correlation</span><span class="rv" id="rv-freq-corr">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-41">
+    <span class="badge s41" id="res-badge-s41" style="background:rgba(244,63,94,.15);color:#f43f5e">STAGE 41 — Optical SGD</span>
+    <div class="result-row"><span id="res-s41-row0">Initial Loss</span><span class="rv" id="rv-sgd-init">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-42">
+    <span class="badge s42" id="res-badge-s42" style="background:rgba(249,115,22,.15);color:#f97316">STAGE 42 — Elliptic Curve</span>
+    <div class="result-row"><span id="res-s42-row0">Curve</span><span class="rv" id="rv-ec-curve">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-43">
+    <span class="badge s43" id="res-badge-s43" style="background:rgba(239,68,68,.15);color:#ef4444">STAGE 43 — Optical BSGS</span>
+    <div class="result-row"><span id="res-s43-row0">Curve E(F_p)</span><span class="rv" id="rv-bsgs-curve">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-44">
+    <span class="badge s44" id="res-badge-s44" style="background:rgba(6,182,212,.15);color:#06b6d4">STAGE 44 — Optical DFT</span>
+    <div class="result-row"><span id="res-s44-row0">Input frequencies</span><span class="rv" id="rv-dft-input">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-45">
+    <span class="badge s45" id="res-badge-s45" style="background:rgba(234,179,8,.15);color:#eab308">STAGE 45 — L-Function / BSD</span>
+    <div class="result-row"><span id="res-s45-row0">L(E₁, 1) rank≥1</span><span class="rv" id="rv-bsd-l1">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-46">
+    <span class="badge s46" id="res-badge-s46" style="background:rgba(124,58,237,.15);color:#7c3aed">STAGE 46 — Schroedinger Equation</span>
+    <div class="result-row"><span id="res-s46-row0">E₁ (ground state)</span><span class="rv" id="rv-sch-e1">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-47">
+    <span class="badge s47" id="res-badge-s47" style="background:rgba(220,38,38,.15);color:#dc2626">STAGE 47 — NVG Deconfinement</span>
+    <div class="result-row"><span id="res-s47-row0">S(max SNR)</span><span class="rv" id="rv-nvg47-smax">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-48">
+    <span class="badge s48" id="res-badge-s48" style="background:rgba(14,165,233,.15);color:#0ea5e9">STAGE 48 — NVG Double Slit</span>
+    <div class="result-row"><span id="res-s48-row0">Iₐ₂</span><span class="rv" id="rv-nvg48-iab">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-49">
+    <span class="badge s49" id="res-badge-s49" style="background:rgba(168,85,247,.15);color:#a855f7">STAGE 49 — NVG Uncertainty</span>
+    <div class="result-row"><span id="res-s49-row0">Δx · Δp</span><span class="rv" id="rv-nvg49-prod">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-50">
+    <span class="badge s50" id="res-badge-s50" style="background:rgba(234,88,12,.15);color:#ea580c">STAGE 50 — NVG Born's Rule</span>
+    <div class="result-row"><span id="res-s50-row0">Correlation P(x)↔|ψ|²</span><span class="rv" id="rv-nvg50-corr">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-51">
+    <span class="badge s51" id="res-badge-s51" style="background:rgba(220,38,38,.15);color:#dc2626">STAGE 51 — Bell State & Aspect</span>
+    <div class="result-row"><span id="res-s51-row0">corr(R,B)</span><span class="rv" id="rv-bell-corr">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-52">
+    <span class="badge s52" id="res-badge-s52" style="background:rgba(34,197,94,.15);color:#22c55e">STAGE 52 — Grover N=8</span>
+    <div class="result-row"><span id="res-s52-row0">Amplification</span><span class="rv" id="rv-grov8-amp">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-53">
+    <span class="badge s53" id="res-badge-s53" style="background:rgba(14,165,233,.15);color:#0ea5e9">STAGE 53 — 🔐 BB84 Full QKD</span>
+    <div class="result-row"><span id="res-s53-row0">QBER</span><span class="rv" id="rv-bb84f-qber">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-54">
+    <span class="badge s54" id="res-badge-s54" style="background:rgba(168,85,247,.15);color:#a855f7">STAGE 54 — QPE Phase Estimation</span>
+    <div class="result-row"><span id="res-s54-row0">Measured phase</span><span class="rv" id="rv-qpe-phase">—</span></div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-55">
+    <span class="badge s55" id="res-badge-s55" style="background:rgba(239,68,68,.15);color:#ef4444">STAGE 55 — Shor Multi Factorization</span>
+    <div class="grade" id="g-s55">—</div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-56">
+    <span class="badge s56" id="res-badge-s56" style="background:rgba(34,197,94,.15);color:#22c55e">STAGE 56 — TSP 4 Cities</span>
+    <div class="grade" id="g-s56">—</div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-57">
+    <span class="badge s57" id="res-badge-s57" style="background:rgba(99,102,241,.15);color:#6366f1">STAGE 57 — NVG Cosmological Bounce</span>
+    <div class="grade" id="g-s57">—</div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-58">
+    <span class="badge s58" id="res-badge-s58" style="background:rgba(236,72,153,.15);color:#ec4899">STAGE 58 — Dark Photon</span>
+    <div class="grade" id="g-s58">—</div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-59">
+    <span class="badge s59" id="res-badge-s59" style="background:rgba(245,158,11,.15);color:#f59e0b">STAGE 59 — Optical Bit Compression</span>
+    <div class="grade" id="g-s59">—</div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-60">
+    <span class="badge s60" id="res-badge-s60" style="background:rgba(139,92,246,.15);color:#8b5cf6">STAGE 60 — Bounce Compression</span>
+    <div class="grade" id="g-s60">—</div>
+
+  </div>
+  <div class="card stage-card" id="card-stage-61">
+    <span class="badge s61" id="res-badge-s61" style="background:rgba(6,182,212,.15);color:#06b6d4">STAGE 61 — Real Text Compression</span>
+    <div class="grade" id="g-s61">—</div>
+  </div>
+<!-- Overall -->
+  <div class="card">
+    <h2 id="res-verdict-title">🏆 Verdict</h2>
+    <div class="grade" id="g-all">—</div>
+    <p class="sub text-center" id="verdict"></p>
+  </div>
+
+  <button id="setup_cam_restart" class="btn btn-outline" onclick="app.exportJSON()">Export JSON</button>
+  <button id="btn_repeat" class="btn btn-primary" onclick="app.goSetup()">🔄 Repeat</button>
+  <button id="setup_cam_restart" class="btn btn-outline" onclick="app.goTo('welcome')">← Welcome</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════════════════ -->
+<script>
+if (window.trustedTypes && window.trustedTypes.createPolicy) {
+  if (!window.trustedTypes.defaultPolicy) {
+    window.trustedTypes.createPolicy('default', {
+      createHTML: string => string,
+      createScript: string => string,
+      createScriptURL: string => string
+    });
+  }
+}
+const app = {
+  stream: null, videoEl: null, capCanvas: null, capCtx: null,
+  expCanvas: null, expCtx: null, results: {}, startTime: 0,
+
+  // ─── NAV ───
+  goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('s-' + id).classList.add('active');
+    if (id === 'welcome') this.stopCamera();
+  },
+
+  setLang(lang) {
+    this.currentLang = lang;
+    this.updateUILanguage();
+    fetch(`/api/set_lang?lang=${lang}`).catch(() => {});
+  },
+
+  setDevice(key) {
+    if (this._devicesConfig && this._devicesConfig[key]) {
+      this.currentDeviceKey = key;
+      this.currentDevice = this._devicesConfig[key];
+      localStorage.setItem('selected_device', key);
+      const selectEl = document.getElementById('device-select');
+      if (selectEl) {
+        selectEl.value = key;
+      }
+      this.results.device = key;
+      this.updateUILanguage();
+    }
+  },
+
+  async goSetup() {
+    this.goTo('setup');
+    await this.initCamera();
+  },
+
+  sleep(ms) { return new Promise(r => setTimeout(r, ms)); },
+  vibrate(p) { if (navigator.vibrate) navigator.vibrate(p); },
+
+  // ─── CAMERA ───
+  async initCamera() {
+    // If stream alive, reuse
+    if (this.stream) {
+      const t = this.stream.getVideoTracks();
+      if (t.length && t[0].readyState === 'live') {
+        const btnStart = document.getElementById('setup_start_btn');
+        if (btnStart) btnStart.disabled = false;
+        return true;
+      }
+      this.stream = null;
+    }
+
+    const info = document.getElementById('cam-info');
+    info.textContent = this.t('info_cam_start');
+    info.style.color = '#f59e0b';
+
+    if (!window.isSecureContext) {
+      info.innerHTML = this.t('info_https_needed');
+      info.style.cssText = 'color:#f59e0b;font-size:13px;position:absolute;bottom:8px;left:8px;right:8px;background:rgba(0,0,0,.8);padding:10px;border-radius:8px;line-height:1.6;';
+      return false;
+    }
+
+    try {
+      this.stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode:'user', width:{ideal:1920}, height:{ideal:1080} },
+        audio: false
+      });
+
+      // Lock exposure/gain/white-balance if supported
+      try {
+        const track = this.stream.getVideoTracks()[0];
+        if (track && track.getCapabilities) {
+          const caps = track.getCapabilities();
+          const constraints = {};
+          if (caps.exposureMode && caps.exposureMode.includes('manual')) {
+            constraints.exposureMode = 'manual';
+          }
+          if (caps.whiteBalanceMode && caps.whiteBalanceMode.includes('manual')) {
+            constraints.whiteBalanceMode = 'manual';
+          }
+          if (caps.focusMode && caps.focusMode.includes('manual')) {
+            constraints.focusMode = 'manual';
+          }
+          if (Object.keys(constraints).length > 0) {
+            await track.applyConstraints({ advanced: [constraints] });
+            console.log("🔒 Camera constraints locked:", constraints);
+          }
+        }
+      } catch (e) {
+        console.warn("⚠️ Failed to lock camera constraints:", e);
+      }
+
+
+      const prev = document.getElementById('preview-vid');
+      prev.srcObject = this.stream;
+      await prev.play().catch(()=>{});
+
+      this.videoEl = document.getElementById('cam-vid');
+      this.videoEl.srcObject = this.stream;
+      await this.videoEl.play().catch(()=>{});
+
+      // Wait for first frame
+      await new Promise(r => {
+        if (this.videoEl.videoWidth > 0) return r();
+        this.videoEl.onloadeddata = r;
+        setTimeout(r, 3000);
+      });
+
+      this.capCanvas = document.getElementById('cap-canvas');
+      this.capCtx = this.capCanvas.getContext('2d', { willReadFrequently: true });
+      const s = this.stream.getVideoTracks()[0].getSettings();
+      this.capCanvas.width = s.width || this.videoEl.videoWidth || 1920;
+      this.capCanvas.height = s.height || this.videoEl.videoHeight || 1080;
+
+      this.expCanvas = document.getElementById('exp-canvas');
+      this.expCtx = this.expCanvas.getContext('2d');
+
+      info.textContent = `✅ ${this.capCanvas.width}×${this.capCanvas.height}`;
+      info.style.color = '#22c55e';
+      const camWrap = document.getElementById('cam-wrapper');
+      if (camWrap) camWrap.classList.add('cam-ok');
+      const btnStart = document.getElementById('setup_start_btn');
+      if (btnStart) btnStart.disabled = false;
+
+      const checklist = document.getElementById('setup_checklist_list');
+      if (checklist) checklist.innerHTML = this.t('setup_cam_ready');
+
+      return true;
+    } catch(e) {
+      console.error('Camera:', e);
+      info.textContent = '❌ ' + (e.name === 'NotAllowedError' ? this.t('err_cam_permission') :
+                                   e.name === 'NotReadableError' ? this.t('err_cam_busy') : e.message);
+      info.style.color = '#ef4444';
+      return false;
+    }
+  },
+
+  async retryCamera() {
+    this.stopCamera();
+    await this.sleep(500);
+    await this.initCamera();
+  },
+
+  stopCamera() {
+    if (this.stream) { this.stream.getTracks().forEach(t=>t.stop()); this.stream = null; }
+  },
+
+  // ─── CAPTURE ───
+  captureFrame() {
+    const v = this.videoEl;
+    if (!v || !v.videoWidth) return null;
+    this.capCanvas.width = v.videoWidth;
+    this.capCanvas.height = v.videoHeight;
+    this.capCtx.drawImage(v, 0, 0);
+    return this.capCtx.getImageData(0, 0, this.capCanvas.width, this.capCanvas.height);
+  },
+
+  async captureStable(n=5, wait=80) {
+    const frames = [];
+    for (let i = 0; i < n; i++) {
+      await this.sleep(wait);
+      const f = this.captureFrame();
+      if (f) frames.push(f);
+    }
+    if (!frames.length) return null;
+    const w = frames[0].width, h = frames[0].height;
+    const avg = new Float64Array(w * h * 4);
+    for (const f of frames) for (let i = 0; i < f.data.length; i++) avg[i] += f.data[i];
+    for (let i = 0; i < avg.length; i++) avg[i] /= frames.length;
+    return { data: avg, width: w, height: h };
+  },
+
+  // ─── DISPLAY PATTERN (fullscreen canvas) ───
+  showPattern(fn) {
+    const c = this.expCanvas;
+    c.style.display = 'block';
+    document.body.classList.add('pattern-active');
+    
+    // Hide the running overlay to prevent any text or progress UI from bleeding through or leaking light
+    const ov = document.getElementById('overlay-run');
+    if (ov) ov.style.display = 'none';
+
+    const dpr = window.devicePixelRatio || 1;
+    // Use screen size if in fullscreen, otherwise window
+    const sw = document.fullscreenElement ? screen.width : window.innerWidth;
+    const sh = document.fullscreenElement ? screen.height : window.innerHeight;
+    const w = c.width = sw * dpr;
+    const h = c.height = sh * dpr;
+    c.style.width = sw + 'px';
+    c.style.height = sh + 'px';
+    fn(this.expCtx, w, h);
+
+    // Send pattern preview to server
+    try {
+      const previewCanvas = document.createElement('canvas');
+      previewCanvas.width = 320;
+      previewCanvas.height = 480;
+      const pCtx = previewCanvas.getContext('2d');
+      pCtx.drawImage(c, 0, 0, 320, 480);
+      const dataUrl = previewCanvas.toDataURL('image/jpeg', 0.8);
+      this.remotePost('/api/phone/pattern', { pattern: dataUrl });
+    } catch(e) {
+      console.error('Failed to send pattern preview:', e);
+    }
+  },
+
+  showColor(color) {
+    this.showPattern((ctx, w, h) => { ctx.fillStyle = color; ctx.fillRect(0, 0, w, h); });
+  },
+
+  hidePattern() {
+    if (this.expCanvas) this.expCanvas.style.display = 'none';
+    document.body.classList.remove('pattern-active');
+    
+    // Restore the running overlay visibility
+    const ov = document.getElementById('overlay-run');
+    if (ov) ov.style.display = '';
+
+    this.remotePost('/api/phone/pattern', { pattern: null });
+  },
+
+  // ═══════════════════════════════════════════════════════
+  //  MAIN RUN: CALIBRATION + TESTS
+  // ═══════════════════════════════════════════════════════
+
+  async startRun(fromRemote) {
+   if (this._isRunning) return;
+   this._isRunning = true;
+    this.results = {};
+    this.startTime = Date.now();
+
+    // ── REQUEST FULLSCREEN (убираем рамки браузера) ──
+    // Fullscreen requires user gesture. If started remotely, show tap overlay
+    const tryFullscreen = async () => {
+      try {
+        const el = document.documentElement;
+        if (el.requestFullscreen) await el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
+      } catch(e) { console.log('Fullscreen not available:', e); }
+    };
+
+    if (fromRemote) {
+      // Show "tap to start" overlay — user tap provides the gesture
+      await new Promise(resolve => {
+        const tapOv = document.createElement('div');
+        tapOv.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none';
+        tapOv.innerHTML = `<div style="font-size:60px;margin-bottom:20px">👆</div><div style="color:#fff;font-size:24px;font-weight:700">${this.t('tap_to_start')}</div><div style="color:#888;font-size:14px;margin-top:10px">${this.t('tap_sub')}</div>`;
+        document.body.appendChild(tapOv);
+        let resolved = false;
+        const handler = async (e) => {
+          if (resolved) return;
+          resolved = true;
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('[TAP] User tapped overlay, starting...');
+          try { await tryFullscreen(); } catch(err) { console.log('Fullscreen error:', err); }
+          tapOv.remove();
+          resolve();
+        };
+        tapOv.addEventListener('touchend', handler, { once: true, passive: false });
+        tapOv.addEventListener('click', handler, { once: true });
+        console.log('[TAP] Overlay shown, waiting for tap...');
+      });
+    } else {
+      await tryFullscreen();
+    }
+
+    // Recalc canvas size after fullscreen
+    await this.sleep(300);
+
+    // ── COUNTDOWN ──
+    const cd = document.getElementById('overlay-cd');
+    document.getElementById('cd_text').innerHTML = this.t('cd_text');
+    cd.classList.add('active');
+    for (let i = 5; i >= 1; i--) {
+      document.getElementById('cd-num').textContent = i;
+      this.vibrate(100);
+      await this.sleep(1000);
+    }
+    cd.classList.remove('active');
+
+    // ── SHOW RUNNING OVERLAY ──
+    const ov = document.getElementById('overlay-run');
+    document.getElementById('run-step').textContent = this.t('run_prep');
+    ov.classList.add('active');
+    document.getElementById('run-log').innerHTML = '';
+
+    try {
+    // ── Ensure canvas is ready ──
+    if (!this.expCanvas) {
+      this.expCanvas = document.getElementById('exp-canvas');
+      this.expCtx = this.expCanvas.getContext('2d');
+      console.log('[STAB] expCanvas re-init');
+    }
+    if (!this.capCanvas) {
+      this.capCanvas = document.getElementById('cap-canvas');
+      this.capCtx = this.capCanvas.getContext('2d', { willReadFrequently: true });
+      console.log('[STAB] capCanvas re-init');
+    }
+    // Re-check camera stream
+    if (!this.stream || !this.stream.getVideoTracks().length || this.stream.getVideoTracks()[0].readyState !== 'live') {
+      this.log(this.t('err_cam_lost'), 'warn');
+      console.log('[STAB] Camera stream dead, reinitializing');
+      await this.initCamera();
+      await this.sleep(500);
+    }
+    console.log('[STAB] canvas OK, starting stabilization');
+
+    // ── STABILIZE (2 sec on 50% gray) ──
+    this.setRun(this.t('stabilization'), this.t('ae_gray'), 0);
+    this.log(this.t('start_stab'));
+    this.showColor('#808080');
+    await this.sleep(2500);
+    this.log(this.t('stab_ok'), 'ok');
+    console.log('[STAB] AE stabilized, starting calibration');
+      await this.runCalibration();
+
+      // Run selected stages dynamically
+      const sel = this._selectedStages;
+      for (const stage of this.stages) {
+        const stageNum = stage.id;
+        if (sel && !sel.has(stageNum)) {
+          continue;
+        }
+        this.currentStage = stage;
+        const serialNum = this.stages.indexOf(stage) + 1;
+        this.log(`\n====================\n🚀 [${this.t('stage_label') || 'Stage'} ${serialNum}] ${stage.name[this.currentLang || 'ru'] || stage.name['ru']}`);
+        const stageDesc = stage.description?.[this.currentLang || 'ru'] || stage.description?.['ru'];
+        if (stageDesc) this.log(`   ${stageDesc}`, 'dim');
+        try {
+          const jsonPath = stage.js_path.replace(/\.js$/, '.json');
+          const jsonRes = await fetch(jsonPath);
+          this._stageTranslations = await jsonRes.json();
+        } catch(e) {
+          console.error(`Failed to load translations for stage ${stageNum}:`, e);
+          this._stageTranslations = null;
+        }
+        try {
+          const mod = await import(stage.js_path);
+          if (mod && mod.run) {
+            await mod.run.call(this);
+          } else {
+            this.log(`Error: stage runner not found for stage ${stageNum}`, 'err');
+          }
+          // Send incremental results after each stage
+          const stageKey = `stage${stage.id}`;
+          if (this.results[stageKey]) {
+            let metricText = '', passed = false;
+            try {
+              if (mod && mod.check) passed = mod.check(this.results[stageKey]);
+              if (mod && mod.metric) metricText = mod.metric(this.results[stageKey]);
+            } catch(e2) {}
+            // Render chart to PNG for remote dashboards
+            let chartUrl = null;
+            try { chartUrl = this.renderStageChart(stage.id); } catch(e3) {}
+            const srData = {
+              stageId: stage.id,
+              serialNum,
+              stageKey,
+              name: stage.name,
+              passed,
+              metric: metricText
+            };
+            // Send full data + chart to server (heavy, once)
+            this.remotePost('/api/phone/stage_result', { ...srData, chart: chartUrl, data: this.results[stageKey] });
+            // Send lightweight marker in log stream (no chart — card will get it from stage_results)
+            this.log(`__SR__${JSON.stringify(srData)}`, 'stage-result');
+          }
+        } catch(e) {
+          this.log(`Error running stage ${stageNum}: ${e.message}`, 'err');
+          console.error(e);
+        }
+      }
+    } catch(e) {
+      console.error('[RUN ERROR]', e);
+      this.results.error = e.message + '\n' + (e.stack || '');
+      this.log(this.t('err_general', {var0: e.message}), 'err');
+      this.log('Stack: ' + (e.stack || 'none').substring(0, 200), 'err');
+    }
+
+    this.hidePattern();
+    this.setRun(this.t('results_title'), this.currentLang === 'ru' ? 'Готово' : 'Done', 100);
+    await this.flushRemotePosts();
+
+    try {
+      await this.remotePost('/api/phone/results', {data: this.results});
+      await this.flushRemotePosts();
+    } catch(e) {
+      console.error('Failed to send final results:', e);
+      this.log(this.t('err_general', {var0: 'Не удалось отправить финальные результаты'}), 'err');
+    }
+
+    ov.classList.remove('active');
+    this.vibrate([200, 100, 200, 100, 600]);
+
+    // Exit fullscreen to show results
+    try {
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    } catch(e) {}
+
+    try {
+      await this.showResults();
+    } catch(e) {
+      console.error('Error rendering results:', e);
+      this.log(this.t('err_render_results', {var0: e.message}), 'err');
+    }
+    this._isRunning = false;
+  },
+
+  // ═══ REMOTE CONTROL (HTTP polling, same port 8443) ═══
+  _remoteEnabled: true,
+  _pollTimer: null,
+
+  async loadStages() {
+    try {
+      const r = await fetch('/api/stages');
+      const d = await r.json();
+      this.sections = d.sections;
+      this.stages = [];
+      this.sections.forEach(sec => {
+        sec.stages.forEach(stg => {
+          stg.sectionId = sec.id;
+          this.stages.push(stg);
+        });
+      });
+      console.log(`Loaded ${this.stages.length} stages dynamically.`);
+    } catch(e) {
+      console.error('Failed to load stages:', e);
+    }
+  },
+
+  async remoteInit() {
+    this.currentLang = 'ru';
+    this.stages = [];
+    this.results = this.results || {};
+
+    // Load devices configuration
+    try {
+      const devRes = await fetch('devices.json');
+      const devData = await devRes.json();
+      this._devicesConfig = devData.devices || {};
+      
+      const selectEl = document.getElementById('device-select');
+      if (selectEl) {
+        selectEl.innerHTML = '';
+        for (const [key, dev] of Object.entries(this._devicesConfig)) {
+          const opt = document.createElement('option');
+          opt.value = key;
+          opt.textContent = dev.name;
+          selectEl.appendChild(opt);
+        }
+      }
+      
+      let initialDeviceKey = localStorage.getItem('selected_device');
+      if (!initialDeviceKey || !this._devicesConfig[initialDeviceKey]) {
+        initialDeviceKey = devData.default || Object.keys(this._devicesConfig)[0] || 'xiaomi_12lite';
+      }
+      
+      this.currentDeviceKey = initialDeviceKey;
+      this.currentDevice = this._devicesConfig[initialDeviceKey];
+      if (selectEl) {
+        selectEl.value = initialDeviceKey;
+      }
+      this.results.device = this.currentDeviceKey;
+    } catch(e) {
+      console.error('Failed to load devices config:', e);
+      // Fallback
+      this._devicesConfig = {
+        "xiaomi_12lite": {
+          "name": "Xiaomi 12 Lite",
+          "oled_pitch_um": 63.2,
+          "sensor_pitch_um": 0.8,
+          "recommended_dist_mm": 37.0
+        },
+        "honor_magic7pro": {
+          "name": "Honor Magic 7 Pro",
+          "oled_pitch_um": 56.1,
+          "sensor_pitch_um": 0.6,
+          "recommended_dist_mm": 29.7
+        },
+        "xiaomi_redminote14pro4g": {
+          "name": "Xiaomi Redmi Note 14 Pro 4G",
+          "oled_pitch_um": 64.3,
+          "sensor_pitch_um": 0.7,
+          "recommended_dist_mm": 38.0
+        }
+      };
+      this.currentDeviceKey = 'xiaomi_12lite';
+      this.currentDevice = this._devicesConfig['xiaomi_12lite'];
+      this.results.device = this.currentDeviceKey;
+    }
+
+    try {
+      const res = await fetch('index.json');
+      this._coreTranslations = await res.json();
+      this.updateUILanguage();
+    } catch(e) {
+      console.error('Failed to load core translations:', e);
+      this._coreTranslations = null;
+    }
+    this.loadStages().then(() => {
+      // Start polling for commands from admin every 3 seconds
+      this._pollTimer = setInterval(() => this._pollCmd(), 3000);
+      console.log('Remote control: polling /api/phone/poll');
+    });
+  },
+
+  async _pollCmd() {
+    try {
+      const r = await fetch('/api/phone/poll');
+      const d = await r.json();
+      if (d.default_lang && d.default_lang !== this.currentLang) {
+        this.currentLang = d.default_lang;
+        this.updateUILanguage();
+        if (document.getElementById('s-results').classList.contains('active')) {
+          this.showResults();
+        }
+      }
+      if (d.cmd === 'start') {
+        console.log('Remote: START, stages:', d.stages);
+        if (!this._isRunning) {
+          // Parse selected stages: "1,2,3,..." → Set
+          if (d.stages) {
+            this._selectedStages = new Set(d.stages.split(',').map(Number).filter(n => n > 0));
+          } else {
+            this._selectedStages = null; // null = all stages
+          }
+          this.startRun(true);
+        }
+      } else if (d.cmd === 'stop') {
+        console.log('Remote: STOP');
+        location.reload();
+      }
+    } catch(e) {}
+  },
+
+  remotePost(url, data) {
+    if (!this._remoteEnabled) return;
+    const send = () => fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+
+    try {
+      if (url === '/api/phone/pattern') {
+        return send().catch(() => {});
+      }
+      this._remoteQueue = (this._remoteQueue || Promise.resolve())
+        .catch(() => {})
+        .then(send)
+        .catch(e => console.warn('Remote post failed:', url, e));
+      return this._remoteQueue;
+    } catch(e) {
+      return Promise.reject(e);
+    }
+  },
+
+  flushRemotePosts() {
+    return (this._remoteQueue || Promise.resolve()).catch(() => {});
+  },
+
+  setRun(stage, step, pct) {
+    pct = Math.max(0, Math.min(Number(pct) || 0, 100));
+    document.getElementById('run-stage').textContent = stage;
+    document.getElementById('run-step').textContent = step;
+    document.getElementById('run-bar').style.width = pct + '%';
+    this.remotePost('/api/phone/stage', {stage, step, progress: pct});
+  },
+
+  log(text, cls='') {
+    // __SR__ markers are for remote dashboards only, don't show on phone
+    if (text && text.startsWith('__SR__')) {
+      this.remotePost('/api/phone/log', {msg: text, cls});
+      return;
+    }
+    const el = document.getElementById('run-log');
+    el.innerHTML += `<div class="log-${cls}">${text}</div>`;
+    el.scrollTop = el.scrollHeight;
+    this.remotePost('/api/phone/log', {msg: text, cls});
+  },
+
+  // ═══ CALIBRATION (phone face down, screen shows patterns) ═══
+
+  async runCalibration() {
+    const cal = {};
+
+    // ── 1. White ──
+    this.setRun(this.t('calibration'), this.t('cal_white'), 5);
+    this.showColor('#ffffff');
+    await this.sleep(1500);  // Let AE adjust to white (longer!)
+    const whiteFrame = await this.captureStable(10, 60);
+    cal.whiteMean = this.regionMean(whiteFrame);
+    this.log(this.t('cal_white_val', {var0: cal.whiteMean.toFixed(1)}));
+
+    // ── 2. Gray (back to stabilize AE) ──
+    this.showColor('#808080');
+    await this.sleep(1200);  // Longer gray stabilization
+
+    // ── 3. Black ──
+    this.setRun(this.t('calibration'), this.t('cal_black'), 10);
+    this.showColor('#000000');
+    await this.sleep(1500);
+    const blackFrame = await this.captureStable(10, 60);
+    cal.blackMean = this.regionMean(blackFrame);
+    this.log(this.t('cal_black_val', {var0: cal.blackMean.toFixed(1)}));
+
+    // Калибровка горизонтальных границ активной области экрана
+    if (whiteFrame && blackFrame) {
+      const w = whiteFrame.width, h = whiteFrame.height, d = whiteFrame.data;
+      const black = cal.blackMean;
+      let x0_sum = 0, x1_sum = 0, count = 0;
+      const yStart = Math.floor(h * 0.3), yEnd = Math.floor(h * 0.7);
+      for (let y = yStart; y < yEnd; y += 10) {
+        let rowX0 = -1, rowX1 = -1;
+        for (let x = 0; x < w; x++) {
+          const i = (y * w + x) * 4;
+          const lum = (d[i] + d[i+1] + d[i+2]) / 3;
+          if (lum > black + 12) { rowX0 = x; break; }
+        }
+        for (let x = w - 1; x >= 0; x--) {
+          const i = (y * w + x) * 4;
+          const lum = (d[i] + d[i+1] + d[i+2]) / 3;
+          if (lum > black + 12) { rowX1 = x; break; }
+        }
+        if (rowX0 !== -1 && rowX1 !== -1 && rowX1 > rowX0 + 50) {
+          x0_sum += rowX0;
+          x1_sum += rowX1;
+          count++;
+        }
+      }
+      let x0 = Math.floor(w * 0.1), x1 = Math.floor(w * 0.9);
+      if (count > 0) {
+        x0 = Math.floor(x0_sum / count);
+        x1 = Math.floor(x1_sum / count);
+      }
+      cal.x0 = x0;
+      cal.x1 = x1;
+      this.log(this.t('cal_borders_horiz', {var0: x0, var1: x1, var2: x1-x0, var3: count}));
+
+      // Калибровка вертикальных границ активной области экрана
+      let y0_sum = 0, y1_sum = 0, y_count = 0;
+      const xStart = Math.floor(w * 0.3), xEnd = Math.floor(w * 0.7);
+      for (let x = xStart; x < xEnd; x += 10) {
+        let colY0 = -1, colY1 = -1;
+        for (let y = 0; y < h; y++) {
+          const i = (y * w + x) * 4;
+          const lum = (d[i] + d[i+1] + d[i+2]) / 3;
+          if (lum > black + 12) { colY0 = y; break; }
+        }
+        for (let y = h - 1; y >= 0; y--) {
+          const i = (y * w + x) * 4;
+          const lum = (d[i] + d[i+1] + d[i+2]) / 3;
+          if (lum > black + 12) { colY1 = y; break; }
+        }
+        if (colY0 !== -1 && colY1 !== -1 && colY1 > colY0 + 50) {
+          y0_sum += colY0;
+          y1_sum += colY1;
+          y_count++;
+        }
+      }
+      let y0 = Math.floor(h * 0.1), y1 = Math.floor(h * 0.9);
+      if (y_count > 0) {
+        y0 = Math.floor(y0_sum / y_count);
+        y1 = Math.floor(y1_sum / y_count);
+      }
+      cal.y0 = y0;
+      cal.y1 = y1;
+      this.log(this.t('cal_borders_vert', {var0: y0, var1: y1, var2: y1-y0, var3: y_count}));
+    }
+
+    // ── stabilize ──
+    this.showColor('#808080');
+    await this.sleep(1200);
+
+    // ── 4. Gray levels (for gamma curve) ──
+    const grayLevels = [0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875];
+    cal.grayInputs = grayLevels;
+    cal.grayOutputs = [];
+
+    for (let gi = 0; gi < grayLevels.length; gi++) {
+      const level = grayLevels[gi];
+      const v = Math.round(level * 255);
+      this.setRun(this.t('calibration'), this.t('cal_gray', {var0: Math.round(level*100)}), 12 + gi * 2);
+      this.showColor(`rgb(${v},${v},${v})`);
+      await this.sleep(800);
+      const gf = await this.captureStable(6, 50);
+      const gm = this.regionMean(gf);
+      cal.grayOutputs.push(gm);
+
+      // Gray stabilizer between levels (longer for AE)
+      this.showColor('#808080');
+      await this.sleep(600);
+    }
+
+    // ── 5. Normalize & compute gamma ──
+    const range = Math.max(cal.whiteMean - cal.blackMean, 1);
+    cal.normalizedOutputs = cal.grayOutputs.map(v => (v - cal.blackMean) / range);
+    cal.dr = cal.whiteMean / Math.max(cal.blackMean, 0.5);
+
+    // Robust linear regression through origin: ln(out) = gamma * ln(inp)
+    let sumXY = 0, sumX2 = 0;
+    for (let i = 0; i < grayLevels.length; i++) {
+      const inp = grayLevels[i];
+      const out = cal.normalizedOutputs[i];
+      if (inp > 0.15 && inp < 0.85 && out > 0.02 && out < 0.98) {
+        const x = Math.log(inp);
+        const y = Math.log(out);
+        sumXY += x * y;
+        sumX2 += x * x;
+      }
+    }
+    let estGamma = sumX2 > 0.001 ? sumXY / sumX2 : 1.0;
+    // Clamp gamma to physically reasonable range [0.5, 2.2] to prevent AE-induced squashing
+    cal.gamma = Math.max(0.5, Math.min(2.2, estGamma));
+
+    // R² linearity AFTER gamma correction
+    // Apply inverse gamma to see how linear the corrected channel is
+    const invGamma = cal.gamma > 0.01 ? 1 / cal.gamma : 1;
+    const corrected = cal.normalizedOutputs.map(v => v > 0 ? Math.pow(v, invGamma) : 0);
+    cal.correctedOutputs = corrected;
+    const ideal = grayLevels;
+    const meanC = corrected.reduce((a,b) => a+b,0) / corrected.length;
+    let ssRes = 0, ssTot = 0;
+    for (let i = 0; i < corrected.length; i++) {
+      ssRes += (corrected[i] - ideal[i]) ** 2;
+      ssTot += (corrected[i] - meanC) ** 2;
+    }
+    cal.r2 = ssTot > 0 ? Math.max(0, 1 - ssRes / ssTot) : 0;
+
+    this.log(`γ=${cal.gamma.toFixed(2)} DR=${cal.dr.toFixed(1)}:1 R²(corrected)=${(cal.r2*100).toFixed(0)}%`);
+
+    // ── 6. SNR ──
+    this.setRun(this.t('calibration'), this.t('cal_snr'), 26);
+    this.showColor('#808080');
+    await this.sleep(800);
+    const snrSamples = [];
+    for (let i = 0; i < 20; i++) {
+      await this.sleep(40);
+      const f = this.captureFrame();
+      if (f) snrSamples.push(this.regionMean({ data: f.data, width: f.width, height: f.height }));
+    }
+    const mu = snrSamples.reduce((a,b)=>a+b,0) / snrSamples.length;
+    const sigma = Math.sqrt(snrSamples.map(v=>(v-mu)**2).reduce((a,b)=>a+b,0) / snrSamples.length);
+    cal.snr = sigma > 0 ? mu / sigma : 999;
+    cal.snrBits = Math.log2(Math.max(cal.snr, 1));
+    this.log(this.t('cal_snr_log', {var0: cal.snr.toFixed(0), var1: cal.snrBits.toFixed(1)}), cal.snrBits >= 4 ? 'ok' : 'warn');
+
+    // ── 7. Inversion detection ──
+    // Predict sign: does brighter screen → brighter camera?
+    // Use gray level measurements from step 4
+    const inputLevels = grayLevels; // [0.1, 0.2, ..., 0.9]
+    const measuredLevels = cal.normalizedOutputs;
+    if (inputLevels.length >= 3 && measuredLevels.length >= 3) {
+      const corrSign = this.pearsonCorr(inputLevels, measuredLevels);
+      cal.inverted = corrSign < 0;
+      cal.channelCorr = corrSign;
+      const chText = cal.inverted ? this.t('cal_channel_inverted', {var0: corrSign.toFixed(3)}) : this.t('cal_channel_normal', {var0: corrSign.toFixed(3)});
+      this.log(chText, Math.abs(corrSign) > 0.5 ? 'ok' : 'warn');
+    } else {
+      cal.inverted = false;
+      cal.channelCorr = 1;
+    }
+
+    // ── 8. Mirror detection ──
+    this.setRun(this.t('calibration'), this.t('cal_mirror'), 28);
+    this.showPattern((ctx, w, h) => {
+      const g = ctx.createLinearGradient(0, 0, w, 0);
+      g.addColorStop(0, '#000'); g.addColorStop(1, '#fff');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    });
+    await this.sleep(800);
+    const calGradFrame = await this.captureStable(5, 60);
+    if (calGradFrame) {
+      const d = calGradFrame.data, w = calGradFrame.width, h = calGradFrame.height;
+      const yStart = Math.floor(h * 0.3);
+      const yEnd = Math.floor(h * 0.7);
+      let leftBright = 0, rightBright = 0;
+      const x0 = cal.x0 !== undefined ? cal.x0 : Math.floor(w * 0.1);
+      const x1 = cal.x1 !== undefined ? cal.x1 : Math.floor(w * 0.9);
+      const xm = Math.floor((x0 + x1) / 2);
+      let countL = 0, countR = 0;
+      for (let y = yStart; y < yEnd; y += 6) {
+        for (let x = x0; x < xm; x += 4) {
+          const i = (y * w + x) * 4;
+          leftBright += (d[i] + d[i+1] + d[i+2]) / 3;
+          countL++;
+        }
+        for (let x = xm; x < x1; x += 4) {
+          const i = (y * w + x) * 4;
+          rightBright += (d[i] + d[i+1] + d[i+2]) / 3;
+          countR++;
+        }
+      }
+      const avgL = countL > 0 ? leftBright / countL : 0;
+      const avgR = countR > 0 ? rightBright / countR : 0;
+      // If left is brighter than right, but on screen left is black and right is white,
+      // it means the camera image is mirrored!
+      cal.isMirrored = avgL > avgR;
+      const mirText = cal.isMirrored ? this.t('mirror_detected') : this.t('mirror_none');
+      this.log(this.t('cal_mirror_val', {var0: mirText}) + ` L=${avgL.toFixed(1)} R=${avgR.toFixed(1)}`);
+    } else {
+      cal.isMirrored = true;
+    }
+
+    this.results.calibration = cal;
+    this.log(this.t('cal_done'), 'ok');
+  },
+
+
+  
+  // ═══ CHUNKED BIT READER (error-corrected) ═══
+  // Reads bitstream in chunks of chunkSize, 3 frames per chunk, majority vote
+  async readBitsChunked(expectedBits, chunkSize = 16, nFrames = 3) {
+    const result = [];
+    const nChunks = Math.ceil(expectedBits.length / chunkSize);
+
+    for (let c = 0; c < nChunks; c++) {
+      const start = c * chunkSize;
+      const end = Math.min(start + chunkSize, expectedBits.length);
+      const chunk = expectedBits.slice(start, end);
+      const cLen = chunk.length;
+
+      // Display this chunk full-width
+      this.showPattern((ctx, w, h) => {
+        ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
+        const bw = Math.floor(w / cLen);
+        for (let i = 0; i < cLen; i++) {
+          ctx.fillStyle = chunk[i] ? '#ddd' : '#141414';
+          ctx.fillRect(i * bw, 0, bw, h);
+        }
+      });
+      await this.sleep(250);
+
+      // Capture multiple frames, majority vote
+      const votes = new Array(cLen).fill(0);
+      for (let f = 0; f < nFrames; f++) {
+        const frame = await this.captureStable(4, 30);
+        const bins = this.measureNBins(frame, cLen);
+        const thr = (Math.max(...bins) + Math.min(...bins)) / 2;
+        for (let i = 0; i < cLen; i++) {
+          votes[i] += bins[i] > thr ? 1 : 0;
+        }
+      }
+      // Majority: >50% votes = 1
+      const majority = votes.map(v => v > nFrames / 2 ? 1 : 0);
+      result.push(...majority);
+    }
+    return result;
+  },
+
+  // ═══ MEASUREMENT HELPERS ═══
+
+  // Auto-calibrate the actual stripe frequency in camera pixels
+  // Scans ±30% around theoretical camFreq, returns freq with max FFT power
+  // This handles: perspective distortion, lens effects, freq calculation errors
+  autoCalibrateCamFreq(d, fw, fh, xStart, xEnd, angleCam, theorFreq) {
+    const y0 = Math.floor(fh * 0.25), y1 = Math.floor(fh * 0.75);
+    let bestFreq = theorFreq, bestPower = 0;
+
+    // Scan 31 candidate frequencies: 0.7× to 1.3× in 2% steps
+    for (let mult = 0.70; mult <= 1.30; mult += 0.02) {
+      const testFreq = theorFreq * mult;
+      let sinSum = 0, cosSum = 0;
+
+      for (let y = y0; y < y1; y += 4) {
+        for (let x = xStart; x < xEnd; x += 4) {
+          const idx = (y * fw + x) * 4;
+          const I = (d[idx] + d[idx+1] + d[idx+2]) / 3;
+          const proj = x * Math.cos(angleCam) + y * Math.sin(angleCam);
+          sinSum += I * Math.sin(2 * Math.PI * proj / testFreq);
+          cosSum += I * Math.cos(2 * Math.PI * proj / testFreq);
+        }
+      }
+
+      const power = sinSum * sinSum + cosSum * cosSum;
+      if (power > bestPower) {
+        bestPower = power;
+        bestFreq = testFreq;
+      }
+    }
+
+    return { freq: bestFreq, power: bestPower, ratio: bestFreq / theorFreq };
+  },
+
+  sigmoid(x) { return 1 / (1 + Math.exp(-x)); },
+
+  unwrapPhases(phases) {
+    if (phases.length === 0) return [];
+    const unwrapped = [phases[0]];
+    let offset = 0;
+    for (let i = 1; i < phases.length; i++) {
+      let diff = phases[i] - phases[i-1];
+      while (diff > Math.PI) {
+        offset -= 2 * Math.PI;
+        diff -= 2 * Math.PI;
+      }
+      while (diff < -Math.PI) {
+        offset += 2 * Math.PI;
+        diff += 2 * Math.PI;
+      }
+      unwrapped.push(phases[i] + offset);
+    }
+    return unwrapped;
+  },
+
+  pearsonCorr(a, b) {
+    const n = Math.min(a.length, b.length);
+    if (n < 2) return 0;
+    let sA=0,sB=0,sA2=0,sB2=0,sAB=0;
+    for (let i=0;i<n;i++) { sA+=a[i];sB+=b[i];sA2+=a[i]*a[i];sB2+=b[i]*b[i];sAB+=a[i]*b[i]; }
+    const num = n*sAB - sA*sB;
+    const den = Math.sqrt((n*sA2-sA*sA)*(n*sB2-sB*sB));
+    return den > 1e-10 ? num/den : 0;
+  },
+
+  regionMeanRGB(frame) {
+    if (!frame) return [0, 0, 0];
+    const d = frame.data, w = frame.width, h = frame.height;
+    let rSum = 0, gSum = 0, bSum = 0, cnt = 0;
+    const x0 = Math.floor(w*.25), x1 = Math.floor(w*.75);
+    const y0 = Math.floor(h*.25), y1 = Math.floor(h*.75);
+    for (let y = y0; y < y1; y += 3)
+      for (let x = x0; x < x1; x += 3) {
+        const i = (y*w+x)*4;
+        rSum += d[i]; gSum += d[i+1]; bSum += d[i+2]; cnt++;
+      }
+    return cnt > 0 ? [rSum/cnt, gSum/cnt, bSum/cnt] : [0, 0, 0];
+  },
+
+  regionMean(frame) {
+    if (!frame) return 0;
+    const d = frame.data, w = frame.width, h = frame.height;
+    let sum = 0, cnt = 0;
+    const x0 = Math.floor(w*.25), x1 = Math.floor(w*.75);
+    const y0 = Math.floor(h*.25), y1 = Math.floor(h*.75);
+    for (let y = y0; y < y1; y += 3)
+      for (let x = x0; x < x1; x += 3) {
+        const i = (y*w+x)*4;
+        sum += (d[i]+d[i+1]+d[i+2])/3; cnt++;
+      }
+    return cnt > 0 ? sum/cnt : 0;
+  },
+
+  // Measure fringe visibility V = (Imax - Imin) / (Imax + Imin) in calibrated ROI
+  measureVisibility(frame) {
+    if (!frame) return 0;
+    const d = frame.data, w = frame.width, h = frame.height;
+    const cal = this.results.calibration || {};
+    const x0 = cal.x0 || Math.floor(w * 0.15);
+    const x1 = cal.x1 || Math.floor(w * 0.85);
+    const y0 = Math.floor(h * 0.3), y1 = Math.floor(h * 0.7);
+    // Build column-wise brightness profile
+    const cols = [];
+    for (let x = x0; x < x1; x += 2) {
+      let sum = 0, cnt = 0;
+      for (let y = y0; y < y1; y += 4) {
+        const i = (y * w + x) * 4;
+        sum += (d[i] + d[i+1] + d[i+2]) / 3;
+        cnt++;
+      }
+      cols.push(sum / cnt);
+    }
+    if (cols.length < 4) return 0;
+    // Smooth with 5-point moving average to reduce noise
+    const smooth = [];
+    for (let i = 2; i < cols.length - 2; i++) {
+      smooth.push((cols[i-2] + cols[i-1] + cols[i] + cols[i+1] + cols[i+2]) / 5);
+    }
+    if (smooth.length < 4) return 0;
+    const iMax = Math.max(...smooth);
+    const iMin = Math.min(...smooth);
+    return (iMax + iMin) > 0 ? (iMax - iMin) / (iMax + iMin) : 0;
+  },
+
+  // Spatial frequency fingerprint: distinguishes H/V/diagonal patterns
+  // Unlike measureNBins (horizontal brightness bins), this captures
+  // the ORIENTATION of spatial structure, which is different for each pattern.
+  spatialFingerprint(frame) {
+    if (!frame) return new Array(6).fill(0);
+    const d = frame.data, w = frame.width, h = frame.height;
+    const x0 = Math.floor(w*0.25), x1 = Math.floor(w*0.75);
+    const y0 = Math.floor(h*0.25), y1 = Math.floor(h*0.75);
+    const nRows = Math.floor((y1-y0)/4);
+    const nCols = Math.floor((x1-x0)/4);
+
+    // Compute per-row and per-column mean intensities
+    const rowMeans = new Float64Array(nRows);
+    const colMeans = new Float64Array(nCols);
+    const rowCounts = new Float64Array(nRows);
+    const colCounts = new Float64Array(nCols);
+
+    for (let y = y0; y < y1; y += 4) {
+      const ry = Math.min(nRows-1, Math.floor((y-y0)/4));
+      for (let x = x0; x < x1; x += 4) {
+        const cx = Math.min(nCols-1, Math.floor((x-x0)/4));
+        const i = (y*w+x)*4;
+        const v = (d[i]+d[i+1]+d[i+2])/3;
+        rowMeans[ry] += v; rowCounts[ry]++;
+        colMeans[cx] += v; colCounts[cx]++;
+      }
+    }
+    for (let r = 0; r < nRows; r++) if (rowCounts[r]>0) rowMeans[r] /= rowCounts[r];
+    for (let c = 0; c < nCols; c++) if (colCounts[c]>0) colMeans[c] /= colCounts[c];
+
+    // Row variance (high for horizontal stripes)
+    let rowMean = 0; for (let r=0;r<nRows;r++) rowMean+=rowMeans[r]; rowMean/=nRows;
+    let rowVar = 0; for (let r=0;r<nRows;r++) rowVar+=(rowMeans[r]-rowMean)**2; rowVar/=nRows;
+
+    // Col variance (high for vertical stripes)
+    let colMean2 = 0; for (let c=0;c<nCols;c++) colMean2+=colMeans[c]; colMean2/=nCols;
+    let colVar = 0; for (let c=0;c<nCols;c++) colVar+=(colMeans[c]-colMean2)**2; colVar/=nCols;
+
+    // Diagonal variance: compute mean on / and \ diagonals
+    const nDiag = Math.min(nRows, nCols);
+    let diagVar1 = 0, diagVar2 = 0;
+    if (nDiag > 2) {
+      const diagMeans1 = [], diagMeans2 = [];
+      for (let dd = 0; dd < nDiag; dd++) {
+        const r1 = dd, c1 = dd; // main diagonal
+        const r2 = dd, c2 = nCols-1-dd; // anti-diagonal
+        if (r1 < nRows && c1 < nCols) diagMeans1.push(rowMeans[r1] + colMeans[c1]);
+        if (r2 < nRows && c2 >= 0 && c2 < nCols) diagMeans2.push(rowMeans[r2] + colMeans[c2]);
+      }
+      if (diagMeans1.length > 1) {
+        const m1 = diagMeans1.reduce((a,b)=>a+b,0)/diagMeans1.length;
+        diagVar1 = diagMeans1.reduce((s,v)=>s+(v-m1)**2,0)/diagMeans1.length;
+      }
+      if (diagMeans2.length > 1) {
+        const m2 = diagMeans2.reduce((a,b)=>a+b,0)/diagMeans2.length;
+        diagVar2 = diagMeans2.reduce((s,v)=>s+(v-m2)**2,0)/diagMeans2.length;
+      }
+    }
+
+    // Per-channel energy (R, G, B separately in center region)
+    let rE = 0, gE = 0, bE = 0, cnt = 0;
+    for (let y = y0; y < y1; y += 6)
+      for (let x = x0; x < x1; x += 6) {
+        const i = (y*w+x)*4;
+        rE += d[i]; gE += d[i+1]; bE += d[i+2]; cnt++;
+      }
+    if (cnt > 0) { rE/=cnt; gE/=cnt; bE/=cnt; }
+
+    // Normalize to [0,1] range
+    const maxVar = Math.max(rowVar, colVar, diagVar1, diagVar2, 1);
+    return [
+      rowVar / maxVar,
+      colVar / maxVar,
+      diagVar1 / maxVar,
+      diagVar2 / maxVar,
+      (rE - gE) / 255,  // R-G channel difference
+      (gE - bE) / 255   // G-B channel difference
+    ];
+  },
+
+  regionSum(frame) {
+    if (!frame) return 0;
+    const d = frame.data, w = frame.width, h = frame.height;
+    let sum = 0;
+    const x0 = Math.floor(w*.2), x1 = Math.floor(w*.8);
+    const y0 = Math.floor(h*.2), y1 = Math.floor(h*.8);
+    for (let y = y0; y < y1; y += 3)
+      for (let x = x0; x < x1; x += 3) {
+        const i = (y*w+x)*4;
+        sum += (d[i]+d[i+1]+d[i+2])/3;
+      }
+    return sum;
+  },
+
+  measureStripContrast(frame) {
+    if (!frame) return 0;
+    const d = frame.data, w = frame.width, h = frame.height;
+    const cy = Math.floor(h/2), band = Math.floor(h*.1);
+    const profile = [];
+    for (let x = Math.floor(w*.2); x < Math.floor(w*.8); x += 2) {
+      let s = 0, c = 0;
+      for (let y = cy-band; y < cy+band; y += 4) {
+        const i = (y*w+x)*4;
+        s += (d[i]+d[i+1]+d[i+2])/3; c++;
+      }
+      profile.push(c > 0 ? s/c : 0);
+    }
+    const sm = [];
+    for (let i = 3; i < profile.length-3; i++) {
+      let s = 0; for (let j = -3; j <= 3; j++) s += profile[i+j]; sm.push(s/7);
+    }
+    let pS=0,pC=0,vS=0,vC=0;
+    for (let i = 1; i < sm.length-1; i++) {
+      if (sm[i]>sm[i-1]&&sm[i]>sm[i+1]) { pS+=sm[i];pC++; }
+      else if (sm[i]<sm[i-1]&&sm[i]<sm[i+1]) { vS+=sm[i];vC++; }
+    }
+    const pM = pC>0?pS/pC:Math.max(...sm);
+    const vM = vC>0?vS/vC:Math.min(...sm);
+    return (pM+vM) > 0 ? (pM-vM)/(pM+vM) : 0;
+  },
+
+  // Per-channel (R,G,B) strip contrast — used by stage11 (RoPE)
+  measureStripContrastRGB(frame) {
+    if (!frame) return [0, 0, 0];
+    const d = frame.data, w = frame.width, h = frame.height;
+    const cy = Math.floor(h/2), band = Math.floor(h*.1);
+    const profileR = [], profileG = [], profileB = [];
+    for (let x = Math.floor(w*.2); x < Math.floor(w*.8); x += 2) {
+      let sR = 0, sG = 0, sB = 0, c = 0;
+      for (let y = cy-band; y < cy+band; y += 4) {
+        const i = (y*w+x)*4;
+        sR += d[i]; sG += d[i+1]; sB += d[i+2]; c++;
+      }
+      profileR.push(c > 0 ? sR/c : 0);
+      profileG.push(c > 0 ? sG/c : 0);
+      profileB.push(c > 0 ? sB/c : 0);
+    }
+    const contrast = (prof) => {
+      const sm = [];
+      for (let i = 3; i < prof.length-3; i++) {
+        let s = 0; for (let j = -3; j <= 3; j++) s += prof[i+j]; sm.push(s/7);
+      }
+      let pS=0,pC=0,vS=0,vC=0;
+      for (let i = 1; i < sm.length-1; i++) {
+        if (sm[i]>sm[i-1]&&sm[i]>sm[i+1]) { pS+=sm[i];pC++; }
+        else if (sm[i]<sm[i-1]&&sm[i]<sm[i+1]) { vS+=sm[i];vC++; }
+      }
+      const pM = pC>0?pS/pC:Math.max(...sm);
+      const vM = vC>0?vS/vC:Math.min(...sm);
+      return (pM+vM) > 0 ? (pM-vM)/(pM+vM) : 0;
+    };
+    return [contrast(profileR), contrast(profileG), contrast(profileB)];
+  },
+
+  // Per-channel horizontal bin means (raw) — used by stage13 (GQA)
+  regionMeanRGBRaw(frame) {
+    if (!frame) return { rBins: [0,0,0,0], gBins: [0,0,0,0], bBins: [0,0,0,0] };
+    const d = frame.data, w = frame.width, h = frame.height;
+    const nBins = 4;
+    const y0 = Math.floor(h*.25), y1 = Math.floor(h*.75);
+    const x0 = Math.floor(w*.1), x1 = Math.floor(w*.9);
+    const bw = Math.floor((x1-x0)/nBins);
+    const rBins = [], gBins = [], bBins = [];
+    for (let b = 0; b < nBins; b++) {
+      let rS=0, gS=0, bS=0, cnt=0;
+      const bx0 = x0 + b*bw, bx1 = bx0 + bw;
+      for (let y = y0; y < y1; y += 4)
+        for (let x = bx0; x < bx1; x += 4) {
+          const i = (y*w+x)*4;
+          rS += d[i]; gS += d[i+1]; bS += d[i+2]; cnt++;
+        }
+      rBins.push(cnt > 0 ? rS/cnt : 0);
+      gBins.push(cnt > 0 ? gS/cnt : 0);
+      bBins.push(cnt > 0 ? bS/cnt : 0);
+    }
+    return { rBins, gBins, bBins };
+  },
+
+  // Measure N horizontal bins (grayscale mean per bin) — used by many stages
+  measureNBins(frame, nBins) {
+    if (!frame) return new Array(nBins).fill(0);
+    const d = frame.data, w = frame.width, h = frame.height;
+    const y0 = Math.floor(h*.2), y1 = Math.floor(h*.8);
+    const x0 = Math.floor(w*.1), x1 = Math.floor(w*.9);
+    const bw = (x1-x0) / nBins;
+    const bins = [];
+    for (let b = 0; b < nBins; b++) {
+      let sum = 0, cnt = 0;
+      const bx0 = Math.floor(x0 + b*bw), bx1 = Math.floor(x0 + (b+1)*bw);
+      for (let y = y0; y < y1; y += 4)
+        for (let x = bx0; x < bx1; x += 4) {
+          const i = (y*w+x)*4;
+          sum += (d[i]+d[i+1]+d[i+2])/3; cnt++;
+        }
+      bins.push(cnt > 0 ? sum/cnt/255 : 0);
+    }
+    return bins;
+  },
+
+  measureCalibratedBins(frame, nBins, opts = {}) {
+    if (!frame) return new Array(nBins).fill(0);
+    const d = frame.data, w = frame.width, h = frame.height;
+    const cal = this.results.calibration || {};
+    const x0 = opts.x0 !== undefined ? opts.x0 : (cal.x0 !== undefined ? cal.x0 : Math.floor(w * 0.1));
+    const x1 = opts.x1 !== undefined ? opts.x1 : (cal.x1 !== undefined ? cal.x1 : Math.floor(w * 0.9));
+    const y0 = opts.y0 !== undefined ? opts.y0 : Math.floor(h * 0.2);
+    const y1 = opts.y1 !== undefined ? opts.y1 : Math.floor(h * 0.8);
+    const dark = (cal.blackMean || 0) / 255;
+    const white = (cal.whiteMean || 255) / 255;
+    const span = Math.max(white - dark, 1e-4);
+    const invGamma = cal.gamma > 0.01 ? 1 / cal.gamma : 1;
+    const bw = (x1 - x0) / nBins;
+    const bins = [];
+
+    for (let b = 0; b < nBins; b++) {
+      let sum = 0, cnt = 0;
+      const bx0 = Math.floor(x0 + b * bw), bx1 = Math.floor(x0 + (b + 1) * bw);
+      for (let y = y0; y < y1; y += 4) {
+        for (let x = bx0; x < bx1; x += 4) {
+          const i = (y * w + x) * 4;
+          const raw = ((d[i] + d[i+1] + d[i+2]) / 3) / 255;
+          const norm = Math.max(0, Math.min(1, (raw - dark) / span));
+          sum += Math.pow(norm, invGamma);
+          cnt++;
+        }
+      }
+      bins.push(cnt > 0 ? sum / cnt : 0);
+    }
+
+    if (opts.mirror === true && cal.isMirrored) bins.reverse();
+    return bins;
+  },
+
+  // Horizontal profile: column-wise average brightness — used by stage16 (Superpos)
+  getHorizontalProfile(frame) {
+    if (!frame) return [];
+    const d = frame.data, w = frame.width, h = frame.height;
+    const y0 = Math.floor(h*.25), y1 = Math.floor(h*.75);
+    const profile = [];
+    for (let x = 0; x < w; x += 2) {
+      let sum = 0, cnt = 0;
+      for (let y = y0; y < y1; y += 4) {
+        const i = (y*w+x)*4;
+        sum += (d[i]+d[i+1]+d[i+2])/3; cnt++;
+      }
+      profile.push(cnt > 0 ? sum/cnt : 0);
+    }
+    return profile;
+  },
+
+  // Quadrant mean: average brightness of left or right half — used by stage19 (Hadamard)
+  quadrantMean(frame, side) {
+    if (!frame) return 0;
+    const d = frame.data, w = frame.width, h = frame.height;
+    const y0 = Math.floor(h*.15), y1 = Math.floor(h*.85);
+    const xMid = Math.floor(w/2);
+    const x0 = side === 'left' ? Math.floor(w*.05) : xMid;
+    const x1 = side === 'left' ? xMid : Math.floor(w*.95);
+    let sum = 0, cnt = 0;
+    for (let y = y0; y < y1; y += 3)
+      for (let x = x0; x < x1; x += 3) {
+        const i = (y*w+x)*4;
+        sum += (d[i]+d[i+1]+d[i+2])/3; cnt++;
+      }
+    return cnt > 0 ? sum/cnt/255 : 0;
+  },
+
+  // Cosine similarity between two vectors — used by stage14 (PE)
+  cosineSimilarity(a, b) {
+    if (!a || !b || a.length !== b.length || a.length === 0) return 0;
+    let dot = 0, magA = 0, magB = 0;
+    for (let i = 0; i < a.length; i++) {
+      dot += a[i] * b[i];
+      magA += a[i] * a[i];
+      magB += b[i] * b[i];
+    }
+    const denom = Math.sqrt(magA) * Math.sqrt(magB);
+    return denom > 1e-12 ? dot / denom : 0;
+  },
+
+  // Greatest common divisor — used by stage34 (Shor)
+  gcd(a, b) {
+    a = Math.abs(Math.round(a));
+    b = Math.abs(Math.round(b));
+    while (b) { [a, b] = [b, a % b]; }
+    return a;
+  },
+
+  // Mean brightness of a specific rectangular area — used by stage33 (Tomo)
+  regionMeanArea(frame, x0, y0, x1, y1) {
+    if (!frame) return 0;
+    const d = frame.data, w = frame.width;
+    let sum = 0, cnt = 0;
+    x0 = Math.max(0, Math.floor(x0));
+    y0 = Math.max(0, Math.floor(y0));
+    x1 = Math.min(frame.width, Math.floor(x1));
+    y1 = Math.min(frame.height, Math.floor(y1));
+    for (let y = y0; y < y1; y += 2)
+      for (let x = x0; x < x1; x += 2) {
+        const i = (y * w + x) * 4;
+        sum += (d[i] + d[i+1] + d[i+2]) / 3; cnt++;
+      }
+    return cnt > 0 ? sum / cnt : 0;
+  },
+
+  measureGradient(frame) {
+    if (!frame) return { r2: 0, profile: [] };
+    const d = frame.data, w = frame.width, h = frame.height;
+    const cy = Math.floor(h/2), band = 40, nBins = 20;
+    const profile = [];
+    for (let bin = 0; bin < nBins; bin++) {
+      const bx0 = Math.floor(bin/nBins*w*.6+w*.2);
+      const bx1 = Math.floor((bin+1)/nBins*w*.6+w*.2);
+      let s = 0, c = 0;
+      for (let y = cy-band; y < cy+band; y += 2)
+        for (let x = bx0; x < bx1; x += 3) {
+          const i = (y*w+x)*4;
+          s += (d[i]+d[i+1]+d[i+2])/3; c++;
+        }
+      profile.push(c>0?s/c:0);
+    }
+    const mn = Math.min(...profile), mx = Math.max(...profile);
+    let norm = profile.map(v => mx>mn ? (v-mn)/(mx-mn) : 0);
+
+    // Auto-detect mirror flip: if profile decreases, flip it
+    if (norm[0] > norm[norm.length-1]) {
+      norm = norm.slice().reverse();
+    }
+
+    // Apply gamma correction using calibration data
+    const gamma = (this.results.calibration && this.results.calibration.gamma) || 1;
+    const invGamma = gamma > 0.01 ? 1 / gamma : 1;
+    const corrected = norm.map(v => v > 0 ? Math.pow(v, invGamma) : 0);
+
+    // Re-normalize corrected to 0-1
+    const cmn = Math.min(...corrected), cmx = Math.max(...corrected);
+    const final = corrected.map(v => cmx>cmn ? (v-cmn)/(cmx-cmn) : 0);
+
+    // Compute R² for both forward and reversed, take max
+    const computeR2 = (data) => {
+      const ideal = Array.from({length:nBins},(_,i) => i/(nBins-1));
+      const mean = data.reduce((a,b)=>a+b,0)/nBins;
+      let ssRes=0, ssTot=0;
+      for (let i = 0; i < nBins; i++) {
+        ssRes += (data[i]-ideal[i])**2;
+        ssTot += (data[i]-mean)**2;
+      }
+      return ssTot > 0 ? 1-ssRes/ssTot : 0;
+    };
+
+    const r2_fwd = computeR2(final);
+    const r2_rev = computeR2([...final].reverse());
+    const bestR2 = Math.max(r2_fwd, r2_rev);
+    const bestProfile = r2_rev > r2_fwd ? [...final].reverse() : final;
+
+    return { r2: bestR2, profile: bestProfile };
+  },
+
+  showBlockPattern(values, gridSize) {
+    this.showPattern((ctx, w, h) => {
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
+      const n = values.length;
+      const cols = gridSize, rows = Math.ceil(n/cols);
+      const cw = Math.floor(w/cols), ch = Math.floor(h/rows);
+      for (let i = 0; i < n; i++) {
+        const r = Math.floor(i/cols), c = i%cols;
+        const v = Math.max(0, Math.min(255, Math.round(values[i]*255)));
+        ctx.fillStyle = `rgb(${v},${v},${v})`;
+        ctx.fillRect(c*cw, r*ch, cw, ch);
+      }
+    });
+  },
+
+  showBlockPatternRGB(rowR, rowG, rowB, gridSize) {
+    this.showPattern((ctx, w, h) => {
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
+      const n = rowR.length;
+      const cols = gridSize, rows = Math.ceil(n/cols);
+      const cw = Math.floor(w/cols), ch = Math.floor(h/rows);
+      for (let i = 0; i < n; i++) {
+        const r = Math.floor(i/cols), c = i%cols;
+        const redVal = Math.max(0, Math.min(255, Math.round((rowR[i] || 0)*255)));
+        const greenVal = Math.max(0, Math.min(255, Math.round((rowG[i] || 0)*255)));
+        const blueVal = Math.max(0, Math.min(255, Math.round((rowB[i] || 0)*255)));
+        ctx.fillStyle = `rgb(${redVal},${greenVal},${blueVal})`;
+        ctx.fillRect(c*cw, r*ch, cw, ch);
+      }
+    });
+  },
+
+  regionSumRGB(frame) {
+    if (!frame) return { r: 0, g: 0, b: 0 };
+    const d = frame.data, w = frame.width, h = frame.height;
+    let rSum = 0, gSum = 0, bSum = 0;
+    const x0 = Math.floor(w*.2), x1 = Math.floor(w*.8);
+    const y0 = Math.floor(h*.2), y1 = Math.floor(h*.8);
+    let cnt = 0;
+    for (let y = y0; y < y1; y += 3)
+      for (let x = x0; x < x1; x += 3) {
+        const i = (y*w+x)*4;
+        rSum += d[i];
+        gSum += d[i+1];
+        bSum += d[i+2];
+        cnt++;
+      }
+    return {
+      r: cnt > 0 ? rSum / cnt : 0,
+      g: cnt > 0 ? gSum / cnt : 0,
+      b: cnt > 0 ? bSum / cnt : 0
+    };
+  },
+
+  blockMeans(frame, gridSize) {
+    if (!frame) return Array(gridSize*gridSize).fill(0);
+    const d = frame.data, w = frame.width, h = frame.height;
+    const cols = gridSize, rows = gridSize;
+    const cw = Math.floor(w/cols), ch = Math.floor(h/rows);
+    const means = [];
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++) {
+        let s=0, cnt=0;
+        const bx0 = c*cw+Math.floor(cw*.25), bx1 = c*cw+Math.floor(cw*.75);
+        const by0 = r*ch+Math.floor(ch*.25), by1 = r*ch+Math.floor(ch*.75);
+        for (let y = by0; y < by1; y += 2)
+          for (let x = bx0; x < bx1; x += 2) {
+            const i = (y*w+x)*4;
+            s += (d[i]+d[i+1]+d[i+2])/3; cnt++;
+          }
+        means.push(cnt>0?s/cnt:0);
+      }
+    return means;
+  },
+
+  pearson(a, b) {
+    const n = Math.min(a.length, b.length);
+    if (n < 2) return 0;
+    const ma = a.reduce((s,v)=>s+v,0)/n;
+    const mb = b.reduce((s,v)=>s+v,0)/n;
+    let num=0,da=0,db=0;
+    for (let i = 0; i < n; i++) {
+      num += (a[i]-ma)*(b[i]-mb);
+      da += (a[i]-ma)**2;
+      db += (b[i]-mb)**2;
+    }
+    return (da>0&&db>0) ? num/Math.sqrt(da*db) : 0;
+  },
+
+  mulberry32(seed) {
+    return () => {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      let t = Math.imul(seed^seed>>>15, 1|seed);
+      t = t + Math.imul(t^t>>>7, 61|t) ^ t;
+      return ((t^t>>>14)>>>0) / 4294967296;
+    };
+  },
+
+  // ═══ RESULTS DISPLAY ═══
+
+  async showResults() {
+    this.goTo('results');
+    const elapsed = ((Date.now() - this.startTime) / 1000).toFixed(0);
+    document.getElementById('res-time').textContent = this.t('results_time', {var0: elapsed});
+    const r = this.results;
+
+    if (r.calibration) {
+      const c = r.calibration;
+      this.rv('rv-white', c.whiteMean.toFixed(1)+'/255', c.whiteMean > 40 ? 'ok' : 'warn');
+      this.rv('rv-black', c.blackMean.toFixed(1)+'/255', c.blackMean < 30 ? 'ok' : 'warn');
+      this.rv('rv-dr', c.dr.toFixed(1)+':1', c.dr > 3 ? 'ok' : c.dr > 1.5 ? 'warn' : 'bad');
+      this.rv('rv-gamma', c.gamma.toFixed(2), Math.abs(c.gamma-1)<1.5 ? 'ok' : 'warn');
+      this.rv('rv-snr', this.t('res_cal_snr_val', {var0: c.snr.toFixed(0), var1: c.snrBits.toFixed(1)}), c.snrBits>=4?'ok':'warn');
+      this.rv('rv-lin', (c.r2*100).toFixed(1)+'%', c.r2>0.8?'ok':c.r2>0.5?'warn':'bad');
+      this.drawGammaChart(c);
+    }
+
+    // Hide all stage cards initially, then show only configured ones
+    document.querySelectorAll('.stage-card').forEach(el => el.style.display = 'none');
+
+    let passCount = 0;
+    let c1_pass = false;
+    const stagePassMap = {};
+    for (const [index, stage] of this.stages.entries()) {
+      const serialNum = index + 1;
+      const stageKey = `stage${stage.id}`;
+      const card = document.getElementById(`card-stage-${stage.id}`);
+      if (card) {
+        card.style.display = 'block';
+      }
+      
+      const badge = document.getElementById(`res-badge-s${stage.id}`);
+      if (badge) {
+        const prefix = this.currentLang === 'ru' ? 'ЭТАП' : 'STAGE';
+        const name = stage.name[this.currentLang] || stage.name['ru'];
+        badge.textContent = `${prefix} ${serialNum} — ${name}`;
+      }
+      
+      // Load stage translations dynamically to translate row0 label
+      let stageTrans = null;
+      try {
+        const jsonPath = stage.js_path.replace(/\.js$/, '.json');
+        const jsonRes = await fetch(jsonPath);
+        stageTrans = await jsonRes.json();
+      } catch(e) {
+        console.error(`Failed to load translations for stage ${stage.id}:`, e);
+      }
+
+      if (stageTrans) {
+        const lang = this.currentLang || 'ru';
+        const trans = stageTrans[lang] || stageTrans['ru'];
+        if (trans && trans.res_row0) {
+          const rowEl = document.getElementById(`res-s${stage.id}-row0`);
+          if (rowEl) {
+            rowEl.textContent = trans.res_row0;
+          }
+        }
+      }
+
+      if (r[stageKey]) {
+        this._stageTranslations = stageTrans;
+        let ok = false;
+        try {
+          const mod = await import(stage.js_path);
+          if (mod && mod.render) {
+            await mod.render.call(this, r);
+          }
+          if (mod && mod.check) {
+            ok = mod.check(r[stageKey]);
+          }
+        } catch(e) {
+          console.error(`Error rendering stage ${stage.id}:`, e);
+        }
+        
+        stagePassMap[stage.id] = ok;
+        if (ok) passCount++;
+        if (stage.id === 1 && ok) c1_pass = true;
+      }
+    }
+
+    // Overall verdict
+    try {
+      const ga = document.getElementById('g-all');
+      const vt = document.getElementById('verdict');
+      const total = this.stages.length;
+      if (ga && vt) {
+        const c1 = c1_pass;
+        const cShor = stagePassMap[34];
+        const cTSP = stagePassMap[56];
+        const cBounce = stagePassMap[60];
+        const cText = stagePassMap[61];
+
+        if (c1 && cShor && cBounce && cText) {
+          ga.textContent = this.t('grade_perfect');
+          ga.className = 'grade pass';
+          vt.innerHTML = this.t('verdict_perfect', {var0: passCount, var1: total});
+        } else if (c1 && cShor && cTSP) {
+          ga.textContent = this.t('grade_high');
+          ga.className = 'grade pass';
+          vt.innerHTML = this.t('verdict_high', {var0: passCount, var1: total});
+        } else if (passCount >= Math.floor(total * 0.40)) {
+          ga.textContent = this.t('grade_mid');
+          ga.className = 'grade pass';
+          vt.innerHTML = this.t('verdict_mid', {var0: passCount, var1: total});
+        } else if (passCount >= Math.floor(total * 0.25)) {
+          ga.textContent = this.t('grade_low');
+          ga.className = 'grade partial';
+          vt.innerHTML = this.t('verdict_low', {var0: passCount, var1: total});
+        } else if (passCount >= 1) {
+          ga.textContent = this.t('grade_lowest');
+          ga.className = 'grade partial';
+          vt.innerHTML = this.t('verdict_lowest', {var0: passCount, var1: total});
+        } else if (c1) {
+          ga.textContent = this.t('grade_channel');
+          ga.className = 'grade partial';
+          vt.innerHTML = this.t('verdict_channel');
+        } else {
+          ga.textContent = this.t('grade_fail');
+          ga.className = 'grade fail';
+          vt.innerHTML = this.t('verdict_fail');
+        }
+      }
+    } catch(e) {
+      console.error('Error rendering overall verdict:', e);
+    }
+  },
+
+  rv(id, text, cls) {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = text; el.className = 'rv ' + cls; }
+  },
+
+  t(key, vars = {}) {
+    const lang = this.currentLang || 'ru';
+    if (key === 'etap') {
+      const idx = this.stages && this.currentStage ? this.stages.indexOf(this.currentStage) : -1;
+      const serialNum = idx !== -1 ? idx + 1 : (this.currentStage ? this.currentStage.id : 1);
+      const prefix = lang === 'ru' ? 'Этап' : 'Stage';
+      return `📡 ${prefix} ${serialNum}`;
+    }
+    let template = this._stageTranslations?.[lang]?.[key] || 
+                   this._stageTranslations?.['ru']?.[key] || 
+                   this._coreTranslations?.[lang]?.[key] || 
+                   this._coreTranslations?.['ru']?.[key] || 
+                   key;
+    for (const [k, v] of Object.entries(vars)) {
+      template = template.replace(new RegExp('\\{' + k + '\\}', 'g'), v);
+    }
+    return template;
+  },
+
+  updateUILanguage() {
+    if (!this._coreTranslations) return;
+    const t = this._coreTranslations[this.currentLang || 'ru'] || this._coreTranslations['ru'];
+    if (!t) return;
+    
+    // Go through all keys in the translation block
+    for (const [key, val] of Object.entries(t)) {
+      if (key.startsWith('res-badge-s')) continue; // Skip dynamic results badges, handled by showResults()
+      const el = document.getElementById(key);
+      if (el) {
+        let textVal = val;
+        if (key === 'welcome_needed_list') {
+          const phoneName = this.currentDevice ? this.currentDevice.name : 'Xiaomi 12 Lite';
+          const distCm = this.currentDevice ? (this.currentDevice.recommended_dist_mm / 10).toFixed(1) : '3.7';
+          textVal = textVal.replace('{var0}', phoneName).replace('{var1}', distCm);
+        } else if (key === 'welcome_diagram_text') {
+          const distMm = this.currentDevice ? this.currentDevice.recommended_dist_mm.toFixed(1) : '37.0';
+          const unit = (this.currentLang || 'ru') === 'ru' ? 'мм' : 'mm';
+          textVal = textVal.replace('{var0}', `${distMm} ${unit}`);
+        }
+
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.value = textVal;
+        } else if (key.includes('list') || key.includes('text') || key.includes('sub') || key.includes('warn') || key.includes('info') || key.includes('diagram') || key.includes('cd')) {
+          el.innerHTML = textVal;
+        } else {
+          el.textContent = textVal;
+        }
+      }
+    }
+  },
+
+  // Render a stage's chart offscreen and return data URL
+  renderStageChart(stageId) {
+    const r = this.results;
+    // Map stageId → { drawFn, canvasId, data }
+    const chartMap = {
+      1:  { fn: 'drawGradChart',     id: 'chart-grad',    data: r.stage1 },
+      2:  { fn: 'drawDotChart',      id: 'chart-dot',     data: r.stage2 },
+      3:  { fn: 'drawMVChart',       id: 'chart-mv',      data: r.stage3 },
+      6:  { fn: 'drawRGBChart',      id: 'chart-rgb',     data: r.stage6 },
+      7:  { fn: 'drawSiLUChart',     id: 'chart-silu',    data: r.stage7 },
+      8:  { fn: 'drawResChart',      id: 'chart-res',     data: r.stage8 },
+      9:  { fn: 'drawDropChart',     id: 'chart-drop',    data: r.stage9 },
+      10: { fn: 'drawMLPChart',      id: 'chart-mlp',     data: r.stage10 },
+      11: { fn: 'drawRoPEChart',     id: 'chart-rope',    data: r.stage11 },
+      12: { fn: 'drawSoftmaxChart',  id: 'chart-softmax', data: r.stage12 },
+      13: { fn: 'drawGQAChart',      id: 'chart-gqa',     data: r.stage13 },
+      14: { fn: 'drawPEChart',       id: 'chart-pe',      data: r.stage14 },
+      15: { fn: 'drawFPChart',       id: 'chart-fp',      data: r.stage15 },
+      16: { fn: 'drawQSuperChart',   id: 'chart-qsuper',  data: r.stage16 },
+      17: { fn: 'drawBellChart',     id: 'chart-bell',    data: r.stage17 },
+      18: { fn: 'drawCollapseChart', id: 'chart-collapse',data: r.stage18 },
+      19: { fn: 'drawHadamardChart', id: 'chart-hadamard',data: r.stage19 },
+      20: { fn: 'drawQFTChart',      id: 'chart-qft',     data: r.stage20 },
+      21: { fn: 'drawGroverChart',   id: 'chart-grover',  data: r.stage21 },
+      22: { fn: 'drawTeleportChart', id: 'chart-teleport',data: r.stage22 },
+      23: { fn: 'drawDJChart',       id: 'chart-dj',      data: r.stage23 },
+      24: { fn: 'drawQECChart',      id: 'chart-qec',     data: r.stage24 },
+      25: { fn: 'drawCNOTChart',     id: 'chart-cnot',    data: r.stage25 },
+    };
+    const info = chartMap[stageId];
+    if (!info || !info.data || !this[info.fn]) return null;
+    try {
+      // Temporarily hide any existing element with same ID
+      const existing = document.getElementById(info.id);
+      let oldId = null;
+      if (existing) { oldId = existing.id; existing.id = '_tmp_' + oldId; }
+      // Create offscreen canvas
+      const cv = document.createElement('canvas');
+      cv.id = info.id;
+      cv.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:400px;height:200px;';
+      Object.defineProperty(cv, 'offsetWidth', { value: 400, configurable: true });
+      Object.defineProperty(cv, 'offsetHeight', { value: 200, configurable: true });
+      document.body.appendChild(cv);
+      this[info.fn](info.data);
+      const dataUrl = cv.toDataURL('image/png', 0.8);
+      document.body.removeChild(cv);
+      // Restore original element ID
+      if (existing && oldId) existing.id = oldId;
+      return dataUrl;
+    } catch(e) {
+      console.error(`Chart render error for stage ${stageId}:`, e);
+      return null;
+    }
+  },
+
+  drawGammaChart(cal) {
+    const cv = document.getElementById('chart-gamma');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width = cv.offsetWidth*2, h = cv.height = cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle = 'rgba(10,10,30,.8)'; ctx.fillRect(0,0,w,h);
+    // Ideal
+    ctx.strokeStyle='rgba(100,120,255,.3)';ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(p,h-p);ctx.lineTo(w-p,p);ctx.stroke();ctx.setLineDash([]);
+    // Data
+    const ins = [0, ...cal.grayInputs, 1];
+    const outs = [0, ...cal.normalizedOutputs, 1];
+    ctx.fillStyle='#6366f1';ctx.strokeStyle='#6366f1';ctx.lineWidth=2;
+    ctx.beginPath();
+    for (let i=0;i<ins.length;i++) {
+      const x=p+ins[i]*(w-2*p), y=h-p-Math.max(0,Math.min(1,outs[i]))*(h-2*p);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      ctx.fillRect(x-4,y-4,8,8);
+    }
+    ctx.stroke();
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='16px sans-serif';
+    ctx.fillText(`γ=${cal.gamma.toFixed(2)} R²=${(cal.r2*100).toFixed(0)}%`,w-p-160,p+20);
+    // Labels
+    ctx.fillStyle='rgba(150,150,180,.4)';ctx.font='12px sans-serif';
+    ctx.fillText(this.t('chart_input_oled'),w/2-30,h-8);
+    ctx.save();ctx.translate(12,h/2);ctx.rotate(-Math.PI/2);ctx.fillText(this.t('chart_output_camera'),0,0);ctx.restore();
+  },
+
+  drawGradChart(s1) {
+    const cv = document.getElementById('chart-grad');
+    if (!cv||!s1.gradProfile) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40, prof = s1.gradProfile;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle='rgba(100,120,255,.3)';ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(p,h-p);ctx.lineTo(w-p,p);ctx.stroke();ctx.setLineDash([]);
+    ctx.strokeStyle='#06b6d4';ctx.lineWidth=2;ctx.beginPath();
+    for(let i=0;i<prof.length;i++){
+      const x=p+i/(prof.length-1)*(w-2*p);
+      const y=h-p-Math.max(0,Math.min(1,prof[i]))*(h-2*p);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='16px sans-serif';
+    ctx.fillText(`R²=${(s1.gradR2*100).toFixed(1)}%`,w-p-100,p+20);
+  },
+
+  drawDotChart(s2) {
+    const cv = document.getElementById('chart-dot');
+    if (!cv||!s2.digitalMeans||!s2.opticalMeans) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const dig = s2.digitalMeans, opt = s2.opticalMeans;
+    const n = Math.min(dig.length, opt.length);
+    // Ideal line (y=x)
+    ctx.strokeStyle='rgba(100,120,255,.3)';ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(p,h-p);ctx.lineTo(w-p,p);ctx.stroke();ctx.setLineDash([]);
+    // Points
+    ctx.fillStyle='rgba(99,102,241,.9)';
+    for(let i=0;i<n;i++){
+      const x = p + dig[i]*(w-2*p);
+      const y = h-p - Math.max(0,Math.min(1,opt[i]))*(h-2*p);
+      ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();
+    }
+    // Labels
+    const ic = s2.intensityCorrelation || 0;
+    ctx.fillStyle='rgba(200,200,220,.6)';ctx.font='16px sans-serif';
+    ctx.fillText(`r=${ic.toFixed(3)}`,w-p-100,p+20);
+    ctx.fillStyle='rgba(150,150,180,.4)';ctx.font='12px sans-serif';
+    ctx.fillText(this.t('chart_digital_input'),w/2-40,h-8);
+    ctx.save();ctx.translate(12,h/2);ctx.rotate(-Math.PI/2);ctx.fillText(this.t('chart_optical_output'),0,0);ctx.restore();
+  },
+
+  drawMVChart(s3) {
+    const cv = document.getElementById('chart-mv');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const dY=s3.digitalY, oY=s3.opticalY;
+    const n=dY.length;
+    const maxV=Math.max(...dY.map(Math.abs),...oY.map(Math.abs),0.01);
+    const bw=(w-2*p)/n/2.5;
+    for(let i=0;i<n;i++){
+      const x=p+(i+.5)*(w-2*p)/n;
+      const hd=(dY[i]/maxV)*(h/2-p), ho=(oY[i]/maxV)*(h/2-p);
+      ctx.fillStyle='rgba(99,102,241,.7)';ctx.fillRect(x-bw,h/2-hd,bw-2,hd);
+      ctx.fillStyle='rgba(6,182,212,.7)';ctx.fillRect(x+2,h/2-ho,bw-2,ho);
+    }
+    ctx.fillStyle='rgba(99,102,241,.8)';ctx.fillRect(w-150,15,12,12);
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='14px sans-serif';ctx.fillText(this.t('chart_digital'),w-132,26);
+    ctx.fillStyle='rgba(6,182,212,.8)';ctx.fillRect(w-150,33,12,12);
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.fillText(this.t('chart_optical'),w-132,44);
+  },
+
+  drawDJChart(s23) {
+    const cv = document.getElementById('chart-dj');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const n = s23.results.length;
+    const bw = (w-2*p)/(n+1)*0.7;
+    for (let i=0;i<n;i++) {
+      const r = s23.results[i];
+      const x = p+(i+1)*(w-2*p)/(n+1);
+      const maxVar = 0.05;
+      const bh = Math.min(r.variance/maxVar, 1)*(h-2*p);
+      ctx.fillStyle = r.correct ? (r.type==='const'?'rgba(168,85,247,.7)':'rgba(34,197,94,.7)') : 'rgba(239,68,68,.7)';
+      ctx.fillRect(x-bw/2, h-p-bh, bw, bh);
+      ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='10px sans-serif';
+      ctx.fillText(r.type==='const'?'const':'balanced', x-bw/2, h-5);
+      ctx.fillText(r.variance.toFixed(4), x-15, h-p-bh-8);
+      ctx.fillText(r.correct?'✓':'✗', x-3, h-p-bh-22);
+    }
+    // Threshold line
+    ctx.strokeStyle='rgba(234,179,8,.5)';ctx.setLineDash([4,4]);
+    const ty = h-p-(0.02/0.05)*(h-2*p);
+    ctx.beginPath();ctx.moveTo(p,ty);ctx.lineTo(w-p,ty);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(234,179,8,.6)';ctx.font='11px sans-serif';ctx.fillText('threshold',w-p-60,ty-5);
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='13px sans-serif';
+    ctx.fillText(`${(s23.accuracy*100).toFixed(0)}%`,p+5,p+14);
+  },
+
+  drawQECChart(s24) {
+    const cv = document.getElementById('chart-qec');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    // 3 bars: F_pre, F_err, F_fix
+    const labels = [this.t('chart_before_error'), this.t('chart_with_error'), this.t('chart_after_qec')];
+    const vals = [s24.avgFidPre, s24.avgFidErr, s24.avgFidFix];
+    const colors = ['rgba(34,197,94,.7)','rgba(239,68,68,.7)','rgba(168,85,247,.8)'];
+    const bw = (w-2*p)/4*0.7;
+    for (let i=0;i<3;i++) {
+      const x = p+(i+1)*(w-2*p)/4;
+      const bh = Math.abs(vals[i])*(h-2*p);
+      ctx.fillStyle=colors[i]; ctx.fillRect(x-bw/2,h-p-bh,bw,bh);
+      ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='11px sans-serif';
+      ctx.fillText(labels[i],x-bw/2-5,h-5);
+      ctx.fillText(vals[i].toFixed(3),x-15,h-p-bh-8);
+    }
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='13px sans-serif';
+    ctx.fillText(`Recovery: ${(s24.recoveryRate*100).toFixed(0)}%`,p+5,p+14);
+  },
+
+  drawCNOTChart(s25) {
+    const cv = document.getElementById('chart-cnot');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const n = s25.cnotResults.length;
+    const cellW = (w-2*p)/n, cellH = (h-2*p)/3;
+    for (let i=0;i<n;i++) {
+      const r = s25.cnotResults[i];
+      // Input row
+      ctx.fillStyle = r.ctrlOK ? 'rgba(34,197,94,.5)' : 'rgba(239,68,68,.5)';
+      ctx.fillRect(p+i*cellW+2, p+2, cellW-4, cellH-4);
+      ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='11px sans-serif';
+      ctx.fillText(`C:${r.ctrlBit} T:${r.tgtBit}`, p+i*cellW+8, p+cellH/2+4);
+      // Output row
+      if (s25.cnotOutputs[i]) {
+        const o = s25.cnotOutputs[i];
+        ctx.fillStyle = o.correct ? 'rgba(34,197,94,.5)' : 'rgba(239,68,68,.5)';
+        ctx.fillRect(p+i*cellW+2, p+cellH+2, cellW-4, cellH-4);
+        ctx.fillText(`C:${o.oCBit} T:${o.oTBit}`, p+i*cellW+8, p+cellH*1.5+4);
+      }
+      // Label
+      ctx.fillStyle='rgba(200,200,220,.4)';ctx.font='9px sans-serif';
+      ctx.fillText(r.name, p+i*cellW+4, h-8);
+    }
+    ctx.fillStyle='rgba(200,200,220,.4)';ctx.font='10px sans-serif';
+    ctx.fillText('Input',2,p+cellH/2+4); ctx.fillText('Output',2,p+cellH*1.5+4);
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='13px sans-serif';
+    ctx.fillText(`Acc=${(s25.totalAcc*100).toFixed(0)}%`,p+5,p+14);
+  },
+
+  drawHadamardChart(s19) {
+    const cv = document.getElementById('chart-hadamard');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    // Draw 4 bars: |0⟩ L/R, H|0⟩ L/R
+    const labels = ['|0⟩ L','|0⟩ R','H|0⟩ L','H|0⟩ R','|1⟩ L','|1⟩ R','H|1⟩ L','H|1⟩ R'];
+    const vals = [s19.q0L,s19.q0R,s19.qHL,s19.qHR,s19.q1L,s19.q1R,s19.qH1L,s19.qH1R];
+    const cols = ['rgba(59,130,246,.6)','rgba(59,130,246,.3)','rgba(124,58,237,.8)','rgba(124,58,237,.8)',
+                  'rgba(239,68,68,.6)','rgba(239,68,68,.3)','rgba(124,58,237,.8)','rgba(124,58,237,.8)'];
+    const maxV = Math.max(...vals, 0.01);
+    const bw = (w-2*p)/(labels.length+1)*0.7;
+    for (let i=0;i<labels.length;i++) {
+      const x = p+(i+1)*(w-2*p)/(labels.length+1);
+      const bh = (vals[i]/maxV)*(h-2*p);
+      ctx.fillStyle=cols[i]; ctx.fillRect(x-bw/2,h-p-bh,bw,bh);
+      ctx.fillStyle='rgba(200,200,220,.4)';ctx.font='9px sans-serif';
+      ctx.save();ctx.translate(x,h-5);ctx.rotate(-0.5);ctx.fillText(labels[i],0,0);ctx.restore();
+    }
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='13px sans-serif';
+    ctx.fillText(`bal=${(s19.avgBalance*100).toFixed(0)}%`,p+5,p+14);
+    // 50% line
+    ctx.strokeStyle='rgba(124,58,237,.3)';ctx.setLineDash([3,3]);
+    const y50=h-p-0.5/maxV*(h-2*p);
+    ctx.beginPath();ctx.moveTo(p,y50);ctx.lineTo(w-p,y50);ctx.stroke();ctx.setLineDash([]);
+  },
+
+  drawQFTChart(s20) {
+    const cv = document.getElementById('chart-qft');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const N = s20.N;
+    const cellW = (w-2*p)/(N+1), cellH = (h-2*p)/(N+1);
+    // Heatmap: rows = input |k⟩, cols = output |n⟩
+    const maxA = Math.max(...s20.qftAmplitudes.flat(), 0.01);
+    for (let k=0;k<N;k++) {
+      for (let n=0;n<N;n++) {
+        const v = s20.qftAmplitudes[k][n]/maxA;
+        const r=Math.round(217*v),g=Math.round(70*v),b=Math.round(239*v);
+        ctx.fillStyle=`rgba(${r},${g},${b},${0.3+v*0.7})`;
+        ctx.fillRect(p+(n+0.5)*cellW, p+(k+0.5)*cellH, cellW*0.9, cellH*0.9);
+        ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='11px sans-serif';
+        ctx.fillText(s20.qftAmplitudes[k][n].toFixed(2), p+(n+0.5)*cellW+5, p+(k+0.5)*cellH+cellH*0.6);
+      }
+      ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='12px sans-serif';
+      ctx.fillText(`|${k}⟩`, 5, p+(k+0.5)*cellH+cellH*0.6);
+    }
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='13px sans-serif';
+    ctx.fillText(`r=${s20.avgCorr.toFixed(3)}`,w-p-80,p+14);
+  },
+
+  drawGroverChart(s21) {
+    const cv = document.getElementById('chart-grover');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const N = s21.N;
+    const stages = [s21.bins0, s21.bins1, s21.bins2];
+    const names = ['H⊗N','Oracle','Diffuser'];
+    const stepW = (w-2*p)/3;
+    const maxV = Math.max(...stages.flat(), 0.01);
+    for (let st=0;st<3;st++) {
+      const bw = stepW/(N+1)*0.7;
+      for (let i=0;i<N;i++) {
+        const x = p + st*stepW + (i+1)*stepW/(N+1);
+        const bh = (stages[st][i]/maxV)*(h-2*p-30);
+        const isT = (i===s21.target);
+        ctx.fillStyle = isT ? (st===2?'rgba(249,115,22,.9)':'rgba(249,115,22,.5)') : 'rgba(100,120,255,.4)';
+        ctx.fillRect(x-bw/2, h-p-bh, bw, bh);
+      }
+      ctx.fillStyle='rgba(200,200,220,.4)';ctx.font='11px sans-serif';
+      ctx.fillText(names[st], p+st*stepW+stepW/3, h-5);
+    }
+    ctx.fillStyle='rgba(249,115,22,.8)';ctx.font='13px sans-serif';
+    ctx.fillText(`#${s21.target}: ${s21.amplificationDB.toFixed(1)}dB ${s21.found?'✓':'✗'}`,p+5,p+14);
+  },
+
+  drawTeleportChart(s22) {
+    const cv = document.getElementById('chart-teleport');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const n = s22.aliceR.length;
+    const maxV = Math.max(...s22.aliceR, ...s22.bobB, 0.01);
+    // Alice R (red dots+line)
+    ctx.strokeStyle='rgba(239,68,68,.8)';ctx.lineWidth=2;ctx.beginPath();
+    for (let i=0;i<n;i++) {
+      const x=p+(i+0.5)*(w-2*p)/n, y=h-p-(s22.aliceR[i]/maxV)*(h-2*p);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.stroke();ctx.fillStyle='rgba(239,68,68,.9)';
+    for (let i=0;i<n;i++) {
+      const x=p+(i+0.5)*(w-2*p)/n, y=h-p-(s22.aliceR[i]/maxV)*(h-2*p);
+      ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();
+    }
+    // Bob B (blue dots+line)
+    ctx.strokeStyle='rgba(59,130,246,.8)';ctx.lineWidth=2;ctx.beginPath();
+    for (let i=0;i<n;i++) {
+      const x=p+(i+0.5)*(w-2*p)/n, y=h-p-(s22.bobB[i]/maxV)*(h-2*p);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.stroke();ctx.fillStyle='rgba(59,130,246,.9)';
+    for (let i=0;i<n;i++) {
+      const x=p+(i+0.5)*(w-2*p)/n, y=h-p-(s22.bobB[i]/maxV)*(h-2*p);
+      ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();
+    }
+    // Labels
+    for (let i=0;i<n;i++) ctx.fillText(s22.states[i],p+(i+0.5)*(w-2*p)/n-10,h-5);
+    ctx.fillStyle='rgba(239,68,68,.7)';ctx.fillRect(w-p-80,p+5,10,10);
+    ctx.fillStyle='rgba(59,130,246,.7)';ctx.fillRect(w-p-80,p+20,10,10);
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='11px sans-serif';
+    ctx.fillText('Alice R',w-p-65,p+14);ctx.fillText('Bob B',w-p-65,p+29);
+    ctx.font='13px sans-serif';ctx.fillText(`F=${s22.fidelity.toFixed(3)}`,p+5,p+14);
+  },
+
+  drawQSuperChart(s16) {
+    const cv = document.getElementById('chart-qsuper');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    // Draw 3 bars: I(A), I(B), I(A+B), Classical
+    const labels = ['I(ψ_A)', 'I(ψ_B)', 'I(A)+I(B)/2', 'I(ψ_A+ψ_B)'];
+    const vals = [s16.IA, s16.IB, s16.classicalSum, s16.IAB];
+    const colors = ['rgba(139,92,246,.6)','rgba(59,130,246,.6)','rgba(100,120,255,.3)','rgba(16,185,129,.8)'];
+    const maxV = Math.max(...vals, 0.01);
+    const bw = (w-2*p) / (labels.length+1) * 0.7;
+    for (let i=0;i<labels.length;i++) {
+      const x = p + (i+1)*(w-2*p)/(labels.length+1);
+      const bh = (vals[i]/maxV)*(h-2*p);
+      ctx.fillStyle = colors[i];
+      ctx.fillRect(x-bw/2, h-p-bh, bw, bh);
+      ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='11px sans-serif';
+      ctx.fillText(labels[i], x-bw/2, h-5);
+      ctx.fillText(vals[i].toFixed(3), x-15, h-p-bh-8);
+    }
+    // Interference arrow
+    if (Math.abs(s16.interference) > 0.001) {
+      const x3 = p + 3*(w-2*p)/(labels.length+1);
+      const x4 = p + 4*(w-2*p)/(labels.length+1);
+      ctx.strokeStyle='rgba(234,179,8,.8)';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(x3,h-p-(s16.classicalSum/maxV)*(h-2*p));
+      ctx.lineTo(x4,h-p-(s16.IAB/maxV)*(h-2*p));ctx.stroke();
+      ctx.fillStyle='rgba(234,179,8,.8)';ctx.font='13px sans-serif';
+      ctx.fillText(`Δ=${s16.relDeviation.toFixed(1)}%`, (x3+x4)/2-20, h-p-(Math.max(s16.classicalSum,s16.IAB)/maxV)*(h-2*p)-15);
+    }
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='13px sans-serif';
+    ctx.fillText(`V=${s16.visibility.toFixed(3)}`,p+5,p+14);
+  },
+
+  drawBellChart(s17) {
+    const cv = document.getElementById('chart-bell');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 50;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+
+    if (s17.scanResults && s17.scanResults.length > 0) {
+      // Draw grid lines
+      ctx.strokeStyle='rgba(200,200,220,.1)'; ctx.lineWidth=1;
+      // Y-axis grid
+      const yLevels = [-0.5, 0.0, 0.5, 1.0];
+      for (const yv of yLevels) {
+        const ypx = h - p - ((yv - (-0.5)) / 1.5) * (h - 2*p);
+        ctx.beginPath(); ctx.moveTo(p, ypx); ctx.lineTo(w-p, ypx); ctx.stroke();
+        ctx.fillStyle='rgba(200,200,220,.4)'; ctx.font='10px sans-serif';
+        ctx.fillText(yv.toFixed(1), p - 25, ypx + 3);
+      }
+      // X-axis ticks (0 to 30 deg)
+      const xTicks = [0, 10, 20, 30];
+      for (const xt of xTicks) {
+        const xpx = p + (xt / 30) * (w - 2*p);
+        ctx.beginPath(); ctx.moveTo(xpx, p); ctx.lineTo(xpx, h-p); ctx.stroke();
+        ctx.fillStyle='rgba(200,200,220,.4)'; ctx.font='10px sans-serif';
+        ctx.fillText(`${xt}°`, xpx - 8, h - p + 15);
+      }
+
+      // Draw fitted curve
+      const bestA = s17.cosAmplitude || 0;
+      const bestB = s17.cosPhaseOffset || 0;
+      const bestD = s17.cosDCbias || 0;
+      ctx.strokeStyle = s17.bestModel === 'cosine' ? 'rgba(236,72,153,.8)' : 'rgba(59,130,246,.5)';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      for (let th = 0; th <= 30; th += 0.5) {
+        const xpx = p + (th / 30) * (w - 2*p);
+        let val = 0;
+        if (s17.bestModel === 'cosine') {
+          val = bestA * Math.cos(th * Math.PI / 180 + bestB) + bestD;
+        } else {
+          const gA = s17.gaussAmplitude || 0;
+          const gSig = s17.gaussSigma || 10;
+          const gD = s17.gaussDCbias || 0;
+          val = gA * Math.exp(-Math.pow(th / gSig, 2)) + gD;
+        }
+        const ypx = h - p - ((val - (-0.5)) / 1.5) * (h - 2*p);
+        if (th === 0) ctx.moveTo(xpx, ypx); else ctx.lineTo(xpx, ypx);
+      }
+      ctx.stroke();
+
+      // Draw data points
+      for (const pt of s17.scanResults) {
+        const xpx = p + (pt.deltaDeg / 30) * (w - 2*p);
+        const ypx = h - p - ((pt.E_raw - (-0.5)) / 1.5) * (h - 2*p);
+        ctx.fillStyle = 'rgba(16,185,129,.9)';
+        ctx.beginPath(); ctx.arc(xpx, ypx, 5, 0, 2*Math.PI); ctx.fill();
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.stroke();
+      }
+
+      // Labeling info
+      ctx.fillStyle='rgba(236,72,153,.9)'; ctx.font='14px sans-serif';
+      ctx.fillText(`S_derived = 2√2·A = ${s17.S_derived.toFixed(3)}`, p+5, p+12);
+      ctx.fillStyle='rgba(200,200,220,.5)'; ctx.font='11px sans-serif';
+      ctx.fillText(`Model: ${s17.bestModel.toUpperCase()} (R²=${(s17.bestModel==='cosine'?s17.cosR2:s17.gaussR2).toFixed(3)})`, p+5, p+30);
+    } else {
+      // Fallback to old format or empty message
+      const n = s17.angles ? s17.angles.length : 0;
+      const cArr = s17.coherencePerAngle || [];
+      if (n > 0) {
+        const maxC = Math.max(...cArr, 0.01);
+        const bw = (w-2*p)/(n+1)*0.6;
+        for (let i=0;i<n;i++) {
+          const x = p + (i+1)*(w-2*p)/(n+1);
+          const bh = (cArr[i]/maxC)*(h-2*p-40);
+          ctx.fillStyle = cArr[i] > 0.707 ? 'rgba(16,185,129,.7)' : cArr[i] > 0.1 ? 'rgba(236,72,153,.7)' : 'rgba(59,130,246,.7)';
+          ctx.fillRect(x-bw/2, h-p-bh, bw, bh);
+          ctx.fillStyle='rgba(200,200,220,.6)';ctx.font='12px sans-serif';
+          ctx.fillText(`${s17.angles[i]}°`, x-10, h-8);
+          ctx.fillText(cArr[i].toFixed(3), x-18, h-p-bh-8);
+        }
+        const threshY = h - p - (0.707/maxC)*(h-2*p-40);
+        if (threshY > p) {
+          ctx.strokeStyle='rgba(239,68,68,.5)';ctx.setLineDash([4,4]);ctx.lineWidth=1;
+          ctx.beginPath();ctx.moveTo(p,threshY);ctx.lineTo(w-p,threshY);ctx.stroke();ctx.setLineDash([]);
+        }
+      } else {
+        ctx.fillStyle='rgba(200,200,220,.4)';ctx.font='14px sans-serif';
+        ctx.fillText(this.t('chart_no_scan_data'), w/2-80, h/2);
+      }
+    }
+  },
+
+  drawCollapseChart(s18) {
+    const cv = document.getElementById('chart-collapse');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const n = s18.means.length;
+    const maxM = Math.max(...s18.means, 0.01);
+    const minM = Math.min(...s18.means);
+    const range = maxM - minM || 0.01;
+    // Draw means (top half)
+    ctx.strokeStyle='rgba(20,184,166,.8)';ctx.lineWidth=2;
+    ctx.beginPath();
+    for (let i=0;i<n;i++) {
+      const x = p + (i+0.5)*(w-2*p)/n;
+      const y = p + (1-(s18.means[i]-minM)/range)*(h/2-p);
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+    ctx.fillStyle='rgba(20,184,166,.9)';
+    for (let i=0;i<n;i++) {
+      const x = p + (i+0.5)*(w-2*p)/n;
+      const y = p + (1-(s18.means[i]-minM)/range)*(h/2-p);
+      ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();
+    }
+    // Draw variances (bottom half)
+    const maxV = Math.max(...s18.variances, 0.0001);
+    ctx.strokeStyle='rgba(251,146,60,.8)';ctx.lineWidth=2;
+    ctx.beginPath();
+    for (let i=0;i<n;i++) {
+      const x = p + (i+0.5)*(w-2*p)/n;
+      const y = h/2+10 + (1-s18.variances[i]/maxV)*(h/2-p-10);
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='12px sans-serif';
+    ctx.fillText('I(t) →',p+5,p+14);ctx.fillText('σ²(t) →',p+5,h/2+20);
+    ctx.fillText(`conv=${s18.convergence.toFixed(3)}`,w-p-110,h/2+20);
+  },
+
+  drawSoftmaxChart(s12) {
+    const cv = document.getElementById('chart-softmax');
+    if (!cv || !s12.inputLevels) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const n = s12.inputLevels.length;
+    // Draw digital softmax (dashed)
+    ctx.strokeStyle='rgba(251,146,60,.4)';ctx.setLineDash([4,4]);ctx.lineWidth=2;
+    ctx.beginPath();
+    const dsMax = Math.max(...s12.digitalSoftmax, 0.01);
+    for (let i=0;i<n;i++) {
+      const x=p+(i+0.5)*(w-2*p)/n;
+      const y=h-p-(s12.digitalSoftmax[i]/dsMax)*(h-2*p);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.stroke();ctx.setLineDash([]);
+    // Draw optical softmax (solid)
+    const osMax = Math.max(...s12.optSoftmax, 0.01);
+    ctx.strokeStyle='#fb923c';ctx.lineWidth=2;
+    ctx.beginPath();
+    for (let i=0;i<n;i++) {
+      const x=p+(i+0.5)*(w-2*p)/n;
+      const y=h-p-(s12.optSoftmax[i]/osMax)*(h-2*p);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+    // Points
+    ctx.fillStyle='#fb923c';
+    for (let i=0;i<n;i++) {
+      const x=p+(i+0.5)*(w-2*p)/n;
+      const y=h-p-(s12.optSoftmax[i]/osMax)*(h-2*p);
+      ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();
+    }
+    // Labels
+    ctx.fillStyle='rgba(150,150,180,.5)';ctx.font='11px sans-serif';
+    for (let i=0;i<n;i++) ctx.fillText(Math.round(s12.inputLevels[i]*100)+'%', p+(i+0.5)*(w-2*p)/n-10, h-8);
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='13px sans-serif';
+    ctx.fillText(`r=${s12.corrSm.toFixed(3)}`,p+5,p+14);
+    ctx.fillText('--- \u0446\u0438\u0444\u0440. softmax',w-p-120,p+14);
+    ctx.fillText('\u2014 \u043e\u043f\u0442. softmax',w-p-120,p+30);
+  },
+
+  drawGQAChart(s13) {
+    const cv = document.getElementById('chart-gqa');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const nT = s13.headR_results.length;
+    const nB = 4;
+    const groupW = (w-2*p)/(nT+0.5);
+    for (let t=0;t<nT;t++) {
+      const gx = p + (t+0.5)*groupW;
+      for (let b=0;b<nB;b++) {
+        const bw = groupW / (nB*2+1);
+        const rH = s13.headR_results[t][b]*(h-2*p)*0.4;
+        const gH = s13.headG_results[t][b]*(h-2*p)*0.4;
+        ctx.fillStyle='rgba(239,68,68,.7)';
+        ctx.fillRect(gx+b*bw*2, h/2-rH, bw-1, rH);
+        ctx.fillStyle='rgba(34,197,94,.7)';
+        ctx.fillRect(gx+b*bw*2+bw, h/2-gH, bw-1, gH);
+      }
+      ctx.fillStyle='rgba(150,150,180,.5)';ctx.font='12px sans-serif';
+      ctx.fillText(`T${t}`, gx+groupW/3, h-8);
+    }
+    ctx.fillStyle='rgba(239,68,68,.8)';ctx.fillRect(w-p-80,p+5,10,10);
+    ctx.fillStyle='rgba(34,197,94,.8)';ctx.fillRect(w-p-80,p+20,10,10);
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='11px sans-serif';
+    ctx.fillText('Q:R',w-p-65,p+14);ctx.fillText('Q:G',w-p-65,p+29);
+    ctx.font='13px sans-serif';
+    ctx.fillText(`R:${s13.headR_match}/3 G:${s13.headG_match}/3`,p+5,p+14);
+  },
+
+  drawPEChart(s14) {
+    const cv = document.getElementById('chart-pe');
+    if (!cv || !s14.peVectors) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const colors = ['rgba(239,68,68,.8)','rgba(34,197,94,.8)','rgba(59,130,246,.8)','rgba(251,146,60,.8)'];
+    const nF = s14.nFreqs;
+    const maxV = Math.max(...s14.peVectors.flat(), 0.01);
+    for (let pos=0;pos<s14.nPositions;pos++) {
+      ctx.strokeStyle=colors[pos%4];ctx.lineWidth=2;
+      ctx.beginPath();
+      for (let k=0;k<nF;k++) {
+        const x=p+(k+0.5)*(w-2*p)/nF;
+        const y=h-p-(s14.peVectors[pos][k]/maxV)*(h-2*p);
+        if(k===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      ctx.fillStyle=colors[pos%4];
+      for (let k=0;k<nF;k++) {
+        const x=p+(k+0.5)*(w-2*p)/nF;
+        const y=h-p-(s14.peVectors[pos][k]/maxV)*(h-2*p);
+        ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();
+      }
+    }
+    for (let pos=0;pos<s14.nPositions;pos++) {
+      ctx.fillStyle=colors[pos%4];ctx.fillRect(w-p-60,p+5+pos*15,10,10);
+      ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='11px sans-serif';
+      ctx.fillText(`P${pos}`,w-p-45,p+14+pos*15);
+    }
+    ctx.font='13px sans-serif';ctx.fillStyle='rgba(200,200,220,.5)';
+    ctx.fillText(`cos=${s14.avgCosSim.toFixed(3)}`,p+5,p+14);
+  },
+
+  drawFPChart(s15) {
+    const cv = document.getElementById('chart-fp');
+    if (!cv || !s15.stripeSizes) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const n = s15.stripeSizes.length;
+    const maxC = Math.max(...s15.contrasts, 0.01);
+    const bw = (w-2*p)/(n+1)*0.7;
+    for (let i=0;i<n;i++) {
+      const x=p+(i+1)*(w-2*p)/(n+1);
+      const bh=(s15.contrasts[i]/maxC)*(h-2*p);
+      const isPeak = i === s15.contrasts.indexOf(s15.maxC);
+      ctx.fillStyle = isPeak ? 'rgba(234,179,8,.9)' : 'rgba(100,120,255,.4)';
+      ctx.fillRect(x-bw/2, h-p-bh, bw, bh);
+      if (isPeak) {
+        ctx.strokeStyle='rgba(234,179,8,.6)';ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(x,h-p-bh-12,6,0,Math.PI*2);ctx.stroke();
+      }
+    }
+    ctx.fillStyle='rgba(150,150,180,.5)';ctx.font='11px sans-serif';
+    for (let i=0;i<n;i++) {
+      const x=p+(i+1)*(w-2*p)/(n+1);
+      ctx.fillText(s15.stripeSizes[i]+'', x-5, h-5);
+    }
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='13px sans-serif';
+    ctx.fillText(`Peak: ${s15.peakFreq}px Q=${s15.qFactor.toFixed(1)}`,p+5,p+14);
+    // Draw average line
+    const avgH=(s15.avgC/maxC)*(h-2*p);
+    ctx.strokeStyle='rgba(200,200,220,.3)';ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(p,h-p-avgH);ctx.lineTo(w-p,h-p-avgH);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(200,200,220,.3)';ctx.fillText('avg',w-p-30,h-p-avgH-5);
+  },
+
+  drawRoPEChart(s11) {
+    const cv = document.getElementById('chart-rope');
+    if (!cv || !s11.stripeSizes) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const n = s11.stripeSizes.length;
+    const maxC = Math.max(...s11.contrastsR,...s11.contrastsG,...s11.contrastsB,0.01);
+    const xStep = (w-2*p)/(n);
+    // Draw R contrast line
+    ctx.strokeStyle='rgba(239,68,68,.8)';ctx.lineWidth=2;
+    ctx.beginPath();
+    for (let i=0;i<n;i++) {
+      const x=p+(i+0.5)*xStep;
+      const y=h-p-(s11.contrastsR[i]/maxC)*(h-2*p);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      ctx.fillStyle='rgba(239,68,68,.9)';ctx.fillRect(x-3,y-3,6,6);
+    }
+    ctx.stroke();
+    // Draw G contrast line
+    ctx.strokeStyle='rgba(34,197,94,.8)';ctx.lineWidth=2;
+    ctx.beginPath();
+    for (let i=0;i<n;i++) {
+      const x=p+(i+0.5)*xStep;
+      const y=h-p-(s11.contrastsG[i]/maxC)*(h-2*p);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      ctx.fillStyle='rgba(34,197,94,.9)';ctx.fillRect(x-3,y-3,6,6);
+    }
+    ctx.stroke();
+    // Draw B contrast line
+    ctx.strokeStyle='rgba(59,130,246,.8)';ctx.lineWidth=2;
+    ctx.beginPath();
+    for (let i=0;i<n;i++) {
+      const x=p+(i+0.5)*xStep;
+      const y=h-p-(s11.contrastsB[i]/maxC)*(h-2*p);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      ctx.fillStyle='rgba(59,130,246,.9)';ctx.fillRect(x-3,y-3,6,6);
+    }
+    ctx.stroke();
+    // X-axis labels (stripe sizes)
+    ctx.fillStyle='rgba(150,150,180,.5)';ctx.font='12px sans-serif';
+    for (let i=0;i<n;i++) {
+      ctx.fillText(s11.stripeSizes[i]+'px', p+(i+0.5)*xStep-12, h-8);
+    }
+    // Legend
+    ctx.fillStyle='rgba(239,68,68,.8)';ctx.fillRect(w-p-80,p+5,10,10);
+    ctx.fillStyle='rgba(34,197,94,.8)';ctx.fillRect(w-p-80,p+20,10,10);
+    ctx.fillStyle='rgba(59,130,246,.8)';ctx.fillRect(w-p-80,p+35,10,10);
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='11px sans-serif';
+    ctx.fillText('R',w-p-65,p+14);ctx.fillText('G',w-p-65,p+29);ctx.fillText('B',w-p-65,p+44);
+    ctx.font='13px sans-serif';
+    ctx.fillText(`Δ=${s11.dispersion.toFixed(4)}`,p+5,p+14);
+  },
+
+  drawRGBChart(s6) {
+    const cv = document.getElementById('chart-rgb');
+    if (!cv || !s6.matrix) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const labels = ['R→','G→','B→'];
+    const colors = ['rgba(239,68,68,.8)','rgba(34,197,94,.8)','rgba(59,130,246,.8)'];
+    const bw = (w-2*p)/9 * 0.8;
+    for (let ch = 0; ch < 3; ch++) {
+      for (let out = 0; out < 3; out++) {
+        const idx = ch*3+out;
+        const x = p + (idx+0.5)*(w-2*p)/9;
+        const val = s6.matrix[ch][out];
+        const bh = val*(h-2*p);
+        ctx.fillStyle = ch===out ? colors[out] : 'rgba(100,120,255,.25)';
+        ctx.fillRect(x-bw/2, h-p-bh, bw, bh);
+      }
+    }
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='14px sans-serif';
+    ctx.fillText(this.t('chart_avg_isolation', {var0: s6.avgIsolationDB.toFixed(1)}),w-p-120,p+20);
+    ctx.fillStyle='rgba(150,150,180,.4)';ctx.font='11px sans-serif';
+    for (let i = 0; i < 3; i++) {
+      ctx.fillText(labels[i]+['R','G','B'].join(' '), p+(i*3+1)*(w-2*p)/9-15, h-8);
+    }
+  },
+
+  drawSiLUChart(s7) {
+    const cv = document.getElementById('chart-silu');
+    if (!cv || !s7.inputs) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    // Draw SiLU reference (dashed)
+    ctx.strokeStyle='rgba(16,185,129,.4)';ctx.setLineDash([4,4]);ctx.lineWidth=2;
+    ctx.beginPath();
+    for (let i=0;i<s7.inputs.length;i++) {
+      const x=p+s7.inputs[i]*(w-2*p);
+      const y=h-p-s7.siluRef[i]*(h-2*p);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.stroke();ctx.setLineDash([]);
+    // Draw linear (dashed gray)
+    ctx.strokeStyle='rgba(100,120,255,.2)';ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(p,h-p);ctx.lineTo(w-p,p);ctx.stroke();ctx.setLineDash([]);
+    // Draw optical (solid)
+    ctx.strokeStyle='#10b981';ctx.lineWidth=2;
+    ctx.beginPath();
+    for (let i=0;i<s7.inputs.length;i++) {
+      const x=p+s7.inputs[i]*(w-2*p);
+      const y=h-p-s7.outputs[i]*(h-2*p);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+    // Points
+    ctx.fillStyle='#10b981';
+    for (let i=0;i<s7.inputs.length;i++) {
+      const x=p+s7.inputs[i]*(w-2*p);
+      const y=h-p-s7.outputs[i]*(h-2*p);
+      ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();
+    }
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='14px sans-serif';
+    ctx.fillText(`SiLU r=${s7.siluCorrelation.toFixed(3)}`,w-p-150,p+20);
+    ctx.fillStyle='rgba(16,185,129,.5)';ctx.font='12px sans-serif';
+    ctx.fillText('--- SiLU ref',w-p-150,p+38);
+  },
+
+  drawResChart(s8) {
+    const cv = document.getElementById('chart-res');
+    if (!cv || !s8.expected) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    // y=x line
+    const maxV = Math.max(...s8.expected,...s8.measured,0.01);
+    ctx.strokeStyle='rgba(100,120,255,.3)';ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(p,h-p);ctx.lineTo(w-p,p);ctx.stroke();ctx.setLineDash([]);
+    // Points
+    ctx.fillStyle='rgba(245,158,11,.9)';
+    for (let i=0;i<s8.expected.length;i++) {
+      const x=p+(s8.expected[i]/maxV)*(w-2*p);
+      const y=h-p-(s8.measured[i]/maxV)*(h-2*p);
+      ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();
+    }
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='14px sans-serif';
+    ctx.fillText(`R²=${(s8.r2*100).toFixed(1)}%`,w-p-100,p+20);
+    ctx.fillStyle='rgba(150,150,180,.4)';ctx.font='12px sans-serif';
+    ctx.fillText(this.t('chart_ab_expected'),w/2-30,h-8);
+    ctx.save();ctx.translate(12,h/2);ctx.rotate(-Math.PI/2);ctx.fillText(this.t('chart_ab_measured'),0,0);ctx.restore();
+  },
+
+  drawDropChart(s9) {
+    const cv = document.getElementById('chart-drop');
+    if (!cv || !s9.dropRates) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const n = s9.dropRates.length;
+    const bw = (w-2*p)/(n+1)*0.6;
+    for (let i=0;i<n;i++) {
+      const x = p + (i+1)*(w-2*p)/(n+1);
+      const val = Math.max(0,s9.correlations[i]);
+      const bh = val*(h-2*p);
+      const hue = val > 0.5 ? 142 : val > 0.3 ? 45 : 0;
+      ctx.fillStyle=`hsla(${hue},70%,55%,.8)`;
+      ctx.fillRect(x-bw/2, h-p-bh, bw, bh);
+      ctx.fillStyle='rgba(200,200,220,.6)';ctx.font='14px sans-serif';
+      ctx.fillText(`${Math.round(s9.dropRates[i]*100)}%`, x-12, h-p+18);
+      ctx.fillText(val.toFixed(2), x-15, h-p-bh-8);
+    }
+    ctx.fillStyle='rgba(150,150,180,.4)';ctx.font='12px sans-serif';
+    ctx.fillText('Dropout rate',w/2-30,h-3);
+  },
+
+  drawMLPChart(s10) {
+    const cv = document.getElementById('chart-mlp');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width=cv.offsetWidth*2, h=cv.height=cv.offsetHeight*2;
+    const p = 40;
+    ctx.fillStyle='rgba(10,10,30,.8)';ctx.fillRect(0,0,w,h);
+    const dY=s10.digitalY2, oY=s10.opticalY2;
+    const n=dY.length;
+    const maxV=Math.max(...dY.map(Math.abs),...oY.map(Math.abs),0.01);
+    const bw=(w-2*p)/n/2.5;
+    for(let i=0;i<n;i++){
+      const x=p+(i+.5)*(w-2*p)/n;
+      const hd=(dY[i]/maxV)*(h/2-p), ho=(oY[i]/maxV)*(h/2-p);
+      ctx.fillStyle='rgba(14,165,233,.7)';ctx.fillRect(x-bw,h/2-hd,bw-2,hd);
+      ctx.fillStyle='rgba(139,92,246,.7)';ctx.fillRect(x+2,h/2-ho,bw-2,ho);
+    }
+    ctx.fillStyle='rgba(14,165,233,.8)';ctx.fillRect(w-150,15,12,12);
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.font='14px sans-serif';ctx.fillText(this.t('chart_digital'),w-132,26);
+    ctx.fillStyle='rgba(139,92,246,.8)';ctx.fillRect(w-150,33,12,12);
+    ctx.fillStyle='rgba(200,200,220,.5)';ctx.fillText(this.t('chart_optical'),w-132,44);
+    ctx.fillText(`r=${s10.fullCorr.toFixed(3)}`,p+5,p+15);
+  },
+
+  exportJSON() {
+    const data = JSON.stringify(this.results, null, 2);
+    const blob = new Blob([data], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `nvg_poc_v3_${new Date().toISOString().slice(0,19).replace(/:/g,'_')}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+};
+// Auto-start remote control polling
+app.remoteInit();
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "ru": {
+    "name": "⚛️ Распад квантовой запутанности (BOS)",
+    "description": "Оценка пространственной когерентности воздуха при моделировании квантовой запутанности.",
+    "entanglement_start": "Запуск эмуляции распада запутанности",
+    "bg_heating": "Фоновый нагрев (температура T) = {var0}",
+    "corr_result": "Корреляция вихрей: r = {var0}",
+    "success": "Смерть запутанности при плавлении подтверждена. Порог пройден",
+    "fail": "Ошибка измерения: не зафиксирован распад корреляций при высоких температурах",
+    "description_all": "Тепловой распад корреляции при «деконфайнменте» (термооптический BOS-аналог).\n\n**Физический принцип:** (Без зеркала). Экран формирует две разнесённые квад-вихревые ячейки (левую и правую) как эмуляцию белловской пары. При T=0 их конвективные завихрения скоррелированы; рост фоновой «температуры» (плавление W→0) разрушает градиенты и обнуляет связь. Это классический термооптический аналог декогеренции, а не буквальная квантовая запутанность.\n**Алгоритмическая суть:** Для трёх уровней фоновой яркости-нагрева (0, 60, 150) на экран выводятся два квад-вихря; по шахматному эталону методом BOS (оптический поток, SAD-сопоставление блоков в диапазоне ±2) измеряется завихрённость каждой ячейки как curl = top.dx + right.dy − bottom.dx − left.dy. По серии из 8 кадров считается корреляция Пирсона между завихрениями левой и правой ячеек.\n**Аналогия:** Измерение того, как долго два тепловых вихря «чувствуют» друг друга в воздухе, прежде чем нагрев-хаос разорвёт их связь.\n**Метрика:** Корреляция холодного r₀ против горячего r_hot; зачёт при r₀ > r_hot + 0.15 или r₀ > 0.40."
+  },
+  "en": {
+    "name": "⚛️ Quantum Entanglement Decay (BOS)",
+    "description": "Evaluating spatial air coherence when simulating quantum entanglement.",
+    "entanglement_start": "Starting entanglement decay emulation",
+    "bg_heating": "Background heating (temperature T) = {var0}",
+    "corr_result": "Vortex correlation: r = {var0}",
+    "success": "Entanglement death during melting confirmed. Threshold passed",
+    "fail": "Measurement error: correlation decay not detected at high temperatures",
+    "description_all": "Thermal correlation death at \"deconfinement\" (a thermo-optic BOS analog).\n\n**Physical principle:** (Mirrorless). The screen forms two separated quad-vortex cells (Left and Right) as an emulated Bell pair. At T=0 their convective curls are correlated; rising background \"temperature\" (melting W→0) disrupts the gradients and drives the link to zero. This is a classical thermo-optic analog of decoherence, not literal quantum entanglement.\n**Algorithmic essence:** For three background brightness-heat levels (0, 60, 150) the screen shows two quad-vortices; against a checkerboard reference, BOS optical flow (SAD block matching over a ±2 range) measures each cell's curl as curl = top.dx + right.dy − bottom.dx − left.dy. Over a series of 8 frames the Pearson correlation between the Left and Right cell curls is computed.\n**Analogy:** Measuring how long two thermal vortices \"feel\" each other in the air before heat-driven chaos breaks their bond.\n**Metric:** Cold r₀ versus hot r_hot correlation; passes when r₀ > r_hot + 0.15 or r₀ > 0.40."
+  },
+  "mirrorless": true
+}

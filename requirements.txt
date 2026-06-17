@@ -1,0 +1,3 @@
+# Server (app/server.py) needs only the Python standard library — nothing to install.
+# These dependencies are for the pure-software validation in simulation/.
+numpy>=1.21

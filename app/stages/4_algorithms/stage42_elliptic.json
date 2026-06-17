@@ -1,0 +1,43 @@
+{
+  "ru": {
+    "name": "Эллиптические кривые (точки)",
+    "description": "Симуляция векторного сложения точек ECC в цветовом пространстве.",
+    "etap": "🔬",
+    "diofantov_oracle_residual_soft": "Диофантов oracle: residual → softmax → proof...",
+    "mestrenagao_score_evristika_ne": "  Mestre-Nagao score≈{var0} (эвристика, не proof)",
+    "optical_sequential_scan_kandid": "Optical: sequential scan кандидатов...",
+    "otvet": "━━━ ОТВЕТ ━━━",
+    "beskonechno_mnogo_ratsionalnyk": "📊 БЕСКОНЕЧНО МНОГО рациональных точек",
+    "optical_generator_p_iz_b": "  Optical: генератор P={var0} (#1 из {var1}, b={var2})",
+    "exact_bigint_pe_p_netselaya": "  Exact BigInt: P∈E ✓, 2P={var0} — нецелая ✓",
+    "orbita_np_bigint_optical_verif": "  Орбита {nP} (BigInt + optical verify):",
+    "koordinaty_rastut_beskonechno_": "    ...координаты растут → бесконечно много различных точек",
+    "ne_udalos_dokazat_beskonechnos": "⚠ Не удалось доказать бесконечность.",
+    "beskonechno_mnogo_ratsionalnyk_1": "бесконечно много рациональных точек: rank(E) >= 1",
+    "unknown_nuzhen_drugoy_kandidat": "unknown: нужен другой кандидат или внешний rank-сертификат",
+    "nuzhen_drugoy_kandidat": "⚠️ {var0}: нужен другой кандидат",
+    "res_row0": "Кривая",
+    "description_all": "Эллиптическая кривая: оптический подбор генератора и точное доказательство ранга.\n\n**Физический принцип:** (С зеркалом). Качество точки-кандидата на кривой E: y²=x³−x−2 кодируется яркостью экрана (чем меньше residual, тем ярче); камера ранжирует кандидатов по измеренной яркости.\n**Алгоритмическая суть:** CPU строит сетку целочисленных кандидатов и сортирует по residual; топ-кандидаты по очереди подсвечиваются, камера читает яркость и выбирает генератор. Затем точная BigInt-арифметика рациональных чисел проверяет P∈E и нецелочисленность 2P, и по теореме Нагелля–Лутца доказывает rank(E) ≥ 1; орбита {nP} дополнительно подтверждается оптически.\n**Аналогия:** Свет подсказывает, какую точку взять, а строгая арифметика доказывает, что точек на кривой бесконечно много.\n**Метрика:** ранг кривой; зачёт при rankGE1 — сертифицирован rank(E) ≥ 1 (точка бесконечного порядка по Нагеллю–Лутцу)."
+  },
+  "en": {
+    "name": "Elliptic Curves (Points)",
+    "description": "Simulation of ECC point vector addition in color space.",
+    "etap": "🔬",
+    "diofantov_oracle_residual_soft": "Diophantov oracle: residual → softmax → proof...",
+    "mestrenagao_score_evristika_ne": "Mestre-Nagao score≈{var0} (heuristic, not proof)",
+    "optical_sequential_scan_kandid": "Optical: sequential scan of candidates...",
+    "otvet": "━━━ ANSWER ━━━",
+    "beskonechno_mnogo_ratsionalnyk": "📊 INFINITELY MANY rational points",
+    "optical_generator_p_iz_b": "Optical: generator P={var0} (#1 of {var1}, b={var2})",
+    "exact_bigint_pe_p_netselaya": "Exact BigInt: P∈E ✓, 2P={var0} - non-integer ✓",
+    "orbita_np_bigint_optical_verif": "Orbit {nP} (BigInt + optical verify):",
+    "koordinaty_rastut_beskonechno_": "...coordinates grow → infinitely many different points",
+    "ne_udalos_dokazat_beskonechnos": "⚠ Failed to prove infinity.",
+    "beskonechno_mnogo_ratsionalnyk_1": "infinitely many rational points: rank(E) >= 1",
+    "unknown_nuzhen_drugoy_kandidat": "unknown: another candidate or external rank certificate is needed",
+    "nuzhen_drugoy_kandidat": "⚠️ {var0}: another candidate needed",
+    "res_row0": "Curve",
+    "description_all": "Elliptic curve: optical generator search and an exact rank proof.\n\n**Physical principle:** (With mirror). The quality of a candidate point on the curve E: y²=x³−x−2 is encoded as screen brightness (the smaller the residual, the brighter); the camera ranks the candidates by measured brightness.\n**Algorithmic essence:** The CPU builds a grid of integer candidates sorted by residual; the top candidates are lit one by one, the camera reads brightness and picks a generator. Then exact BigInt rational arithmetic verifies P∈E and that 2P is non-integral, and by the Nagell-Lutz theorem proves rank(E) ≥ 1; the orbit {nP} is additionally confirmed optically.\n**Analogy:** Light hints at which point to take, while rigorous arithmetic proves the curve carries infinitely many rational points.\n**Metric:** the curve rank; passes when rankGE1 — rank(E) ≥ 1 is certified (an infinite-order point via Nagell-Lutz)."
+  },
+  "mirrorless": false
+}

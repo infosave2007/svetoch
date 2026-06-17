@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Дискретное преобразование Фурье (DFT)",
+    "description": "Оптическое вычисление пространственного спектра через дифракцию.",
+    "etap": "📡",
+    "optical_dft_o_fure_za_odin_kad": "Optical DFT: O(1) Фурье за один кадр...",
+    "vkhodnoy_signal_f_a": "  Входной сигнал: f={var0} A={var1}",
+    "izvlechenie_spektra_iz_odnogo_": "Извлечение спектра из одного кадра...",
+    "optical_dft": "Optical DFT {var0}",
+    "o_fure_rabotaet": "✅ O(1) Фурье работает!",
+    "spektr_chastichno": "⚠️ Спектр частично",
+    "res_row0": "Частоты входа",
+    "description_all": "Спектр Фурье из одного оптически захваченного кадра.\n\n**Физический принцип:** (С зеркалом). Композитный сигнал (сумма синусоид) рисуется полосами на экране и за один кадр переносится через оптический тракт в камеру; тракт играет роль аналогового канала, сохраняющего пространственный сигнал.\n**Алгоритмическая суть:** Экран показывает сумму синусоид частот {2,5,9}, камера снимает ОДИН кадр. Из него извлекается 1D-профиль (усреднение строк), убирается DC, применяется обратная гамма, и CPU считает DFT по 20 бинам. Спектральные пики и корреляция сравниваются с эталонным цифровым DFT входного сигнала.\n**Аналогия:** «Фурье за один снимок» — спектр картинки получается из единственного оптического кадра, а не из видеоряда.\n**Метрика:** корреляция оптического и цифрового спектров corr; зачёт при совпадении ≥ 2 пиков (±1 бин) и corr > 0.2."
+  },
+  "en": {
+    "name": "Discrete Fourier Transform (DFT)",
+    "description": "Optical computation of the spatial spectrum via diffraction.",
+    "etap": "📡",
+    "optical_dft_o_fure_za_odin_kad": "Optical DFT: O(1) Fourier in one frame...",
+    "vkhodnoy_signal_f_a": "Input signal: f={var0} A={var1}",
+    "izvlechenie_spektra_iz_odnogo_": "Extracting spectrum from one frame...",
+    "optical_dft": "Optical DFT {var0}",
+    "o_fure_rabotaet": "✅ O(1) Fourier works!",
+    "spektr_chastichno": "⚠️ Partial spectrum",
+    "res_row0": "Input frequencies",
+    "description_all": "A Fourier spectrum from a single optically captured frame.\n\n**Physical principle:** (With mirror). A composite signal (a sum of sinusoids) is drawn as stripes on the screen and carried in a single frame through the optical channel to the camera; the channel acts as an analog medium preserving the spatial signal.\n**Algorithmic essence:** The screen shows a sum of sinusoids at frequencies {2,5,9}, the camera captures ONE frame. A 1D profile is extracted from it (averaging rows), DC is removed, an inverse gamma is applied, and the CPU computes a 20-bin DFT. The spectral peaks and correlation are compared against a reference digital DFT of the input signal.\n**Analogy:** 'Fourier in one snapshot' — the picture's spectrum is obtained from a single optical frame rather than a video stream.\n**Metric:** the correlation of the optical and digital spectra, corr; passes when ≥ 2 peaks match (±1 bin) and corr > 0.2."
+  },
+  "mirrorless": false
+}

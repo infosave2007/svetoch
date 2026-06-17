@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Свёрточная сеть (CNN)",
+    "description": "Аппаратное ускорение сверточных слоев через оптическую интеграцию.",
+    "etap": "🖼️",
+    "bukva": "Буква {var0}...",
+    "bukva_1": "Буква {var0}:",
+    "optical_cnn": "Optical CNN {var0}",
+    "cnn_rabotaet": "✅ CNN работает",
+    "nizkaya_korrelyatsiya": "❌ Низкая корреляция",
+    "res_row0": "|корреляция конв.|",
+    "description_all": "Сверточная нейронная сеть (CNN).\n\n**Физический принцип:** Дефокус и рассеяние тракта «экран→камера» работают как естественный низкочастотный фильтр (оптическое размытие, близкое к свёртке Гаусса).\n**Алгоритмическая суть:** На экран выводятся 3 буквы 8×8 (A, B, C). Камера считывает оптический отклик как сетку 8×8, который сравнивается по корреляции Пирсона с цифровой свёрткой Гаусса 3×3 и с исходной картинкой. Берётся средняя по модулю корреляция (инверсия допустима).\n**Аналогия:** Как линза «мылит» картинку, выполняя гауссово размытие, так мы используем оптическое размытие тракта в роли свёрточного слоя нейросети.\n**Метрика:** Средняя |корреляция| оптического отклика с цифровой свёрткой; прохождение при avgAbsCorrConv > 0.2."
+  },
+  "en": {
+    "name": "Convolutional Network (CNN)",
+    "description": "Hardware acceleration of convolutional layers via optical integration.",
+    "etap": "🖼️",
+    "bukva": "Letter {var0}...",
+    "bukva_1": "Letter {var0}:",
+    "optical_cnn": "Optical CNN {var0}",
+    "cnn_rabotaet": "✅ CNN works",
+    "nizkaya_korrelyatsiya": "❌ Low correlation",
+    "res_row0": "|conv correlation|",
+    "description_all": "Convolutional Neural Network (CNN).\n\n**Physical principle:** Defocus and scattering of the \"screen→camera\" path act as a natural low-pass filter (optical blur close to a Gaussian convolution).\n**Algorithmic essence:** Three 8×8 letters (A, B, C) are shown on screen. The camera reads the optical response as an 8×8 grid, which is compared via Pearson correlation against a digital 3×3 Gaussian convolution and against the original image. The mean absolute correlation is taken (inversion is allowed).\n**Analogy:** Just as a lens blurs an image, performing a Gaussian blur, we use the optical blur of the path as a convolutional layer of the network.\n**Metric:** Mean |correlation| of the optical response with the digital convolution; passes when avgAbsCorrConv > 0.2."
+  },
+  "mirrorless": false
+}

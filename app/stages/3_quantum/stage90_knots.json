@@ -1,0 +1,19 @@
+{
+  "ru": {
+    "name": "🌀 Вихревое плетение узлов",
+    "description": "Отслеживание физических траекторий тепловых вихрей для вычисления топологических инвариантов (зацеплений).",
+    "knots_start": "Старт вихревого плетения узлов",
+    "success": "Узел успешно сплетен. Топологический индекс Lk = {var0}",
+    "fail": "Ошибка слежения: траектория утеряна из-за сильного шума",
+    "description_all": "Вихревое плетение узлов (термооптический аналог).\n\n**Физический принцип:** (Без зеркала). OLED-экран ведёт тепловые вихри по сложным траекториям (узел-трилистник, затем плетение двух вихрей по модулированным окружностям), создавая конвективные искажения воздуха. Это классическая термооптика, инвариант считается статистически.\n**Алгоритмическая суть:** Режим 1 — вихрь проходит трилистник (30 кадров); режим 2 — два вихря A и B противоположной хиральности плетутся (40 кадров). На каждом шаге выводится паттерн поверх шахматной решётки-эталона, камера снимает кадры (captureStable) и SAD-оптическим потоком (measureShiftVector) отслеживает центры вихрей. Из дифференциальных координат сдвига пошагово интегрируется число зацепления Гаусса Lk = Σ (Δx·dΔy − Δy·dΔx)/(2π·|Δ|²).\n**Аналогия:** Узлы обычно считают на мощных симуляторах; здесь их «плетут» из тёплых воздушных потоков и измеряют переплетение оптически.\n**Метрика:** Число зацепления Lk (цель ≈1.0); успех (check) — pass, то есть |Lk| > 0.45."
+  },
+  "en": {
+    "name": "🌀 Vortex Knots and Links",
+    "description": "Tracking physical trajectories of thermal vortices to compute topological invariants (links).",
+    "knots_start": "Starting vortex knots and links show",
+    "success": "Knot successfully braided. Topological index Lk = {var0}",
+    "fail": "Tracking error: trajectory lost due to excessive noise",
+    "description_all": "Vortex Knots and Links (thermo-optical analog).\n\n**Physical principle:** (Mirrorless). The OLED screen drives thermal vortices along complex trajectories (a trefoil knot, then a braid of two vortices on modulated circles), creating convective air distortions. This is classical thermo-optics; the invariant is computed statistically.\n**Algorithmic essence:** Mode 1 — a vortex traces a trefoil (30 frames); Mode 2 — two vortices A and B of opposite chirality braid (40 frames). At each step a pattern is shown over a reference checkerboard grid, the camera captures frames (captureStable) and, via SAD optical flow (measureShiftVector), tracks the vortex centers. From the differential shift coordinates the Gauss linking number is integrated step by step: Lk = Σ (Δx·dΔy − Δy·dΔx)/(2π·|Δ|²).\n**Analogy:** Knots are usually computed on heavy simulators; here they are \"braided\" from warm air currents and their intertwining is measured optically.\n**Metric:** Linking number Lk (target ≈1.0); pass (check) requires pass, i.e. |Lk| > 0.45."
+  },
+  "mirrorless": true
+}

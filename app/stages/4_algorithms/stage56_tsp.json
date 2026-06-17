@@ -1,0 +1,43 @@
+{
+  "ru": {
+    "name": "Задача коммивояжёра (TSP)",
+    "description": "Оптическое решение графовых задач через конструктивную интерференцию.",
+    "etap": "🗺️",
+    "tsp_gorodov": "TSP: 4→5→6 городов...",
+    "goroda": "4 города",
+    "gorodov": "5 городов",
+    "gorodov_1": "6 городов",
+    "marshrutov_unikalnykh": "  Маршрутов: {var0} (уникальных)",
+    "propusk_pxbin_slishkom_malo": "  Пропуск: {var0} px/bin — слишком мало",
+    "klassicheskiy_optimum": "  Классический оптимум: {var0} = {var1}",
+    "opticheskiy": "  Оптический: {var0} = {var1} {var2}",
+    "tsp_progressivnyy": "━━━ TSP ПРОГРЕССИВНЫЙ ━━━",
+    "gorodov_propushcheno_marshruto": "  {var0} городов: пропущено ({var1} маршрутов)",
+    "gorodov_marshrutov_pxbin": "  {var0} городов ({var1} маршрутов, {var2}px/bin): {var3}",
+    "tsp_maksimum_gorodov": "TSP максимум: {var0} городов!",
+    "tsp_maksimum_gorodov_1": "✅ TSP: максимум {var0} городов!",
+    "tsp_maksimum": "⚠️ TSP: максимум {var0}",
+    "description_all": "Задача коммивояжёра: поиск кратчайшего маршрута по яркости.\n\n**Физический принцип:** (С зеркалом). Стоимость каждого маршрута кодируется яркостью полосы на экране (короче путь — ярче); камера ищет самый яркий бин, который и указывает на оптимальный маршрут.\n**Алгоритмическая суть:** Для 4, 5 и 6 городов CPU перебирает все уникальные маршруты (с фиксированным стартом, без зеркальных дублей) и считает их длины. Стоимости выводятся как яркостные бины, камера измеряет их через measureNBins и выбирает самый яркий; этот «оптический» ответ сверяется с классическим оптимумом. Размер задачи растёт, пока хватает разрешения экрана (px/bin ≥ 10).\n**Аналогия:** Все маршруты светятся одновременно, и кратчайший вспыхивает ярче всех — глаз (камера) сразу находит победителя.\n**Метрика:** максимальное число городов, для которого оптический выбор совпал с оптимумом; зачёт при maxSolved ≥ 4."
+  },
+  "en": {
+    "name": "Travelling Salesman Problem (TSP)",
+    "description": "Optical solution of graph problems via constructive interference.",
+    "etap": "🗺️",
+    "tsp_gorodov": "TSP: 4→5→6 cities...",
+    "goroda": "4 cities",
+    "gorodov": "5 cities",
+    "gorodov_1": "6 cities",
+    "marshrutov_unikalnykh": "Routes: {var0} (unique)",
+    "propusk_pxbin_slishkom_malo": "Skip: {var0} px/bin - too small",
+    "klassicheskiy_optimum": "Classic optimum: {var0} = {var1}",
+    "opticheskiy": "Optical: {var0} = {var1} {var2}",
+    "tsp_progressivnyy": "━━━ TSP PROGRESSIVE ━━━",
+    "gorodov_propushcheno_marshruto": "{var0} cities: missing ({var1} routes)",
+    "gorodov_marshrutov_pxbin": "{var0} cities ({var1} routes, {var2}px/bin): {var3}",
+    "tsp_maksimum_gorodov": "TSP maximum: {var0} cities!",
+    "tsp_maksimum_gorodov_1": "✅ TSP: maximum {var0} cities!",
+    "tsp_maksimum": "⚠️ TSP: maximum {var0}",
+    "description_all": "The travelling salesman problem: finding the shortest route by brightness.\n\n**Physical principle:** (With mirror). Each route's cost is encoded as the brightness of a screen bar (the shorter the path, the brighter); the camera looks for the brightest bin, which points to the optimal route.\n**Algorithmic essence:** For 4, 5 and 6 cities the CPU enumerates all unique routes (fixed start, no mirror duplicates) and computes their lengths. The costs are shown as brightness bins, the camera measures them via measureNBins and picks the brightest; this 'optical' answer is compared with the classical optimum. The problem size grows as long as screen resolution allows (px/bin ≥ 10).\n**Analogy:** All routes glow at once, and the shortest one flares brightest — the eye (camera) spots the winner instantly.\n**Metric:** the maximum city count for which the optical pick matched the optimum; passes when maxSolved ≥ 4."
+  },
+  "mirrorless": false
+}

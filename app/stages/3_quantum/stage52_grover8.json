@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Поиск Гровера (8 элементов)",
+    "description": "Амплитудное усиление при поиске в оптическом пространстве на 8 элементов.",
+    "etap": "🔍",
+    "n_propusk_pxbin": "  N={var0}: пропуск ({var1} px/bin < 10)",
+    "grover_progressivnyy": "━━━ GROVER ПРОГРЕССИВНЫЙ ━━━",
+    "n_propushcheno": "  N={var0}: пропущено",
+    "grover_maksimum_n": "Grover максимум: N={var0}!",
+    "grover_maks_n": "✅ Grover: макс N={var0}!",
+    "grover_chastichno": "⚠️ Grover частично",
+    "res_row0": "Усиление",
+    "description_all": "Алгоритм Гровера (оптический аналог, N=8→16→32→64).\n\n**Физический принцип:** (С зеркалом). Усиление амплитуды отмеченного состояния визуализируется как яркий бин на экране и подтверждается камерой. Это классическая модель на экране и камере телефона, а не настоящие кубиты.\n**Алгоритмическая суть:** Для каждого N (8,16,32,64) инверсия фазы и диффузия Гровера считаются на CPU за ⌊π/4·√N⌋ итераций. Итоговое распределение |amp|² выводится как N столбцов яркости. Камера снимает плоский белый кадр и кадр распределения (captureStable, measureCalibratedBins/measureNBins), делит один на другой для коррекции виньетирования, и проверяет, что максимум попал в окно вокруг целевого бина с усилением относительно среднего.\n**Аналогия:** Поиск нужного ответа среди множества вариантов по самому яркому пятну на фотографии.\n**Метрика:** Усиление амплитуды (× относительно среднего фона); успех (check) — pass, то есть максимально разрешённое N (maxN) ≥ 8 при усилении окна цели > 1.25×."
+  },
+  "en": {
+    "name": "Grover's Search (8 Items)",
+    "description": "Amplitude amplification when searching an 8-element optical space.",
+    "etap": "🔍",
+    "n_propusk_pxbin": "N={var0}: skip ({var1} px/bin < 10)",
+    "grover_progressivnyy": "━━━ GROVER PROGRESSIVE ━━━",
+    "n_propushcheno": "N={var0}: skipped",
+    "grover_maksimum_n": "Grover maximum: N={var0}!",
+    "grover_maks_n": "✅ Grover: max N={var0}!",
+    "grover_chastichno": "⚠️ Grover partially",
+    "res_row0": "Amplification",
+    "description_all": "Grover's Algorithm (optical analog, N=8→16→32→64).\n\n**Physical principle:** (With mirror). Amplification of the marked state's amplitude is visualized as a bright bin on the screen and confirmed by the camera. This is a classical model on a phone screen and camera, not real qubits.\n**Algorithmic essence:** For each N (8,16,32,64) the Grover phase inversion and diffusion are computed on the CPU over ⌊π/4·√N⌋ iterations. The final |amp|² distribution is shown as N brightness columns. The camera captures a flat white frame and the distribution frame (captureStable, measureCalibratedBins/measureNBins), divides one by the other to correct vignetting, and checks that the maximum falls within a window around the target bin with amplification relative to the mean.\n**Analogy:** Finding the right answer among many options by the brightest spot in a photo.\n**Metric:** Amplitude amplification (× relative to mean background); pass (check) requires pass, i.e. the maximum resolved N (maxN) ≥ 8 with a target-window amplification > 1.25×."
+  },
+  "mirrorless": false
+}

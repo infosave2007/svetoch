@@ -1,0 +1,21 @@
+{
+  "ru": {
+    "name": "🔮 Тепловой 3D-глобус (конвективный лентикуляр)",
+    "description": "Глобальная термо-оптическая визуализация земного шара с оценкой потоков Кориолиса.",
+    "globe_start": "Генерация теплового лентикулярного потока и 3D-проекции...",
+    "tracking_convection": "Измерение физического BOS-сдвига в тепловом факеле...",
+    "success": "Голографический эффект подтвержден. Измеренный угол рефракции факела: r = {var0} px",
+    "fail": "Ошибка анализа: тепловой факел нестабилен или отсутствует физическая рефракция",
+    "description_all": "Тепловой лентикулярный 3D-глобус (BOS-сдвиг).\n\n**Физический принцип:** (Без зеркала). На экране рендерится вращающийся каркасный 3D-глобус (континенты, сетка) в двух ракурсах «левый/правый глаз», чередуемых столбцами как параллакс-барьер. Чередование ярких и тёмных столбцов формирует физический массив тепловых микрофакелов — конвективную лентикулярную решётку, преломляющую свет.\n**Алгоритмическая суть:** Глобус прокручивается на 12 шагах от 0 до 270°. На каждом шаге поверх показывается опорный шахматный паттерн, камера снимает кадр и блочным сопоставлением (SAD с субпиксельным уточнением) измеряет векторы BOS-сдвига в центральной зоне относительно холодного кадра. Выбирается доминирующая ось (H или V) и считается средняя абсолютная величина сдвига как интенсивность потока.\n**Аналогия:** Смартфон создаёт собственный миниатюрный «голографический» тепловой слой, реальную рефракцию которого регистрирует камера.\n**Метрика:** Интенсивность направленного потока flowIntensity (px). Зачёт при flowIntensity > 0.4 px."
+  },
+  "en": {
+    "name": "🔮 Thermal 3D Globe (Convective Lenticular)",
+    "description": "Global thermo-optic visualization of the Earth, evaluating Coriolis-like flows.",
+    "globe_start": "Generating thermal lenticular plume and 3D projection...",
+    "tracking_convection": "Measuring physical BOS shift in the thermal plume...",
+    "success": "Holographic effect confirmed. Measured plume refraction: r = {var0} px",
+    "fail": "Analysis error: thermal plume unstable or physical refraction absent",
+    "description_all": "Thermal Lenticular 3D Globe (BOS shift).\n\n**Physical principle:** (Mirrorless). A rotating wireframe 3D globe (continents, grid) is rendered in two left/right-eye perspectives, column-interlaced like a parallax barrier. The alternating bright and dark columns form a physical array of thermal micro-plumes — a convective lenticular grating that refracts light.\n**Algorithmic essence:** The globe spins across 12 steps from 0 to 270°. At each step a reference checkerboard is shown over it; the camera captures a frame and measures BOS shift vectors in the central region via block matching (SAD with sub-pixel refinement) relative to a cold reference frame. The dominant axis (H or V) is selected and the mean absolute shift is taken as the flow intensity.\n**Analogy:** The smartphone creates its own miniature \"holographic\" thermal layer whose real refraction is registered by the camera.\n**Metric:** Directed flow intensity flowIntensity (px). Pass when flowIntensity > 0.4 px."
+  },
+  "mirrorless": true
+}

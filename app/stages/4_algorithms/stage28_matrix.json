@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "Матрица передачи (ранг, SVD)",
+    "description": "Оптический расчет произведения матриц через временное мультиплексирование.",
+    "etap": "🔬",
+    "bazis": "Базис {var0}/{var1}...",
+    "matrix": "Matrix {var0}",
+    "polnyy_rang": "✅ Полный ранг",
+    "vyrozhdennaya": "❌ Вырожденная",
+    "res_row0": "Ранг",
+    "description_all": "Оптическая передаточная матрица и её SVD-анализ.\n\n**Физический принцип:** (С зеркалом). Экран выступает в роли 2D-оптического модулятора: для каждого из 8 базисных векторов подсвечивается ровно одна вертикальная колонка (one-hot).\n**Алгоритмическая суть:** Временно́е мультиплексирование: 8 раз выводится one-hot паттерн, камера интегрирует яркость в 8 колонках и формирует строку передаточной матрицы T (8×8). Затем CPU считает TᵀT, по диагонали оценивает сингулярные числа, ранг (σ > 5% от σ_max) и число обусловленности κ.\n**Аналогия:** Смартфон как оптический канал линейной алгебры, чью передаточную матрицу мы измеряем и факторизуем.\n**Метрика:** ранг передаточной матрицы; зачёт при rank ≥ 4."
+  },
+  "en": {
+    "name": "Transfer Matrix (Rank, SVD)",
+    "description": "Optical computation of a matrix product via time multiplexing.",
+    "etap": "🔬",
+    "bazis": "Basis {var0}/{var1}...",
+    "matrix": "Matrix {var0}",
+    "polnyy_rang": "✅ Full rank",
+    "vyrozhdennaya": "❌ Degenerate",
+    "res_row0": "Rank",
+    "description_all": "Optical transfer matrix and its SVD analysis.\n\n**Physical principle:** (With mirror). The screen acts as a 2D optical modulator: for each of the 8 basis vectors exactly one vertical column is lit (one-hot).\n**Algorithmic essence:** Time multiplexing: a one-hot pattern is shown 8 times, the camera integrates brightness across 8 columns and forms one row of the transfer matrix T (8×8). The CPU then computes TᵀT, estimates singular values from its diagonal, the rank (σ > 5% of σ_max) and the condition number κ.\n**Analogy:** The smartphone as an optical linear-algebra channel whose transfer matrix we measure and factorize.\n**Metric:** rank of the transfer matrix; passes when rank ≥ 4."
+  },
+  "mirrorless": false
+}

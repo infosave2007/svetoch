@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Монте-Карло: число π",
+    "description": "Оптическое интегрирование площади случайных распределений Монте-Карло.",
+    "etap": "🎯",
+    "mc_start": "Монте-Карло оценка π...",
+    "kalib": "Gamma-калибровка...",
+    "mc_optical": "Optical: точки → яркость → камера считает π...",
+    "mc_convergence": "Сходимость O(1/√N)...",
+    "res_row0": "π estimate",
+    "res_row1": "Optical corr",
+    "description_all": "Оценка π методом Монте-Карло (Численные методы).\n\n**Физический принцип:** (С зеркалом). Случайные точки в квадрате [0,1]² выводятся столбцами: яркий, если x²+y²≤1 (внутри круга), иначе тёмный (γ-калибровка). Камера измеряет среднюю яркость — долю точек внутри круга, откуда π≈4·доля.\n**Алгоритмическая суть:** Детерминированный ГПСЧ Mulberry32 даёт 8 испытаний по 40 точек; для каждого CPU считает π, а оптическая доля считывается камерой и сверяется (корреляция Пирсона). Отдельно прогон до 10000 точек демонстрирует сходимость O(1/√N).\n**Аналогия:** Бросаем светящиеся дротики в круг и измеряем общую яркость мишени вместо ручного подсчёта попаданий.\n**Метрика:** Оценка cpuPi и ошибка |cpuPi−π|; зачёт при |cpuPi−π| < 0.2."
+  },
+  "en": {
+    "name": "Monte Carlo π",
+    "description": "Optical Monte Carlo estimation of π by measuring the fraction of in-circle points.",
+    "etap": "🎯",
+    "mc_start": "Monte Carlo π estimation...",
+    "kalib": "Gamma calibration...",
+    "mc_optical": "Optical: points → brightness → camera counts π...",
+    "mc_convergence": "Convergence O(1/√N)...",
+    "res_row0": "π estimate",
+    "res_row1": "Optical corr",
+    "description_all": "Monte Carlo estimation of π (Numerical methods).\n\n**Physical principle:** (With mirror). Random points in the square [0,1]² are shown as columns: bright if x²+y²≤1 (inside the circle), dark otherwise (gamma-calibrated). The camera measures the mean brightness — the fraction of in-circle points, so π≈4·fraction.\n**Algorithmic essence:** A deterministic Mulberry32 PRNG drives 8 trials of 40 points each; for every trial the CPU computes π while the optical fraction is read by the camera and compared (Pearson correlation). A separate run up to 10000 points demonstrates O(1/√N) convergence.\n**Analogy:** We throw glowing darts into a circle and measure the board's total brightness instead of counting hits by hand.\n**Metric:** Estimate cpuPi and error |cpuPi−π|; pass when |cpuPi−π| < 0.2."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Дисперсионный сахариметр",
+    "description": "Измерение концентрации соли/сахара (Инвариант Аббе).",
+    "etap": "💠",
+    "analyzing_dispersion": "Расчет дисперсии...",
+    "liquid_res": "Вещество: {var0}",
+    "rezonans_nayden": "✅ Дисперсия вычислена!",
+    "slabyy_rezonans": "⚠️ Ошибка расчета",
+    "net_rezonansa": "❌ Нет данных",
+    "res_row0": "Индекс (Cr/Cb)",
+    "description_all": "Хроматический Дисперсионный Сахариметр.\n\n**Физический принцип:** Измерение числа Аббе (дисперсии) жидкости независимо от размера капли. Фокусное расстояние линзы зависит от радиуса кривизны и показателя преломления, а красный и синий свет преломляются по-разному. Разделив оптический контраст в красном на контраст в синем, мы математически сокращаем размер капли из уравнения.\n**Алгоритмическая суть:** Экран проецирует случайный спекл-паттерн (для подавления муара). В течение 10 с камера непрерывно снимает кадры и в центральном круге считает пространственный контраст красного (Cr) и синего (Cb) каналов. Индекс дисперсии D = Cr / Cb усредняется с поправкой на термодрейф (−0.0010·t). По калибровочным порогам D вещество относят к Воздуху, вязкой органике, маслу, густому/обычному сиропу или воде.\n**Аналогия:** Карманный сахариметр, измеряющий концентрацию раствора без пробирок — по цвету преломления капли.\n**Метрика:** Индекс дисперсии D = Cr / Cb (термокомпенсированный). Калибровка: Воздух D<0.975, органика 0.975–0.985, масло 0.985–0.989, густой сироп 0.989–0.991, сироп 0.991–0.993, вода D≥0.993. Этап всегда зачётный (pass=true)."
+  },
+  "en": {
+    "name": "Dispersion Saccharimeter",
+    "description": "Measure salt/sugar concentration (Abbe Invariant).",
+    "etap": "💠",
+    "analyzing_dispersion": "Calculating dispersion...",
+    "liquid_res": "Substance: {var0}",
+    "rezonans_nayden": "✅ Dispersion calculated!",
+    "slabyy_rezonans": "⚠️ Calculation error",
+    "net_rezonansa": "❌ No data",
+    "res_row0": "Index (Cr/Cb)",
+    "description_all": "Chromatic Dispersion Saccharimeter.\n\n**Physical principle:** Measuring the Abbe number (dispersion) of a liquid independent of drop size. Lens focal length depends on radius of curvature and refractive index, and red and blue light refract differently. By dividing optical contrast in red by contrast in blue, the drop size mathematically cancels out.\n**Algorithmic essence:** The screen projects a random speckle pattern (to suppress Moiré). For 10 s the camera continuously captures frames and computes the spatial contrast of the Red (Cr) and Blue (Cb) channels within a central disc. The dispersion index D = Cr / Cb is averaged with a thermal-drift correction (−0.0010·t). Calibrated D thresholds classify the substance as Air, viscous organics, oil, thick/light syrup or water.\n**Analogy:** A pocket saccharimeter that reads solution concentration without test tubes — from the chromatic refraction of the drop.\n**Metric:** Dispersion index D = Cr / Cb (thermally corrected). Calibration: Air D<0.975, organics 0.975–0.985, oil 0.985–0.989, thick syrup 0.989–0.991, syrup 0.991–0.993, water D≥0.993. The stage always passes (pass=true)."
+  },
+  "mirrorless": true
+}

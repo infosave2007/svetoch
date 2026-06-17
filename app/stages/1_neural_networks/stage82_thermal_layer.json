@@ -1,0 +1,32 @@
+{
+  "strings": {
+    "ru": {
+      "etap": "🔥 Этап 82",
+      "thermal_llm_start": "Беззеркальный Тепловой LLM",
+      "thermal_llm_train": "Обучение на биграммах (цифровое)...",
+      "thermal_llm_inference": "⚡ ТЕПЛОВОЙ INFERENCE: BOS-сдвиги → dot products..."
+    },
+    "en": {
+      "etap": "🔥 Stage 82",
+      "thermal_llm_start": "Mirrorless Thermal LLM",
+      "thermal_llm_train": "Training on bigrams (digital)...",
+      "thermal_llm_inference": "⚡ THERMAL INFERENCE: BOS shifts → dot products..."
+    }
+  },
+  "meta": {
+    "name": "ThermalLLM",
+    "description": "Mirrorless Thermal LLM: language model using convection BOS shifts for optical dot products ($0, no mirror)"
+  },
+  "html": "<div class='stage'><h3>🔥 Mirrorless Thermal LLM</h3><p>Беззеркальный LLM: тепловая конвекция → BOS-сдвиги → dot product (без зеркала, $0)</p><div class='rv'><span class='rl'>Текст</span><span id='rv-tl-text' class='rval'>—</span></div><div class='rv'><span class='rl'>Совпадение</span><span id='rv-tl-match' class='rval'>—</span></div><div class='rv'><span class='rl'>Thermal δ</span><span id='rv-tl-cal' class='rval'>—</span></div><p id='g-s82' class='grade'>…</p></div>",
+  "ru": {
+    "name": "🔥 Беззеркальный тепловой LLM",
+    "description_all": "Тепловой слой нейросети (Thermal LLM).\n\n**Физический принцип:** (Без зеркала). Телефон лежит горизонтально экраном вверх. Экран отрисовывает яркие паттерны, локально нагревая воздух (эффект термооптической конвекции). Изменение плотности воздуха искажает проходящий свет (эффект Шлирена).\n**Алгоритмическая суть:** Цифрово обучается символьная модель на биграммах, после чего выполняется тепловой инференс: для каждого из 8 генерируемых символов экран показывает по VOCAB паттернов, а камера через оптический поток (BOS — Background Oriented Schlieren) измеряет конвективные микросдвиги, величина которых служит скалярным произведением (логитом). Далее softmax и сэмплирование; результат сравнивается с CPU.\n**Аналогия:** Воздух над экраном выступает в роли физического тензорного сопроцессора, аппаратно вычисляющего активации для LLM.\n**Метрика:** Сгенерированный текст и доля совпадений с CPU; прохождение (pass) при длине оптического текста ≥ 6 символов.",
+    "description": "Беззеркальный слой нейросети: использование тепловой конвекции экрана (BOS) для оптического умножения матриц."
+  },
+  "en": {
+    "name": "🔥 Mirrorless Thermal LLM",
+    "description_all": "Thermal Neural Layer (Thermal LLM).\n\n**Physical principle:** (Mirrorless). The phone lies horizontally, screen up. The OLED renders bright patterns, locally heating the air and triggering convection, which changes the air's refractive index (Schlieren effect).\n**Algorithmic essence:** A character model is trained digitally on bigrams; thermal inference then runs: for each of the 8 generated characters the screen shows VOCAB patterns, and the camera, via optical flow (BOS — Background Oriented Schlieren), measures the convective micro-shifts whose magnitude serves as the dot product (logit). Softmax and sampling follow, and the result is compared against CPU.\n**Analogy:** The air layer above the screen acts as a physical tensor co-processor that computes LLM activations in hardware.\n**Metric:** Generated text and match rate against CPU; passes when the optical text is ≥ 6 characters long.",
+    "description": "Mirrorless neural layer: using screen thermal convection (BOS) for optical matrix multiplication."
+  },
+  "mirrorless": true
+}

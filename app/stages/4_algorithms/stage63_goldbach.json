@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Гипотеза Гольдбаха",
+    "description": "Аппаратная визуализация проблемы Гольдбаха через эффект Муара.",
+    "etap": "🎯",
+    "goldbach_start": "Гипотеза Гольдбаха: N = p + q...",
+    "kalib": "Gamma-калибровка...",
+    "goldbach_optical": "Optical: пары простых → яркость → камера...",
+    "goldbach_full": "CPU: полная проверка до N=1000...",
+    "goldbach_viz": "Визуализация G(N)...",
+    "res_row0": "Max N verified",
+    "res_row1": "Optical corr",
+    "description_all": "Гипотеза Гольдбаха: N = p + q (Теория чисел).\n\n**Физический принцип:** (С зеркалом). Для чётного N выводятся столбцы k=2..N/2: яркий, если и k, и N−k простые, иначе тёмный (γ-калибровка). Камера измеряет долю ярких столбцов, что даёт число гольдбаховых пар G(N).\n**Алгоритмическая суть:** CPU решетом до 1000 находит простые и считает G(N); оптически G(N) восстанавливается из средней яркости для N=10,20,30,40,46 и сверяется с CPU (корреляция Пирсона). Затем CPU проверяет G(N)>0 для всех чётных 4≤N≤1000.\n**Аналогия:** Каждое чётное число «разбирается» на пару простых, и свет подсчитывает, сколько таких разбиений существует.\n**Метрика:** Максимальное проверенное N (maxVerified) и корреляция corr; зачёт при allVerified — G(N)>0 для всех чётных N до 1000."
+  },
+  "en": {
+    "name": "Goldbach Conjecture",
+    "description": "Optical verification of the Goldbach conjecture by counting prime-pair brightness columns.",
+    "etap": "🎯",
+    "goldbach_start": "Goldbach conjecture: N = p + q...",
+    "kalib": "Gamma calibration...",
+    "goldbach_optical": "Optical: prime pairs → brightness → camera...",
+    "goldbach_full": "CPU: full verification up to N=1000...",
+    "goldbach_viz": "Visualizing G(N)...",
+    "res_row0": "Max N verified",
+    "res_row1": "Optical corr",
+    "description_all": "Goldbach conjecture: N = p + q (Number theory).\n\n**Physical principle:** (With mirror). For even N, columns k=2..N/2 are shown bright if both k and N−k are prime, dark otherwise (gamma-calibrated). The camera measures the fraction of bright columns, giving the Goldbach pair count G(N).\n**Algorithmic essence:** The CPU sieves primes up to 1000 and computes G(N); optically G(N) is recovered from the mean brightness for N=10,20,30,40,46 and compared to the CPU (Pearson correlation). The CPU then checks G(N)>0 for every even 4≤N≤1000.\n**Analogy:** Every even number splits into a pair of primes, and light counts how many such splittings exist.\n**Metric:** Maximum verified N (maxVerified) and correlation corr; pass when allVerified — G(N)>0 for every even N up to 1000."
+  },
+  "mirrorless": false
+}

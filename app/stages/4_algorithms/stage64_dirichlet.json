@@ -1,0 +1,31 @@
+{
+  "ru": {
+    "name": "L-функции Дирихле",
+    "description": "Оценка сходимости математических рядов через глобальную экспозицию матрицы.",
+    "etap": "🎯",
+    "dirichlet_start": "L-функции Дирихле...",
+    "kalib": "Gamma-калибровка...",
+    "dirichlet_chars": "Квадратичные характеры χ_q...",
+    "dirichlet_optical": "Optical: суммы характеров χ(n)...",
+    "dirichlet_result": "Результаты...",
+    "res_row0": "L(1,χ)≠0",
+    "res_row1": "Пойа–Виноградов",
+    "res_row2": "Optical corr",
+    "description_all": "L-функции Дирихле и простые в прогрессиях (Теория чисел).\n\n**Физический принцип:** (С зеркалом). Значения квадратичных характеров χ_q(n)∈{−1,0,+1} (символ Лежандра) выводятся столбцами как тёмный/средний/яркий уровни (γ-калибровка), и камера измеряет среднюю яркость — оптическая сумма характера Σχ(n).\n**Алгоритмическая суть:** CPU для модулей q=5..47 считает L(1,χ), границу Пойа–Виноградова |S(N)|≤√q·log q и распределение простых по классам вычетов; оптически Σχ(n) за полный период (≈0) сверяется с CPU (корреляция Пирсона).\n**Аналогия:** Чередование «плюсов» и «минусов» характера превращается в узор яркости, чья суммарная светимость и есть сумма ряда.\n**Метрика:** Корреляция corr оптики и CPU; зачёт при allLnonzero (L(1,χ)≠0 для всех q) И allPV (граница Пойа–Виноградова выполнена)."
+  },
+  "en": {
+    "name": "Dirichlet L-functions",
+    "description": "Optical Dirichlet character sums and L-functions verifying primes in progressions.",
+    "etap": "🎯",
+    "dirichlet_start": "Dirichlet L-functions...",
+    "kalib": "Gamma calibration...",
+    "dirichlet_chars": "Quadratic characters χ_q...",
+    "dirichlet_optical": "Optical: character sums χ(n)...",
+    "dirichlet_result": "Results...",
+    "res_row0": "L(1,χ)≠0",
+    "res_row1": "Pólya–Vinogradov",
+    "res_row2": "Optical corr",
+    "description_all": "Dirichlet L-functions and primes in progressions (Number theory).\n\n**Physical principle:** (With mirror). Quadratic character values χ_q(n)∈{−1,0,+1} (Legendre symbol) are shown as columns at dark/mid/bright levels (gamma-calibrated), and the camera measures the mean brightness — an optical character sum Σχ(n).\n**Algorithmic essence:** For moduli q=5..47 the CPU computes L(1,χ), the Pólya–Vinogradov bound |S(N)|≤√q·log q, and the distribution of primes across residue classes; optically Σχ(n) over a full period (≈0) is compared to the CPU (Pearson correlation).\n**Analogy:** The alternating pluses and minuses of a character become a brightness pattern whose total luminosity is the series sum.\n**Metric:** Correlation corr between optics and CPU; pass when allLnonzero (L(1,χ)≠0 for all q) AND allPV (Pólya–Vinogradov bound satisfied)."
+  },
+  "mirrorless": false
+}

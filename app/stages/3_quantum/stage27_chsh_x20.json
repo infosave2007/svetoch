@@ -1,0 +1,39 @@
+{
+  "ru": {
+    "name": "CHSH ×50 (статистика Белла)",
+    "description": "Многократное измерение CHSH для подтверждения статистической значимости.",
+    "etap": "📊",
+    "chsh_raundov": "CHSH ×20 раундов...",
+    "chsh_raund": "CHSH раунд {var0}/{var1}",
+    "chsh_rezultaty": "── CHSH ×{var0} результаты ──",
+    "sraw_raundov": "S̄_raw = {var0} ± {var1} ({var2} раундов)",
+    "klassich_predel": "Классич. предел = 2.000",
+    "snorm_znachimo_p_narushenie_be": "✅ S_norm = {var0} > 2 ЗНАЧИМО (p={var1}) — НАРУШЕНИЕ БЕЛЛА!",
+    "kogerentnost_znachima_no_snorm": "⚠️ Когерентность значима, но S_norm ≤ 2",
+    "net_znachimogo_narusheniya": "❌ Нет значимого нарушения",
+    "bell_narushena": "✅ Bell нарушена!",
+    "s_p_slaboe": "⚠️ S>2, p слабое",
+    "klassicheskiy": "❌ Классический",
+    "res_row0": "Среднее S",
+    "description_all": "Тест CHSH ×20 раундов (статистика) — оптический аналог.\n\n**Физический принцип:** Классическая модель на экране телефона с зеркалом и камерой. Половины экрана несут синусоидальные решётки под «углами» Алисы (30°/52.5°) и Боба (41.25°/63.75°); это оптический аналог поляризационных измерений Белл-теста.\n**Алгоритмическая суть:** 20 раундов по 4 пары углов: камера снимает кадр, по зелёному каналу через сину/коэффициенты и автокалибровку частоты считается фаза каждой полосы, разности фаз детрендятся, корреляция E определяется как реальная часть среднего фазового вектора. Из четырёх E вычисляется S_round = |E00−E01+E10+E11|, далее по 20 значениям — среднее S̄_norm, σ и t-тест на S̄_norm > 2.\n**Аналогия:** Многократный сбор «коррелированных» оптических замеров для надёжного статистического вывода о превышении классического предела Белла S=2.\n**Метрика:** Среднее нормированное S̄_norm и p-значение t-теста; прохождение при S̄_norm > 2 и pBell < 0.05."
+  },
+  "en": {
+    "name": "CHSH ×50 (Bell Statistics)",
+    "description": "Repeated CHSH measurement to confirm statistical significance.",
+    "etap": "📊",
+    "chsh_raundov": "CHSH ×20 rounds...",
+    "chsh_raund": "CHSH round {var0}/{var1}",
+    "chsh_rezultaty": "── CHSH ×{var0} results ──",
+    "sraw_raundov": "S̄_raw = {var0} ± {var1} ({var2} rounds)",
+    "klassich_predel": "Classic limit = 2.000",
+    "snorm_znachimo_p_narushenie_be": "✅ S_norm = {var0} > 2 SIGNIFICANT (p={var1}) - BELL VIOLATION!",
+    "kogerentnost_znachima_no_snorm": "⚠️ Coherence is significant, but S_norm ≤ 2",
+    "net_znachimogo_narusheniya": "❌ No significant violation",
+    "bell_narushena": "✅ Bell is broken!",
+    "s_p_slaboe": "⚠️ S>2, p weak",
+    "klassicheskiy": "❌ Classic",
+    "res_row0": "Mean S",
+    "description_all": "CHSH ×20-round test (statistics) — optical analog.\n\n**Physical principle:** A classical model on a phone screen with mirror and camera. The screen halves carry sinusoidal gratings at Alice's (30°/52.5°) and Bob's (41.25°/63.75°) 'angles' — an optical analog of the polarization measurements in a Bell test.\n**Algorithmic essence:** 20 rounds of 4 angle pairs: the camera captures a frame, the phase of each strip is computed from the green channel via sin/cos coefficients and per-half frequency auto-calibration, the phase differences are detrended, and correlation E is taken as the real part of the mean phase vector. From the four E values S_round = |E00−E01+E10+E11| is formed; over 20 values the mean S̄_norm, σ and a t-test for S̄_norm > 2 are computed.\n**Analogy:** Repeated collection of 'correlated' optical measurements for a robust statistical conclusion about exceeding the classical Bell limit S=2.\n**Metric:** Mean normalized S̄_norm and the t-test p-value; passes when S̄_norm > 2 and pBell < 0.05."
+  },
+  "mirrorless": false
+}

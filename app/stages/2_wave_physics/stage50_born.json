@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Правило Борна (|ψ|²)",
+    "description": "Аппаратный расчет квадрата модуля амплитуды (переход к вероятности).",
+    "etap": "🎲",
+    "nvg_pravilo_borna_osmoticheski": "NVG: правило Борна = осмотический softmax...",
+    "srednyaya_korrelyatsiya_px": "  Средняя корреляция P(x)↔|ψ|²: {var0}",
+    "srednyaya_kl": "  Средняя KL: {var0}",
+    "born_rule": "Born rule {var0}",
+    "born_rule_chastichno": "⚠️ Born rule частично",
+    "res_row0": "Корреляция P(x)↔|ψ|²",
+    "description_all": "Правило Борна.\n\n**Физический принцип:** (С зеркалом). Фотосенсор измеряет только интенсивность света P(x), а не фазу амплитуды ψ(x): яркость на матрице играет роль |ψ(x)|².\n**Алгоритмическая суть:** На экран по очереди выводятся 4 распределения |ψ|² (равномерное, одиночный пик, двойной пик, квадратичное 4x(1−x)). Камера по 8 бинам измеряет яркость, нормирует её на равномерный эталон и сравнивает измеренное P(x) с ожидаемым: считаются корреляция Пирсона и KL-дивергенция, усреднённые по информативным распределениям.\n**Аналогия:** Доказательство того, что камера, как и глаз человека, видит не сами квантовые вероятности, а только их проекцию — интенсивность.\n**Метрика:** Правило Борна подтверждено при средней корреляции avgCorr > 0.5 и средней KL < 0.5; отображается corr."
+  },
+  "en": {
+    "name": "Born Rule (|ψ|²)",
+    "description": "Hardware computation of the squared amplitude modulus (mapping to probability).",
+    "etap": "🎲",
+    "nvg_pravilo_borna_osmoticheski": "NVG: Born's rule = osmotic softmax...",
+    "srednyaya_korrelyatsiya_px": "Average correlation P(x)↔|ψ|²: {var0}",
+    "srednyaya_kl": "Average KL: {var0}",
+    "born_rule": "Born rule {var0}",
+    "born_rule_chastichno": "⚠️ Born rule partially",
+    "res_row0": "Correlation P(x)↔|ψ|²",
+    "description_all": "The Born rule.\n\n**Physical principle:** (With mirror). The photosensor measures only light intensity P(x), not the phase of the amplitude ψ(x): sensor brightness plays the role of |ψ(x)|².\n**Algorithmic essence:** Four |ψ|² distributions are shown in turn (uniform, single peak, double peak, quadratic 4x(1−x)). The camera measures brightness over 8 bins, normalizes it against the uniform reference, and compares the measured P(x) with the expected one: it computes the Pearson correlation and KL divergence, averaged over the informative distributions.\n**Analogy:** Proof that the camera, like the human eye, sees not the quantum probabilities themselves but only their projection — the intensity.\n**Metric:** The Born rule is confirmed when the average correlation avgCorr > 0.5 and the average KL < 0.5; the reported quantity is corr."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,23 @@
+{
+  "ru": {
+    "name": "Обучение перцептрона",
+    "description": "Обучение нейросети с оптическим вычислением прямого прохода.",
+    "etap": "🎯",
+    "perc_start": "Оптический персептрон...",
+    "perc_learn": "Обучение + оптический inference...",
+    "res_row0": "CPU accuracy",
+    "res_row1": "Optical accuracy",
+    "description_all": "Однослойный перцептрон.\n\n**Физический принцип:** Камера за один кадр суммирует яркость всех столбцов экрана, физически выполняя multiply-accumulate (скалярное произведение w·x) за O(1).\n**Алгоритмическая суть:** Перцептрон на 8 входов обучается на CPU трём логическим функциям (AND ≥6/8, OR ≥1/8, MAJORITY >4/8) по правилу перцептрона. Затем для оптического инференса произведения w[i]·x[i] выводятся как яркости 8 столбцов (относительно серого фона), камера измеряет среднюю яркость, по калибровке (тёмный/средний/яркий) восстанавливается оптическое скалярное произведение, добавляется смещение и берётся порог >0 для бинарной классификации.\n**Аналогия:** Один взгляд камеры на экран заменяет целый слой умножений-сложений нейрона.\n**Метрика:** Средняя точность CPU и оптического инференса; прохождение при avgCpuAcc > 0.7."
+  },
+  "en": {
+    "name": "Perceptron Training",
+    "description": "Training a neural network with optical computation of the forward pass.",
+    "etap": "🎯",
+    "perc_start": "Optical perceptron...",
+    "perc_learn": "Training + optical inference...",
+    "res_row0": "CPU accuracy",
+    "res_row1": "Optical accuracy",
+    "description_all": "Single-layer perceptron.\n\n**Physical principle:** In a single frame the camera sums the brightness of all screen columns, physically performing a multiply-accumulate (the dot product w·x) in O(1).\n**Algorithmic essence:** An 8-input perceptron is trained on CPU for three logic functions (AND ≥6/8, OR ≥1/8, MAJORITY >4/8) using the perceptron rule. For optical inference the products w[i]·x[i] are then displayed as the brightness of 8 columns (relative to a gray background); the camera measures the mean brightness, a calibration (dark/mid/bright) recovers the optical dot product, a bias is added, and a >0 threshold yields the binary class.\n**Analogy:** A single glance of the camera at the screen replaces a whole layer of a neuron's multiply-add operations.\n**Metric:** Mean accuracy of the CPU and optical inference; passes when avgCpuAcc > 0.7."
+  },
+  "mirrorless": false
+}

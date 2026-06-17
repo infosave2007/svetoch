@@ -1,0 +1,21 @@
+{
+  "ru": {
+    "name": "Принцип неопределённости (Δx·Δp)",
+    "description": "Демонстрация квантовой неопределенности через дифракционное уширение.",
+    "etap": "📏",
+    "nvg_printsip_neopredelyonnosti": "NVG: принцип неопределённости...",
+    "s_a_lower_bound_also_compute_s": "s a lower bound\n\n    // Also compute SNR × DR\n    const snr = cal.snr || 26;\n    const dr = (cal.whiteMean || 80) / Math.max(cal.blackMean || 2, 1);\n    const snrDr = snr * dr;\n\n    this.log(`━━━ NVG #50 ━━━`);\n    this.log(`  Δx·Δp: min=${minProduct.toFixed(4)}, max=${maxProduct.toFixed(4)}`);\n    this.log(`  Нижняя граница ≥ ${minProduct.toFixed(4)} (аналог ℏ/2)`);\n    this.log(`  SNR×DR = ${snr.toFixed(0)} × ${dr.toFixed(1)} = ${snrDr.toFixed(0)}`);\n    this.log(`NVG неопределённость ${bounded ? ",
+    "res_row0": "Δx · Δp",
+    "description_all": "Принцип неопределённости Гейзенберга.\n\n**Физический принцип:** (С зеркалом). Чем точнее задана пространственная координата (выше частота полос → меньше Δx), тем сильнее размывается контраст на сенсоре из-за дифракции и расфокуса — это рост «неопределённости импульса» Δp.\n**Алгоритмическая суть:** Перебираются 6 частот полос (1, 2, 4, 8, 12, 16 циклов). Для каждой камера по 8 бинам измеряет контраст, затем считается Δx=1/f, Δp=1/contrast и их произведение Δx·Δp. Алгоритм берёт минимум произведения по всем частотам как «нижнюю границу» (аналог ℏ/2).\n**Аналогия:** Практическая демонстрация того, что оптику смартфона нельзя сфокусировать в бесконечно малую точку без потери контраста.\n**Метрика:** Соотношение подтверждено при min(Δx·Δp) > 0.1; отображается min."
+  },
+  "en": {
+    "name": "Uncertainty Principle (Δx·Δp)",
+    "description": "Demonstration of quantum uncertainty via diffractive broadening.",
+    "etap": "📏",
+    "nvg_printsip_neopredelyonnosti": "NVG: the uncertainty principle...",
+    "s_a_lower_bound_also_compute_s": "s a lower bound\n\n    // Also compute SNR × DR\n    const snr = cal.snr || 26;\n    const dr = (cal.whiteMean || 80) / Math.max(cal.blackMean || 2, 1);\n    const snrDr = snr * dr;\n\n    this.log(`━━━ NVG #50 ━━━`);\n    this.log(` Δx·Δp: min=${minProduct.toFixed(4)}, max=${maxProduct.toFixed(4)}`);\n    this.log(` Lower bound ≥ ${minProduct.toFixed(4)} (analogous to ℏ/2)`);\n    this.log(` SNR×DR = ${snr.toFixed(0)} × ${dr.toFixed(1)} = ${snrDr.toFixed(0)}`);\n    this.log(`NVG uncertainty ${bounded ?",
+    "res_row0": "Δx · Δp",
+    "description_all": "Heisenberg's uncertainty principle.\n\n**Physical principle:** (With mirror). The more precisely the spatial coordinate is set (higher stripe frequency → smaller Δx), the more the contrast smears on the sensor due to diffraction and defocus — a growth of the 'momentum uncertainty' Δp.\n**Algorithmic essence:** It sweeps 6 stripe frequencies (1, 2, 4, 8, 12, 16 cycles). For each, the camera measures contrast over 8 bins, then computes Δx=1/f, Δp=1/contrast and their product Δx·Δp. The algorithm takes the minimum product across frequencies as a 'lower bound' (analogous to ℏ/2).\n**Analogy:** A practical demonstration that a smartphone's optics cannot be focused to an infinitely small point without losing contrast.\n**Metric:** The relation is confirmed when min(Δx·Δp) > 0.1; the reported quantity is the min."
+  },
+  "mirrorless": false
+}

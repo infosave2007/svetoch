@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Интерферометр Фабри–Перо",
+    "description": "Гибридная эмуляция многократной интерференции и функции Эйри.",
+    "etap": "🔬",
+    "fabripero_rezonans": "Фабри-Перо резонанс...",
+    "poloski_px": "Полоски {var0}px",
+    "fp": "FP {var0}",
+    "rezonans_nayden": "✅ Резонанс найден!",
+    "slabyy_rezonans": "⚠️ Слабый резонанс",
+    "net_rezonansa": "❌ Нет резонанса",
+    "res_row0": "Пик контраста",
+    "description_all": "Интерферометр Фабри-Перо.\n\n**Физический принцип:** (С зеркалом). Эмуляция оптического резонатора высокой добротности: канал «экран-зеркало-камера» переотражает свет, и при определённых пространственных частотах паттерна обход усиливает картину (резонанс).\n**Алгоритмическая суть:** Экран перебирает 12 шагов полос (40→4px), для каждого камера снимает стабильный кадр и измеряет контраст полос. Алгоритм ищет частоту с максимальным контрастом, считает отношение пик/среднее и добротность Q как отношение числа точек к полуширине пика (FWHM).\n**Аналогия:** Цифровая имитация лазерного резонатора на основе реального зашумленного сигнала с камеры.\n**Метрика:** Резонанс засчитан при пик/среднее > 1.2; отображаемая величина — добротность Q = (число точек)/FWHM."
+  },
+  "en": {
+    "name": "Fabry–Pérot Interferometer",
+    "description": "Hybrid emulation of multiple-beam interference and the Airy function.",
+    "etap": "🔬",
+    "fabripero_rezonans": "Fabry-Perot resonance...",
+    "poloski_px": "Stripes {var0}px",
+    "fp": "FP {var0}",
+    "rezonans_nayden": "✅ Resonance found!",
+    "slabyy_rezonans": "⚠️ Weak resonance",
+    "net_rezonansa": "❌ No resonance",
+    "res_row0": "Contrast peak",
+    "description_all": "Fabry-Perot interferometer.\n\n**Physical principle:** (With mirror). Emulation of a high-Q optical resonator: the screen-mirror-camera channel re-reflects light, and at certain spatial pattern frequencies the round-trip reinforces the pattern (resonance).\n**Algorithmic essence:** The screen sweeps 12 stripe sizes (40→4px); for each, the camera grabs a stable frame and measures stripe contrast. The algorithm finds the frequency of maximum contrast, computes the peak/average ratio, and a Q-factor as the point count divided by the peak half-width (FWHM).\n**Analogy:** A digital imitation of a laser cavity built on a real, noisy camera signal.\n**Metric:** Resonance is counted when peak/average > 1.2; the reported quantity is the Q-factor = (point count)/FWHM."
+  },
+  "mirrorless": false
+}

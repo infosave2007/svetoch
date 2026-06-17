@@ -1,0 +1,31 @@
+{
+  "ru": {
+    "name": "Функция Мёртенса (гипотеза Римана)",
+    "description": "Оптическое вычисление суммы Мертенса через интерференцию решеток.",
+    "etap": "🎯",
+    "mertens_start": "Функция Мёртенса M(x) = Σμ(n)...",
+    "kalib": "Gamma-калибровка...",
+    "mertens_optical": "Optical: μ(n) → яркость → камера суммирует...",
+    "mertens_rh": "Проверка: |M(x)| ≤ √x (RH)...",
+    "mertens_viz": "Визуализация M(x)/√x...",
+    "res_row0": "Optical corr",
+    "res_row1": "RH bound",
+    "res_row2": "Max |M/√x|",
+    "description_all": "Функция Мёртенса M(x)=Σμ(n) (Теория чисел).\n\n**Физический принцип:** (С зеркалом). Значения функции Мёбиуса μ(n)∈{−1,0,+1} выводятся столбцами как тёмный/средний/яркий уровни (γ-калибровка), и камера измеряет среднюю яркость окна — оптическая сумма μ(n), дающая M(N).\n**Алгоритмическая суть:** CPU решетом считает μ(n) для n=1..500 и точные M(x); оптически M(N) восстанавливается из нормированной средней яркости для N=10,20,30,40,47 и сверяется с CPU (корреляция Пирсона). Затем проверяется граница Римана |M(x)|≤√x в контрольных точках до 500.\n**Аналогия:** Свет складывает «плюсы» и «минусы» теории чисел в одно число, как весы суммируют гирьки разного знака.\n**Метрика:** Корреляция corr оптики и CPU; зачёт при rhConsistent — выполнении |M(x)|≤√x на всех контрольных точках x≤500."
+  },
+  "en": {
+    "name": "Mertens Function (Riemann Hypothesis)",
+    "description": "Optical computation of the Mertens sum by summing Mobius-encoded brightness columns.",
+    "etap": "🎯",
+    "mertens_start": "Mertens function M(x) = Σμ(n)...",
+    "kalib": "Gamma calibration...",
+    "mertens_optical": "Optical: μ(n) → brightness → camera sums...",
+    "mertens_rh": "Checking: |M(x)| ≤ √x (RH)...",
+    "mertens_viz": "Visualizing M(x)/√x...",
+    "res_row0": "Optical corr",
+    "res_row1": "RH bound",
+    "res_row2": "Max |M/√x|",
+    "description_all": "Mertens function M(x)=Σμ(n) (Number theory).\n\n**Physical principle:** (With mirror). Mobius values μ(n)∈{−1,0,+1} are shown as columns at dark/mid/bright levels (gamma-calibrated), and the camera measures the mean window brightness — an optical sum of μ(n) yielding M(N).\n**Algorithmic essence:** The CPU sieves μ(n) for n=1..500 and the exact M(x); optically M(N) is recovered from the normalized mean brightness for N=10,20,30,40,47 and compared to the CPU (Pearson correlation). The Riemann bound |M(x)|≤√x is then checked at control points up to 500.\n**Analogy:** Light adds up the pluses and minuses of number theory into a single value, like a balance summing weights of opposite sign.\n**Metric:** Correlation corr between optics and CPU; pass when rhConsistent — |M(x)|≤√x holds at all control points x≤500."
+  },
+  "mirrorless": false
+}

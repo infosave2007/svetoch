@@ -1,0 +1,31 @@
+{
+  "ru": {
+    "name": "Оптический градиентный спуск (SGD)",
+    "description": "Аппаратное вычисление градиента ошибки через оптическое вычитание.",
+    "etap": "🎓",
+    "sgd_iteratsiya": "SGD итерация {var0}/{var1}",
+    "shag_loss_w_y": "  Шаг {var0}: Loss={var1} | W=[{var2}] → y=[{var3}]",
+    "optical_sgd_nachalnyy_loss_kon": "🎓 Optical SGD: Начальный Loss={var0}, Конечный Loss={var1}",
+    "snizhenie_oshibki_trebuetsya": "  Снижение ошибки: {var0}% (требуется ≥ 50%)",
+    "obuchenie": "  Обучение {var0}",
+    "sgd_skhoditsya": "✅ SGD сходится!",
+    "sgd_ne_skhoditsya": "❌ SGD не сходится",
+    "res_row0": "Начальный Loss",
+    "description_all": "Оптический градиентный спуск с обратной связью через камеру.\n\n**Физический принцип:** (С зеркалом). Экран выступает оптическим выходным слоем: 8 весов рисуются как 8 яркостных колонок, а камера считывает фактический отклик тракта — «прямой проход» сети.\n**Алгоритмическая суть:** 8 итераций обучения. На каждой текущие веса W показываются колонками, камера измеряет выход y (8 бинов), считается ошибка MSE против целевого вектора, и по дельта-правилу W ← W − η·(y − y_target) (η=0.7) веса обновляются. В конце снижение потерь оценивается отдельным замером.\n**Аналогия:** Нейросеть, чей «нейрон» — это реальный оптический канал телефона, обучаемая методом проб через подсветку и съёмку.\n**Метрика:** начальный и конечный Loss (MSE); зачёт при снижении ошибки ≥ 50% и конечном Loss < 0.05."
+  },
+  "en": {
+    "name": "Optical Gradient Descent (SGD)",
+    "description": "Hardware computation of the error gradient via an optical feedback loop.",
+    "etap": "🎓",
+    "sgd_iteratsiya": "SGD iteration {var0}/{var1}",
+    "shag_loss_w_y": "Step {var0}: Loss={var1} | W=[{var2}] → y=[{var3}]",
+    "optical_sgd_nachalnyy_loss_kon": "🎓 Optical SGD: Initial Loss={var0}, Final Loss={var1}",
+    "snizhenie_oshibki_trebuetsya": "Error reduction: {var0}% (≥ 50% required)",
+    "obuchenie": "Training {var0}",
+    "sgd_skhoditsya": "✅ SGD matches!",
+    "sgd_ne_skhoditsya": "❌ SGD does not converge",
+    "res_row0": "Initial Loss",
+    "description_all": "Optical gradient descent with a camera feedback loop.\n\n**Physical principle:** (With mirror). The screen acts as an optical output layer: 8 weights are drawn as 8 brightness columns, and the camera reads back the channel's actual response — the network's 'forward pass'.\n**Algorithmic essence:** 8 training iterations. At each one the current weights W are shown as columns, the camera measures the output y (8 bins), the MSE error against a target vector is computed, and by the delta rule W ← W − η·(y − y_target) (η=0.7) the weights are updated. The final loss reduction is assessed by a separate measurement.\n**Analogy:** A neural network whose 'neuron' is the phone's real optical channel, trained by trial-and-error through display and capture.\n**Metric:** the initial and final Loss (MSE); passes when the error drops by ≥ 50% and the final Loss < 0.05."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "Закон Бенфорда",
+    "description": "Проверка закона первой цифры на распределении яркости оптического шума.",
+    "etap": "🎯",
+    "benford_start": "Закон Бенфорда...",
+    "benford_data": "Генерация тестовых данных...",
+    "benford_optical": "Optical: d=1..9 → яркость → камера считает...",
+    "res_row0": "Benford-compliant",
+    "res_row1": "Optical corr",
+    "description_all": "Закон Бенфорда P(d)=log₁₀(1+1/d) (Статистика).\n\n**Физический принцип:** (С зеркалом). Для каждой цифры d=1..9 элементы набора выводятся столбцами: яркий, если первая цифра числа равна d, иначе тёмный (γ-калибровка). Камера измеряет долю ярких столбцов — оптическую частоту цифры.\n**Алгоритмическая суть:** CPU для 4 наборов (степени 2ⁿ, Фибоначчи, факториалы n!, n²) считает частоты первых цифр и тест χ² (порог 15.51), а оптические частоты считываются камерой и сверяются (корреляция Пирсона).\n**Аналогия:** Единица лидирует чаще девятки не случайно: даже «сухие» числа подчиняются логарифмическому закону, видимому в яркости.\n**Метрика:** Число наборов, прошедших χ²<15.51 (benfordCount из 4) и средняя корреляция avgOptCorr; зачёт при benfordCount ≥ 2."
+  },
+  "en": {
+    "name": "Benford's Law",
+    "description": "Optical verification of Benford's first-digit law on mathematical datasets.",
+    "etap": "🎯",
+    "benford_start": "Benford's law...",
+    "benford_data": "Generating test data...",
+    "benford_optical": "Optical: d=1..9 → brightness → camera counts...",
+    "res_row0": "Benford-compliant",
+    "res_row1": "Optical corr",
+    "description_all": "Benford's law P(d)=log₁₀(1+1/d) (Statistics).\n\n**Physical principle:** (With mirror). For each digit d=1..9 the dataset entries are shown as columns: bright if the number's leading digit equals d, dark otherwise (gamma-calibrated). The camera measures the fraction of bright columns — the optical frequency of that digit.\n**Algorithmic essence:** For 4 datasets (powers 2ⁿ, Fibonacci, factorials n!, n²) the CPU computes leading-digit frequencies and a χ² test (threshold 15.51), while the optical frequencies are read by the camera and compared (Pearson correlation).\n**Analogy:** One leads over nine not by chance — even dry numbers obey a logarithmic law made visible in brightness.\n**Metric:** Number of datasets passing χ²<15.51 (benfordCount of 4) and average correlation avgOptCorr; pass when benfordCount ≥ 2."
+  },
+  "mirrorless": false
+}

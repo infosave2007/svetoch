@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Активация SiLU",
+    "description": "Применение функции активации SiLU через нелинейный отклик камеры.",
+    "etap": "📈",
+    "uroven": "Уровень {var0}/{var1}: {var2}%",
+    "nelineynost": "Нелинейность: {var0}%",
+    "estestvennaya_siluaktivatsiya": "✅ Естественная SiLU-активация!",
+    "slabaya_nelineynost": "⚠️ Слабая нелинейность",
+    "kanal_lineynyy": "❌ Канал линейный",
+    "res_row0": "Корреляция с SiLU",
+    "description_all": "Оптическая нелинейность (SiLU).\n\n**Физический принцип:** (С зеркалом). Использование динамического диапазона и кривой чувствительности сенсора камеры как физической функции активации.\n**Алгоритмическая суть:** На экран подаётся 20 уровней серого от 0 до 1; камера снимает передаточную кривую (нормировка по чёрному и белому). Кривая сравнивается с эталонами SiLU, ReLU и линейной зависимости (корреляции Пирсона), а степень нелинейности оценивается как (1 − R²_линейной)·100%.\n**Аналогия:** Замена математической формулы активации (Sigmoid) на физическую кривую насыщения фотосенсора смартфона.\n**Метрика:** нелинейность отклика (порог > 2%)."
+  },
+  "en": {
+    "name": "SiLU Activation",
+    "description": "Applying the SiLU activation function via the nonlinear response of the camera.",
+    "etap": "📈",
+    "uroven": "Level {var0}/{var1}: {var2}%",
+    "nelineynost": "Nonlinearity: {var0}%",
+    "estestvennaya_siluaktivatsiya": "✅ Natural SiLU activation!",
+    "slabaya_nelineynost": "⚠️ Weak nonlinearity",
+    "kanal_lineynyy": "❌ Linear channel",
+    "res_row0": "Correlation with SiLU",
+    "description_all": "Optical nonlinearity (SiLU).\n\n**Physical principle:** (With mirror). Using the dynamic range and the sensitivity curve of the camera sensor as a physical activation function.\n**Algorithmic essence:** 20 gray levels from 0 to 1 are fed to the screen; the camera captures the transfer curve (normalized against black and white). The curve is compared against SiLU, ReLU and linear references (Pearson correlations), and the degree of nonlinearity is estimated as (1 − R²_linear)·100%.\n**Analogy:** Replacing the mathematical activation formula (Sigmoid) with the physical saturation curve of the smartphone photosensor.\n**Metric:** response nonlinearity (pass threshold > 2%)."
+  },
+  "mirrorless": false
+}

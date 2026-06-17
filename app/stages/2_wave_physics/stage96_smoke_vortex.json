@@ -1,0 +1,19 @@
+{
+  "ru": {
+    "name": "💨 Резонансный дымовой супер-вихрь (5 Гц)",
+    "description": "Демонстрация термодинамического взаимодействия пульсирующего дисплея с реальным дымом.",
+    "smoke_start": "Генерация макро-вихря",
+    "success": "Связь с дымом установлена (Вращение={var0})",
+    "fail": "Дым не обнаружен или резонанс не достигнут",
+    "description_all": "Резонансный дымовой супер-вихрь (5 Гц).\n\n**Физический принцип:** (Без зеркала). На экран выводится гигантская кольцевая структура из 8 одинаково закрученных (по часовой) спиральных вихрей с центральной светящейся линзой. Яркость всей структуры пульсирует меандром строго на 5 Гц (100 мс свет / 100 мс темнота) — резонансная частота для микроконвекции над дисплеем. 8 периферийных термооптических вихрей работают синхронно, как шестерёнки, закручивая воздух в единый центральный макро-вихрь.\n**Алгоритмическая суть:** В течение 30 секунд экран мигает резонансным паттерном; пользователь пускает дым над дисплеем. Камера каждые 250 мс снимает мгновенный кадр и считает глобальную активность как среднюю SAD-разность яркости между соседними кадрами по всей зоне, накапливая среднее и пиковое значение движения дыма.\n**Аналогия:** Экран работает как невидимый оптический «вентилятор», 8-ю тепловыми лопастями закручивающий реальный дым.\n**Метрика:** Средняя и пиковая активность SAD. Зачёт при avgActivity > 0.55 либо maxActivity > 0.9."
+  },
+  "en": {
+    "name": "💨 Resonant Smoke Super-Vortex (5 Hz)",
+    "description": "Demonstration of thermodynamic interaction between a pulsating display and real smoke.",
+    "smoke_start": "Generating macro-vortex",
+    "success": "Smoke coupling established (Rotation={var0})",
+    "fail": "No smoke detected or resonance failed",
+    "description_all": "Resonant Smoke Super-Vortex (5 Hz).\n\n**Physical principle:** (Mirrorless). A giant ring of 8 identically (clockwise) spiraling vortices with a central glowing lens is displayed. The whole structure's brightness pulses as a strict 5 Hz square wave (100 ms on / 100 ms off) — the resonant frequency for microconvection above the display. The 8 peripheral thermo-optical vortices act like synchronized gears, twisting the air into a single central macro-vortex.\n**Algorithmic essence:** For 30 seconds the screen flashes the resonant pattern while the user blows smoke over the display. Every 250 ms the camera grabs an instant frame and computes global activity as the mean SAD brightness difference between consecutive frames across the whole region, accumulating the average and the peak smoke-motion value.\n**Analogy:** The screen acts as an invisible optical 'fan', using 8 thermal blades to physically twist real smoke.\n**Metric:** Average and peak SAD activity. Pass when avgActivity > 0.55 or maxActivity > 0.9."
+  },
+  "mirrorless": true
+}

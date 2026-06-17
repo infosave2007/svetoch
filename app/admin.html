@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NVG PoC — Admin Panel</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet">
+  <!-- KaTeX for beautiful math formulas in modal -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a0a1e;
+      --card: #12122a;
+      --border: #1e1e3a;
+      --text: #e0e0f0;
+      --dim: #8888aa;
+      --accent: #8b5cf6;
+      --green: #22c55e;
+      --red: #ef4444;
+      --orange: #f97316;
+      --blue: #3b82f6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a3e, #0a0a1e);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--blue));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .status-bar {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status-dot.on {
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    .status-dot.off {
+      background: var(--red);
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .5
+      }
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 8px 20px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .btn-start {
+      background: var(--green);
+      color: #000;
+    }
+
+    .btn-start:hover {
+      filter: brightness(1.2);
+      transform: scale(1.05);
+    }
+
+    .btn-stop {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn-stop:hover {
+      filter: brightness(1.2);
+    }
+
+    .btn-refresh {
+      background: var(--border);
+      color: var(--text);
+    }
+
+    .btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 16px 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 12px 16px;
+      background: rgba(139, 92, 246, .08);
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .panel-body {
+      padding: 16px;
+    }
+
+    /* Progress */
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--blue));
+      transition: width .5s ease;
+      border-radius: 3px;
+    }
+
+    .stage-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .stage-pct {
+      font-size: 13px;
+      color: var(--dim);
+    }
+
+    /* Log */
+    #log-container {
+      max-height: 400px;
+      overflow-y: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    #log-container::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    #log-container::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    .log-entry {
+      padding: 2px 0;
+      border-bottom: 1px solid rgba(30, 30, 58, .5);
+    }
+
+    .log-time {
+      color: var(--dim);
+      margin-right: 8px;
+    }
+
+    .log-ok {
+      color: var(--green);
+    }
+
+    .log-warn {
+      color: var(--orange);
+    }
+
+    .log-err {
+      color: var(--red);
+    }
+
+    .log-dim {
+      color: #888;
+      font-style: italic;
+      font-size: 0.92em;
+    }
+
+    /* Inline stage result cards */
+    .stage-result-card {
+      margin: 6px 0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+      animation: cardIn 0.3s ease-out;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .stage-result-card.pass {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.06);
+    }
+
+    .stage-result-card.fail {
+      border-color: rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.06);
+    }
+
+    .src-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .src-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .src-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .src-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      word-wrap: break-word;
+      line-height: 1.4;
+    }
+
+    .src-metric {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--dim);
+      margin-top: 1px;
+    }
+
+    .src-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+
+    .src-badge.pass {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .src-badge.fail {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .src-chart {
+      width: 100%;
+      border-radius: 6px;
+      overflow: hidden;
+      background: rgba(10, 10, 30, 0.6);
+    }
+
+    .src-chart img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+    }
+
+    /* Stages grid */
+    .stages-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .stage-cell {
+      padding: 8px 4px;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      border: 1px solid var(--border);
+      transition: all .3s;
+    }
+
+    .stage-cell.pass {
+      background: rgba(34, 197, 94, .15);
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .stage-cell.fail {
+      background: rgba(239, 68, 68, .1);
+      border-color: rgba(239, 68, 68, .3);
+      color: var(--red);
+    }
+
+    .stage-cell.run {
+      background: rgba(139, 92, 246, .15);
+      border-color: var(--accent);
+      color: var(--accent);
+      animation: pulse 1s infinite;
+    }
+
+    .stage-cell.wait {
+      background: transparent;
+      color: var(--dim);
+    }
+
+    /* Results */
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .result-table th,
+    .result-table td {
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .result-table th {
+      color: var(--dim);
+      font-weight: 400;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .val-ok {
+      color: var(--green);
+    }
+
+    .val-warn {
+      color: var(--orange);
+    }
+
+    .val-fail {
+      color: var(--red);
+    }
+
+    /* Full-width panels */
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    /* Modal and Details Button styling */
+    .info-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      padding: 2px 4px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-radius: 4px;
+      transition: all 0.2s;
+      opacity: 0.7;
+    }
+
+    .info-btn:hover {
+      opacity: 1;
+      background: rgba(139, 92, 246, 0.15);
+      transform: scale(1.1);
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 5, 15, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .modal-content {
+      background: linear-gradient(145deg, #12122d, #0b0b18);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 90%;
+      max-width: 650px;
+      max-height: 85vh;
+      padding: 28px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--dim);
+      font-size: 18px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-right: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+      overflow-y: auto;
+      max-height: 60vh;
+      padding-right: 8px;
+    }
+
+    .modal-desc p {
+      margin-bottom: 14px;
+    }
+
+    .modal-desc::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .modal-desc::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <h1 id="lbl-admin-title">⚛️ NVG Optical Computer — Admin</h1>
+    <div class="status-bar">
+      <span><span class="status-dot off" id="phone-dot"></span> <span id="phone-status">Phone: —</span></span>
+      <select id="lang-select" onchange="changeLang(this.value)"
+        style="background:var(--card);color:var(--text);border:1px solid var(--border);padding:4px 8px;border-radius:4px;font-size:13px;cursor:pointer">
+        <option value="ru">RU</option>
+        <option value="en">EN</option>
+      </select>
+    </div>
+    <div class="controls">
+      <button class="btn btn-start" id="btn-start" onclick="sendCmd('start')">▶ Start</button>
+      <button class="btn btn-stop" id="btn-stop" onclick="sendCmd('stop')">⏹ Stop</button>
+      <button class="btn btn-refresh" onclick="location.reload()">↻</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- Stage Selection -->
+    <div class="panel full-width">
+      <div class="panel-header" id="lbl-select-stages">🎯 Select Stages
+        <span style="margin-left:auto;display:flex;gap:6px">
+          <button class="btn" id="btn-all-stages" style="font-size:11px;padding:3px 8px"
+            onclick="toggleAllStages(true)">✅ All</button>
+          <button class="btn" id="btn-none-stages" style="font-size:11px;padding:3px 8px"
+            onclick="toggleAllStages(false)">☐ Clear</button>
+        </span>
+      </div>
+      <div class="panel-body">
+        <div id="stage-checkboxes"
+          style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;font-size:11px"></div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="panel">
+      <div class="panel-header" id="lbl-progress">📊 Progress</div>
+      <div class="panel-body">
+        <div class="stage-name" id="cur-stage">Waiting...</div>
+        <div class="stage-pct" id="cur-pct">0%</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress" style="width:0%"></div>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:var(--dim)" id="cur-time"></div>
+      </div>
+    </div>
+
+    <!-- Stages Map -->
+    <div class="panel">
+      <div class="panel-header" id="lbl-map">🗺️ Stages Map</div>
+      <div class="panel-body">
+        <div class="stages-grid" id="stages-grid"></div>
+      </div>
+    </div>
+
+    <!-- Log -->
+    <div class="panel full-width">
+      <div class="panel-header" id="lbl-log">📝 Log <span style="margin-left:auto;font-size:11px;color:var(--dim)"
+          id="log-count">0</span></div>
+      <div class="panel-body">
+        <div id="log-container"></div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="panel full-width" id="results-panel" style="display:none">
+      <div class="panel-header" id="lbl-results">🏆 Results</div>
+      <div class="panel-body">
+        <div id="results-content"></div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="panel full-width" id="history-panel">
+      <div class="panel-header" id="lbl-history">💾 Run History</div>
+      <div class="panel-body">
+        <div id="history-content" style="font-size:12px;color:var(--dim)">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Details Modal -->
+  <div id="details-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeDetailsModal()">×</button>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <div class="modal-desc" id="modal-desc"></div>
+    </div>
+  </div>
+
+  <script>
+    if (window.trustedTypes && window.trustedTypes.createPolicy) {
+      if (!window.trustedTypes.defaultPolicy) {
+        window.trustedTypes.createPolicy('default', {
+          createHTML: string => string,
+          createScript: string => string,
+          createScriptURL: string => string
+        });
+      }
+    }
+    let sectionsData = [];
+    let TOTAL_STAGES = 0;
+    let stageMap = {};
+    let stageStates = [];
+    let lastLogCount = 0;
+    let currentLang = 'ru';
+    let lastStateData = null;
+    let renderedStageResults = new Set();
+    let cachedStageResults = {};
+
+    let TRANSLATIONS = {};
+
+    function loadStagesAndInit() {
+      fetch('admin.json').then(r => r.json()).then(trans => {
+        TRANSLATIONS = trans;
+
+        fetch('/api/stages').then(r => r.json()).then(d => {
+          sectionsData = d.sections;
+          let flatStages = [];
+          sectionsData.forEach(sec => {
+            sec.stages.forEach(stg => {
+              stg.sectionId = sec.id;
+              flatStages.push(stg);
+              stageMap[stg.id] = stg;
+            });
+          });
+          TOTAL_STAGES = flatStages.length;
+          stageStates = new Array(TOTAL_STAGES).fill('wait');
+
+          fetch('/api/state').then(r => r.json()).then(st => {
+            currentLang = st.default_lang || 'ru';
+            document.getElementById('lang-select').value = currentLang;
+            lastStateData = st;
+
+            initStageCheckboxes();
+            initGrid();
+            translatePage();
+
+            if (st.results) showResults(st.results);
+
+            setInterval(pollState, 1000);
+            loadHistory();
+            setInterval(loadHistory, 30000);
+          }).catch(() => {
+            currentLang = 'ru';
+            initStageCheckboxes();
+            initGrid();
+            translatePage();
+            setInterval(pollState, 1000);
+            loadHistory();
+            setInterval(loadHistory, 30000);
+          });
+        });
+      }).catch(e => console.error("Failed to load admin translations", e));
+    }
+
+    function initGrid() {
+      const grid = document.getElementById('stages-grid');
+      grid.innerHTML = '';
+      let flatStages = [];
+      sectionsData.forEach(sec => {
+        sec.stages.forEach(stg => {
+          flatStages.push(stg);
+        });
+      });
+
+      flatStages.forEach((stg, index) => {
+        const cell = document.createElement('div');
+        cell.className = `stage-cell ${stageStates[index] || 'wait'}`;
+        cell.id = `sc-${stg.id}`;
+        cell.textContent = `${index + 1}`;
+        cell.title = stg.name[currentLang] || stg.name['ru'];
+        grid.appendChild(cell);
+      });
+    }
+
+    function updateStageCell(num, cls) {
+      let flatStages = [];
+      sectionsData.forEach(sec => {
+        sec.stages.forEach(stg => { flatStages.push(stg); });
+      });
+      const stg = flatStages[num - 1];
+      if (stg) {
+        const cell = document.getElementById(`sc-${stg.id}`);
+        if (cell) {
+          cell.className = `stage-cell ${cls}`;
+          stageStates[num - 1] = cls;
+        }
+      }
+    }
+
+    function updateStageDot(num, cls) {
+      updateStageCell(num, cls);
+    }
+
+    function clearRunningStageCells() {
+      stageStates.forEach((state, index) => {
+        if (state === 'run') updateStageCell(index + 1, 'wait');
+      });
+    }
+
+    function addLog(msg, cls, time) {
+      // Detect stage result marker and render card instead of log line
+      if (msg && msg.startsWith('__SR__')) {
+        try {
+          const sr = JSON.parse(msg.substring(6));
+          renderStageResultCard(sr);
+          updateStageDot(sr.serialNum, sr.passed ? 'pass' : 'fail');
+          if (sr.stageKey) renderedStageResults.add(sr.stageKey);
+        } catch (e) { console.error('Bad SR marker:', e); }
+        return;
+      }
+      const container = document.getElementById('log-container');
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      const t = time ? new Date(time).toLocaleTimeString() : new Date().toLocaleTimeString();
+      entry.innerHTML = `<span class="log-time">${t}</span><span class="log-${cls || ''}">${escHtml(msg)}</span>`;
+      container.appendChild(entry);
+      container.scrollTop = container.scrollHeight;
+      document.getElementById('log-count').textContent = container.children.length;
+    }
+
+    function renderStageResultCard(sr) {
+      const container = document.getElementById('log-container');
+      const card = document.createElement('div');
+      const passed = sr.passed;
+      card.className = `stage-result-card ${passed ? 'pass' : 'fail'}`;
+      const name = sr.name?.[currentLang] || sr.name?.['ru'] || `Stage ${sr.serialNum}`;
+      const passLabel = currentLang === 'ru' ? (passed ? 'Пройден' : 'Не пройден') : (passed ? 'Passed' : 'Failed');
+      let chartHtml = '';
+      const chartSrc = sr.chart || cachedStageResults[sr.stageKey]?.chart;
+      if (chartSrc) {
+        chartHtml = `<div class="src-chart"><img src="${chartSrc}" alt="chart"></div>`;
+      } else if (sr.stageKey) {
+        chartHtml = `<div class="src-chart" id="src-chart-${sr.stageKey}"></div>`;
+      }
+      card.innerHTML = `
+    <div class="src-header">
+      <span class="src-icon">${passed ? '✅' : '❌'}</span>
+      <div class="src-info">
+        <div class="src-title">${TRANSLATIONS[currentLang]?.stage_label || 'Stage'} ${sr.serialNum}: ${escHtml(name)}</div>
+        <div class="src-metric">${escHtml(sr.metric || '—')}</div>
+      </div>
+      <span class="src-badge ${passed ? 'pass' : 'fail'}">${passLabel}</span>
+    </div>
+    ${chartHtml}
+  `;
+      container.appendChild(card);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function escHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function translateStageName(stage) {
+      if (!stage) return TRANSLATIONS[currentLang]?.waiting || 'Waiting...';
+
+      const labels = Object.values(TRANSLATIONS).map(t => t.stage_label).filter(Boolean);
+      if (!labels.includes('Stage')) labels.push('Stage');
+      if (!labels.includes('Этап')) labels.push('Этап');
+
+      const escapedLabels = labels.map(l => l.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+      const regex = new RegExp(`(?:${escapedLabels.join('|')})\\s*(\\d+)`, 'i');
+
+      const m = stage.match(regex);
+      if (m) {
+        const num = parseInt(m[1]);
+        let flatStages = [];
+        sectionsData.forEach(sec => {
+          sec.stages.forEach(stg => { flatStages.push(stg); });
+        });
+        const stg = flatStages[num - 1];
+        if (stg) {
+          const prefix = TRANSLATIONS[currentLang]?.stage_label || (currentLang === 'ru' ? 'Этап' : 'Stage');
+          return `${prefix} ${num}: ${stg.name[currentLang] || stg.name['ru']}`;
+        }
+      }
+      return stage;
+    }
+
+    function setProgress(stage, pct) {
+      const formattedStage = translateStageName(stage);
+      document.getElementById('cur-stage').textContent = formattedStage;
+      document.getElementById('cur-pct').textContent = (pct || 0).toFixed(1) + '%';
+      document.getElementById('progress').style.width = Math.min(pct || 0, 100) + '%';
+      const m = stage?.match(/(\d+)/);
+      if (m) {
+        const num = parseInt(m[1]);
+        for (let i = 1; i < num; i++) {
+          if (stageStates[i - 1] === 'wait' || stageStates[i - 1] === 'run')
+            updateStageCell(i, 'pass');
+        }
+        updateStageCell(num, 'run');
+      }
+    }
+
+    async function showResults(data) {
+      if (!data) return;
+      document.getElementById('results-panel').style.display = 'block';
+      const content = document.getElementById('results-content');
+      let passCount = 0;
+
+      const t = TRANSLATIONS[currentLang];
+
+      // Collect all active stages from sectionsData
+      let flatStages = [];
+      sectionsData.forEach(sec => {
+        sec.stages.forEach(stg => {
+          stg.sectionId = sec.id;
+          flatStages.push(stg);
+        });
+      });
+
+      const promises = flatStages.map(async stg => {
+        const stageKey = `stage${stg.id}`;
+        let ok = false;
+        let mText = '—';
+        let active = false;
+
+        if (data[stageKey]) {
+          active = true;
+          try {
+            const mod = await import(stg.js_path);
+            if (mod.check) ok = mod.check(data[stageKey]);
+            if (mod.metric) mText = mod.metric(data[stageKey]);
+          } catch (e) {
+            console.error("Failed to load check/metric for stage:", stg.id, e);
+          }
+        }
+        return { stg, ok, mText, active };
+      });
+
+      const results = await Promise.all(promises);
+
+      let html = `<table class="result-table"><tr><th>${t.num_col}</th><th>${t.stage_col}</th><th>${t.metric_col}</th><th>${t.status_col}</th></tr>`;
+
+      results.forEach((res, idx) => {
+        const { stg, ok, mText, active } = res;
+        const serialNum = idx + 1;
+        const name = stg.name[currentLang] || stg.name['ru'];
+
+        if (!active) {
+          if (stageStates[serialNum - 1] === 'run') updateStageCell(serialNum, 'wait');
+          html += `<tr><td>${serialNum}</td><td>${name}</td><td>—</td><td>⏭</td></tr>`;
+          return;
+        }
+
+        if (ok) passCount++;
+        updateStageCell(serialNum, ok ? 'pass' : 'fail');
+        html += `<tr><td>${serialNum}</td><td>${name}</td><td class="${ok ? 'val-ok' : 'val-fail'}">${mText}</td><td>${ok ? '✅' : '❌'}</td></tr>`;
+      });
+
+      html += '</table>';
+      const total = flatStages.length;
+      html += `<div style="margin-top:16px;font-size:20px;font-weight:700;color:${passCount >= Math.floor(total * 0.35) ? 'var(--green)' : passCount >= Math.floor(total * 0.25) ? 'var(--blue)' : 'var(--orange)'}">${passCount}/${total} ${t.passed_label}</div>`;
+      content.innerHTML = html;
+    }
+
+    function initStageCheckboxes() {
+      const container = document.getElementById('stage-checkboxes');
+      container.innerHTML = '';
+      sectionsData.forEach(sec => {
+        const secHeader = document.createElement('div');
+        secHeader.style.cssText = 'grid-column: 1 / -1; font-weight:700; margin-top:10px; margin-bottom:4px; font-size:12px; color:#fff; border-bottom:1px solid var(--border); padding-bottom:2px';
+        secHeader.textContent = sec.name[currentLang] || sec.name['ru'];
+        container.appendChild(secHeader);
+
+        let serial = 1;
+        sec.stages.forEach(stg => {
+          const wrapper = document.createElement('div');
+          wrapper.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:4px;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,0.03);border:1px solid var(--border)';
+
+          const label = document.createElement('label');
+          label.style.cssText = 'display:flex;align-items:center;gap:6px;cursor:pointer;flex-grow:1;min-width:0;margin:0';
+
+          const cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.checked = true;
+          cb.id = `stg-cb-${stg.id}`;
+          cb.style.cssText = 'margin:0;cursor:pointer;flex-shrink:0';
+          label.appendChild(cb);
+
+          const txt = document.createElement('span');
+          txt.textContent = `${serial}. ${stg.name[currentLang] || stg.name['ru']}`;
+          txt.style.cssText = 'word-wrap:break-word;line-height:1.4;';
+          label.appendChild(txt);
+
+          if (stg.mirrorless) {
+            const badge = document.createElement('span');
+            badge.innerHTML = '🚫🪞';
+            badge.style.cssText = 'font-size:10px;margin-left:4px;cursor:help;flex-shrink:0';
+            badge.title = currentLang === 'ru' ? 'Беззеркальный эксперимент' : 'Mirrorless experiment';
+            label.appendChild(badge);
+          }
+
+          wrapper.appendChild(label);
+
+          const infoBtn = document.createElement('button');
+          infoBtn.className = 'info-btn';
+          infoBtn.innerHTML = 'ℹ️';
+          infoBtn.title = currentLang === 'ru' ? 'Подробнее' : 'Details';
+          infoBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            showStageDetails(stg);
+          };
+          wrapper.appendChild(infoBtn);
+
+          container.appendChild(wrapper);
+          serial++;
+        });
+      });
+    }
+
+    function toggleAllStages(on) {
+      sectionsData.forEach(sec => {
+        sec.stages.forEach(stg => {
+          const cb = document.getElementById(`stg-cb-${stg.id}`);
+          if (cb) cb.checked = on;
+        });
+      });
+    }
+
+    function getSelectedStages() {
+      const selected = [];
+      sectionsData.forEach(sec => {
+        sec.stages.forEach(stg => {
+          const cb = document.getElementById(`stg-cb-${stg.id}`);
+          if (cb && cb.checked) selected.push(stg.id);
+        });
+      });
+      return selected;
+    }
+
+    function sendCmd(cmd) {
+      if (cmd === 'start') {
+        document.getElementById('log-container').innerHTML = '';
+        document.getElementById('log-count').textContent = '0';
+        lastLogCount = 0;
+        stageStates = new Array(TOTAL_STAGES).fill('wait');
+        initGrid();
+        document.getElementById('results-panel').style.display = 'none';
+        setProgress(TRANSLATIONS[currentLang]?.waiting || 'Waiting...', 0);
+      }
+      let url = `/api/${cmd}`;
+      if (cmd === 'start') {
+        const stages = getSelectedStages();
+        url += `?stages=${stages.join(',')}`;
+      }
+      fetch(url).then(r => r.json()).then(d => {
+        addLog(`Admin → ${cmd}`, 'ok');
+      }).catch(e => addLog(`${TRANSLATIONS[currentLang]?.error || 'Error'}: ${e}`, 'err'));
+    }
+
+    function changeLang(lang) {
+      fetch(`/api/set_lang?lang=${lang}`).then(r => r.json()).then(d => {
+        currentLang = d.lang;
+        translatePage();
+        initStageCheckboxes();
+        initGrid();
+        if (lastStateData && lastStateData.results) {
+          showResults(lastStateData.results);
+        }
+        loadHistory();
+      });
+    }
+
+    function translatePage() {
+      const t = TRANSLATIONS[currentLang];
+      document.getElementById('lbl-admin-title').textContent = t.admin_title;
+      document.getElementById('lbl-select-stages').childNodes[0].textContent = t.title + " ";
+      document.getElementById('btn-all-stages').textContent = t.btn_all;
+      document.getElementById('btn-none-stages').textContent = t.btn_none;
+      document.getElementById('btn-start').innerHTML = t.btn_start;
+      document.getElementById('btn-stop').innerHTML = t.btn_stop;
+      document.getElementById('lbl-progress').textContent = t.progress;
+      document.getElementById('lbl-map').textContent = `${t.map} (${TOTAL_STAGES})`;
+      document.getElementById('lbl-log').childNodes[0].textContent = t.log + " ";
+      document.getElementById('lbl-results').childNodes[0].textContent = t.results;
+      document.getElementById('lbl-history').childNodes[0].textContent = t.history;
+
+      const conn = lastStateData ? lastStateData.phone_connected : false;
+      document.getElementById('phone-dot').className = conn ? 'status-dot on' : 'status-dot off';
+      document.getElementById('phone-status').textContent = `${t.phone}: ${conn ? '✓' : '—'}`;
+    }
+
+    function pollState() {
+      fetch('/api/state').then(r => r.json()).then(d => {
+        lastStateData = d;
+
+        // Language synchronization from server if changed elsewhere
+        if (d.default_lang && d.default_lang !== currentLang) {
+          currentLang = d.default_lang;
+          document.getElementById('lang-select').value = currentLang;
+          translatePage();
+          initStageCheckboxes();
+          initGrid();
+        }
+
+        translatePage();
+
+        if (d.stage && d.running) {
+          setProgress(d.stage, d.progress);
+        } else if (d.results) {
+          clearRunningStageCells();
+          setProgress(currentLang === 'ru' ? 'Завершено' : 'Complete', 100);
+        } else {
+          clearRunningStageCells();
+          document.getElementById('cur-stage').textContent = TRANSLATIONS[currentLang]?.waiting || 'Waiting...';
+          document.getElementById('cur-pct').textContent = '0.0%';
+          document.getElementById('progress').style.width = '0%';
+        }
+
+        if (d.logs && d.logs.length < lastLogCount) {
+          document.getElementById('log-container').innerHTML = '';
+          document.getElementById('log-count').textContent = '0';
+          lastLogCount = 0;
+          renderedStageResults.clear();
+        }
+        if (d.logs && d.logs.length > lastLogCount) {
+          const newLogs = d.logs.slice(lastLogCount);
+          newLogs.forEach(l => addLog(l.msg, l.cls, l.t));
+          lastLogCount = d.logs.length;
+        }
+        // Cache stage_results and fill chart placeholders
+        if (d.stage_results) {
+          cachedStageResults = d.stage_results;
+          for (const [key, sr] of Object.entries(d.stage_results)) {
+            if (!renderedStageResults.has(key)) {
+              updateStageDot(sr.serialNum, sr.passed ? 'pass' : 'fail');
+            }
+            if (sr.chart) {
+              const ph = document.getElementById(`src-chart-${key}`);
+              if (ph && !ph.querySelector('img')) {
+                ph.innerHTML = `<img src="${sr.chart}" alt="chart">`;
+              }
+            }
+          }
+        }
+        if (d.results) showResults(d.results);
+        document.getElementById('cur-time').textContent = `${TRANSLATIONS[currentLang]?.updated || 'Updated'}: ${new Date().toLocaleTimeString()}`;
+      }).catch(() => { });
+    }
+
+    function loadHistory() {
+      fetch('/api/history').then(r => r.json()).then(d => {
+        const el = document.getElementById('history-content');
+        const t = TRANSLATIONS[currentLang];
+        if (!d.history || d.history.length === 0) {
+          el.innerHTML = `<span style="color:var(--dim)">${t.no_results}</span>`;
+          return;
+        }
+        let html = `<table class="result-table"><tr><th>${t.time_col}</th><th>${t.stages_col}</th><th>${t.size_col}</th><th>${t.download_col}</th></tr>`;
+        for (const h of d.history) {
+          const timeStr = (h.time || '').replace(/_/g, ' ');
+          const sizeKB = h.size ? (h.size / 1024).toFixed(0) + 'KB' : '?';
+          html += `<tr><td>${timeStr}</td><td>${h.stages || '?'}</td><td>${sizeKB}</td><td><a href="/api/download/${h.file}" download style="color:var(--blue);text-decoration:none;font-size:16px" title="Download ${h.file}">💾</a></td></tr>`;
+        }
+        html += '</table>';
+        el.innerHTML = html;
+      }).catch(() => {
+        document.getElementById('history-content').textContent = TRANSLATIONS[currentLang].load_err;
+      });
+    }
+
+    function showStageDetails(stg) {
+      const modal = document.getElementById('details-modal');
+      const title = document.getElementById('modal-title');
+      const desc = document.getElementById('modal-desc');
+
+      const mirrorlessIcon = stg.mirrorless ? ' 🚫🪞' : ' 🪞';
+      title.innerHTML = `${currentLang === 'ru' ? 'Этап' : 'Stage'} ${stg.id}: ${escHtml(stg.name[currentLang] || stg.name['ru'] || '')}<span style="font-size:12px;font-weight:normal;color:var(--dim);margin-left:auto;display:flex;align-items:center;gap:4px">${mirrorlessIcon} ${stg.mirrorless ? (currentLang === 'ru' ? 'Беззеркальный' : 'Mirrorless') : (currentLang === 'ru' ? 'С зеркалом' : 'With mirror')}</span>`;
+
+      let content = '';
+      if (stg.description_all) {
+        content = stg.description_all[currentLang] || stg.description_all['ru'] || '';
+      }
+      if (!content) {
+        content = stg.description[currentLang] || stg.description['ru'] || '';
+      }
+
+      // Format content: escape HTML, render minimal markdown (**bold**, `code`), newlines → paragraphs
+      const renderMd = (s) => escHtml(s)
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>');
+      desc.innerHTML = content.split('\n').map(p => {
+        const trimmed = p.trim();
+        return trimmed ? `<p>${renderMd(trimmed)}</p>` : '';
+      }).join('');
+
+      modal.style.display = 'flex';
+
+      // Trigger KaTeX math rendering if available
+      if (window.renderMathInElement) {
+        window.renderMathInElement(desc, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\]', display: true }
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function closeDetailsModal() {
+      document.getElementById('details-modal').style.display = 'none';
+    }
+
+    // Close modal when clicking outside content
+    document.getElementById('details-modal').addEventListener('click', function (e) {
+      if (e.target === this) {
+        closeDetailsModal();
+      }
+    });
+
+    // Start
+    loadStagesAndInit();
+    document.getElementById('cur-time').textContent = `Start: ${new Date().toLocaleTimeString()}`;
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Спектрометр жидкостей",
+    "description": "Определение жидкости: Вода / Масло / Кровь.",
+    "etap": "🧪",
+    "analyzing": "Анализ капли...",
+    "liquid_res": "Вещество: {var0}",
+    "rezonans_nayden": "✅ Анализ завершен!",
+    "slabyy_rezonans": "⚠️ Анализ завершен",
+    "net_rezonansa": "❌ Ошибка анализа",
+    "res_row0": "Тип вещества",
+    "description_all": "Микрокапельный Спектро-Рефрактометр.\n\n**Физический принцип:** Гибридный оптический анализ. Капля жидкости на объективе камеры работает как микролинза. Разные жидкости имеют разный показатель преломления (рефрактометрия), абсорбционный спектр (спектроскопия) и мутность (рассеяние Ми).\n**Алгоритмическая суть:** Сначала экран выводит высокочастотную решётку, и камера измеряет пространственный контраст (StdDev) в центральном круге как оценку показателя преломления и мутности. Затем экран по очереди вспыхивает чистыми R, G, B цветами, и по среднему сигналу каналов вычисляется индекс поглощения R/G. По порогам контраста и R/G вещество классифицируется как Воздух, Кровь, Масло или Вода.\n**Аналогия:** Карманная химическая лаборатория, использующая оптику смартфона вместо пробирок и центрифуг.\n**Метрика:** Контраст StdDev и индекс R/G. Воздух при StdDev > 25; Кровь при R/G > 1.5; Масло при StdDev < 9.75; иначе Вода. Зачёт при успешной классификации (result ≠ Unknown)."
+  },
+  "en": {
+    "name": "Liquid Spectrometer",
+    "description": "Liquid identification: Water / Oil / Blood.",
+    "etap": "🧪",
+    "analyzing": "Analyzing drop...",
+    "liquid_res": "Substance: {var0}",
+    "rezonans_nayden": "✅ Analysis complete!",
+    "slabyy_rezonans": "⚠️ Analysis complete",
+    "net_rezonansa": "❌ Analysis error",
+    "res_row0": "Substance Type",
+    "description_all": "Micro-drop Spectro-Refractometer.\n\n**Physical principle:** Hybrid optical analysis. A drop of liquid on the camera lens acts as a micro-lens. Different liquids have distinct refractive indices (refractometry), absorption spectra (spectroscopy), and turbidity (Mie scattering).\n**Algorithmic essence:** First the screen displays a high-frequency grid and the camera measures the spatial contrast (StdDev) within a central disc as a proxy for refractive index and turbidity. Then the screen flashes pure R, G, B colors in turn and the channel averages yield an R/G absorption index. By thresholding contrast and R/G the substance is classified as Air, Blood, Oil or Water.\n**Analogy:** A pocket chemistry lab using smartphone optics instead of test tubes and centrifuges.\n**Metric:** Contrast StdDev and R/G index. Air when StdDev > 25; Blood when R/G > 1.5; Oil when StdDev < 9.75; otherwise Water. Pass on successful classification (result ≠ Unknown)."
+  },
+  "mirrorless": true
+}

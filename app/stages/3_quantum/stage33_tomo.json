@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Томография матрицы плотности (ρ)",
+    "description": "Оптическая реконструкция матрицы плотности по серии проекций.",
+    "etap": "🔮",
+    "tomografiya": "Томография {var0}...",
+    "tomografiya_avgtr_avgr": "Томография: avgTr(ρ²)={var0}, avg|r|={var1}",
+    "sostoyanie": "Состояние {var0}",
+    "tomografiya_rabotaet": "✅ Томография работает",
+    "nizkaya_chistota": "❌ Низкая чистота",
+    "res_row0": "Чистота Tr(ρ²)",
+    "description_all": "Квантовая томография состояний — оптический аналог.\n\n**Физический принцип:** Классическая модель на экране телефона с зеркалом и камерой. Базисы Паули эмулируются паттернами полос: Z — вертикальные, X — горизонтальные, Y — диагональные 45°; «состояния» |0⟩ и |+⟩ задаются яркостью полос.\n**Алгоритмическая суть:** Для каждого состояния снимается по три кадра, quadrantMean/regionMeanArea считывают противоположные области, давая средние ⟨σz⟩=(L−R)/(L+R), ⟨σx⟩=(top−bot)/(top+bot), ⟨σy⟩ по диагоналям. Вектор Блоха |r|=√(σx²+σy²+σz²), чистота Tr(ρ²)=(1+|r|²)/2; результаты усредняются по двум состояниям (avgPurity, avgBloch).\n**Аналогия:** Как медицинский томограф собирает объём по проекциям, состояние восстанавливается по трём яркостным проекциям-базисам.\n**Метрика:** Средняя чистота avgPurity = ⟨(1+|r|²)/2⟩ по состояниям; прохождение при avgPurity > 0.5."
+  },
+  "en": {
+    "name": "Density-Matrix Tomography (ρ)",
+    "description": "Optical reconstruction of the density matrix from a series of projections.",
+    "etap": "🔮",
+    "tomografiya": "Tomography {var0}...",
+    "tomografiya_avgtr_avgr": "Tomography: avgTr(ρ²)={var0}, avg|r|={var1}",
+    "sostoyanie": "State {var0}",
+    "tomografiya_rabotaet": "✅ Tomography works",
+    "nizkaya_chistota": "❌ Low purity",
+    "res_row0": "Purity Tr(ρ²)",
+    "description_all": "Quantum state tomography — optical analog.\n\n**Physical principle:** A classical model on a phone screen with mirror and camera. The Pauli bases are emulated by stripe patterns: Z — vertical, X — horizontal, Y — 45° diagonal; the 'states' |0⟩ and |+⟩ are set by stripe brightness.\n**Algorithmic essence:** For each state three frames are captured, quadrantMean/regionMeanArea read opposite regions to give the expectations ⟨σz⟩=(L−R)/(L+R), ⟨σx⟩=(top−bot)/(top+bot), ⟨σy⟩ from diagonals. The Bloch vector |r|=√(σx²+σy²+σz²) and purity Tr(ρ²)=(1+|r|²)/2 are formed; results are averaged over the two states (avgPurity, avgBloch).\n**Analogy:** Like a medical scanner builds a volume from projections, the state is reconstructed from three brightness-projection bases.\n**Metric:** Mean purity avgPurity = ⟨(1+|r|²)/2⟩ over the states; passes when avgPurity > 0.5."
+  },
+  "mirrorless": false
+}

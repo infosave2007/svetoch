@@ -1,0 +1,35 @@
+{
+  "ru": {
+    "name": "Калибровка оптического канала",
+    "description": "Анализ базовых оптических свойств канала «экран-камера».",
+    "etap": "📡",
+    "opticheskiy_kanal": "Оптический канал...",
+    "poloski_px": "Полоски {var0}px",
+    "poloski_px_1": "Полоски {var0}px...",
+    "kontrast": "  → Контраст: {var0}",
+    "gradient": "Градиент...",
+    "gradient_r": "Градиент R²={var0}%",
+    "kanal_rabotaet": "✅ Канал работает",
+    "slabyy_kanal": "⚠️ Слабый канал",
+    "net_kontrasta": "❌ Нет контраста",
+    "res_row0": "Контраст полос 32px",
+    "description_all": "Оптический канал связи.\n\n**Физический принцип:** (С зеркалом). Сигнал выводится на экран, отражается от зеркала и улавливается фронтальной камерой.\n**Алгоритмическая суть:** На экран выводятся вертикальные полосы шириной 32, 16 и 8 px; камера снимает кадр и для каждой ширины вычисляется контраст полос (точки MTF). Затем выводится горизонтальный градиент чёрный→белый, и измеряется линейность передачи градаций серого (коэффициент R²).\n**Аналогия:** Базовая калибровка «воздушного» оптоволокна — проверка того, насколько чётко камера видит пиксели экрана через зеркало.\n**Метрика:** контраст полос 32 px (порог C(32) > 0.01)."
+  },
+  "en": {
+    "name": "Optical Channel Calibration",
+    "description": "Analysis of the basic optical properties of the \"screen-to-camera\" channel.",
+    "etap": "📡",
+    "opticheskiy_kanal": "Optical channel...",
+    "poloski_px": "Stripes {var0}px",
+    "poloski_px_1": "Stripes {var0}px...",
+    "kontrast": "→ Contrast: {var0}",
+    "gradient": "Gradient...",
+    "gradient_r": "Gradient R²={var0}%",
+    "kanal_rabotaet": "✅ Channel is working",
+    "slabyy_kanal": "⚠️ Weak channel",
+    "net_kontrasta": "❌ No contrast",
+    "res_row0": "Contrast of 32px stripes",
+    "description_all": "Optical communication channel.\n\n**Physical principle:** (With mirror). The signal is shown on the screen, reflected off the mirror and captured by the front camera.\n**Algorithmic essence:** Vertical stripes of width 32, 16 and 8 px are displayed; the camera grabs a frame and for each width the stripe contrast is computed (MTF points). Then a horizontal black-to-white gradient is shown, and the linearity of the grayscale transfer through the optical path is measured (R² coefficient).\n**Analogy:** Basic calibration of an \"air\" optical fiber — checking how clearly the camera sees the screen pixels through the mirror.\n**Metric:** contrast of 32 px stripes (pass threshold C(32) > 0.01)."
+  },
+  "mirrorless": false
+}

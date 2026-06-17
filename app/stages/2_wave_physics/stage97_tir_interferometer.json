@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Интерферометр НПВО (TIR)",
+    "description": "Волноводный беззеркальный интерферометр нулевого зазора.",
+    "etap": "💠",
+    "scan_tir": "Сканирование мод волновода...",
+    "poloski_px": "Мода {var0}px",
+    "tir_res": "TIR {var0}",
+    "rezonans_nayden": "✅ Резонанс TIR найден!",
+    "slabyy_rezonans": "⚠️ Слабый резонанс (загрязнен экран?)",
+    "net_rezonansa": "❌ Нет резонанса (нажмите на стекло)",
+    "res_row0": "Оптический путь",
+    "description_all": "Волноводный TIR-интерферометр (Zero-Gap).\n\n**Физический принцип:** (Без зеркала). Стекло смартфона (Gorilla Glass) выступает в роли диэлектрического волновода: свет дисплея захватывается за счёт полного внутреннего отражения (TIR) и достигает матрицы камеры.\n**Алгоритмическая суть:** Экран по очереди выводит высокочастотные чёрно-белые решётки с шагом полосы [8, 6, 5, 4, 3, 2] px, на каждой моде делает стабилизированный захват кадра и измеряет контраст просочившейся внутристекольной волны. Находится мода с максимальным контрастом и считается отношение пик/среднее (peak/avg).\n**Аналогия:** Смартфон превращается в цельный волоконно-оптический датчик напряжений, где экран — лазер, стекло — оптоволокно, а камера — детектор.\n**Метрика:** Резонансное отношение peakRatio = maxC / avgC. Зачёт при peakRatio > 1.2."
+  },
+  "en": {
+    "name": "TIR Interferometer",
+    "description": "Mirrorless waveguide zero-gap interferometer.",
+    "etap": "💠",
+    "scan_tir": "Scanning waveguide modes...",
+    "poloski_px": "Mode {var0}px",
+    "tir_res": "TIR {var0}",
+    "rezonans_nayden": "✅ TIR resonance found!",
+    "slabyy_rezonans": "⚠️ Weak resonance (clean screen?)",
+    "net_rezonansa": "❌ No resonance (press glass)",
+    "res_row0": "Optical path",
+    "description_all": "TIR Waveguide Interferometer (Zero-Gap).\n\n**Physical principle:** (Mirrorless). The smartphone's cover glass (Gorilla Glass) acts as a dielectric slab waveguide: display light is trapped via Total Internal Reflection (TIR) and reaches the camera sensor.\n**Algorithmic essence:** The screen sweeps high-frequency black-and-white gratings with stripe pitches [8, 6, 5, 4, 3, 2] px; at each mode it makes a stabilized capture and measures the contrast of the leaked in-glass wave. The mode with maximum contrast is found and the peak-to-average ratio is computed.\n**Analogy:** The smartphone becomes a solid-state fiber-optic strain sensor, where the screen is the laser, the glass is the fiber, and the camera is the detector.\n**Metric:** Resonance ratio peakRatio = maxC / avgC. Pass when peakRatio > 1.2."
+  },
+  "mirrorless": true
+}

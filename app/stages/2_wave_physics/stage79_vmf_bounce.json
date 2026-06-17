@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "VMF: космологический отскок",
+    "description": "Оптическая проверка отскока вместо Большого взрыва: парабола Фридмана и циклы Толмана 4^n по яркости.",
+    "etap": "🔬",
+    "vmf_bounce_start": "VMF: уравнение Фридмана + Толман...",
+    "vmf_friedmann": "Парабола H²(ρ) = ρ(1-ρ/ρ_c)...",
+    "vmf_tolman": "Энтропийный снежный ком: 4^n...",
+    "res_row0": "Friedmann parabola",
+    "res_row1": "Tolman 4^n",
+    "description_all": "VMF: космологический отскок (Фридман) и энтропийный ком Толмана.\n\n**Физический принцип:** (С зеркалом). Модифицированное уравнение Фридмана H²(ρ)=(8πG/3)·ρ(1−ρ/ρ_c) — парабола с нулями при ρ=0 и ρ=ρ_c и максимумом при ρ_c/2: поправка ρ/ρ_c устраняет сингулярность Большого взрыва и даёт отскок. Энтропийный «снежный ком» Толмана наращивает массу каждого цикла как M_n=M₁·4^(n−1), приводя к нашей Вселенной к 77-му циклу и H₀=72.8 км/с/Мпк.\n**Алгоритмическая суть:** После 3-точечной калибровки яркости экран в 11 точках показывает яркость ∝ H²=x(1−x)/0.25 (часть A) и в 8 циклах яркость ∝ 4^n (часть B). Камера измеряет обе, восстанавливает интенсивность и считает корреляцию Пирсона с параболой и с геометрической прогрессией, проверяя максимум в центре, нули на краях и коэффициент роста ≈4.\n**Аналогия:** Как мяч отскакивает, не проходя сквозь пол, так Вселенная «отскакивает» при критической плотности вместо коллапса в сингулярность — смартфон считывает форму обеих кривых по яркости экрана.\n**Метрика:** Корреляция параболы (corrParabola>0.9, максимум в центре) и корреляция Толмана 4^n (corrExp>0.8); зачёт при прохождении обеих частей."
+  },
+  "en": {
+    "name": "VMF: Cosmological Bounce",
+    "description": "Optical test of a Big-Bounce instead of a Big Bang: the Friedmann parabola and Tolman 4^n cycles via brightness.",
+    "etap": "🔬",
+    "vmf_bounce_start": "VMF: Friedmann equation + Tolman...",
+    "vmf_friedmann": "Parabola H²(ρ) = ρ(1-ρ/ρ_c)...",
+    "vmf_tolman": "Entropy snowball: 4^n...",
+    "res_row0": "Friedmann parabola",
+    "res_row1": "Tolman 4^n",
+    "description_all": "VMF: cosmological bounce (Friedmann) and the Tolman entropy snowball.\n\n**Physical principle:** (With mirror). The modified Friedmann equation H²(ρ)=(8πG/3)·ρ(1−ρ/ρ_c) is a parabola with zeros at ρ=0 and ρ=ρ_c and a maximum at ρ_c/2: the ρ/ρ_c correction removes the Big Bang singularity and produces a bounce. The Tolman entropy \"snowball\" grows each cycle's mass as M_n=M₁·4^(n−1), reaching our universe by cycle 77 and H₀=72.8 km/s/Mpc.\n**Algorithmic essence:** After a 3-point brightness calibration, the screen shows brightness ∝ H²=x(1−x)/0.25 at 11 points (Part A) and brightness ∝ 4^n across 8 cycles (Part B). The camera measures both, recovers the intensity, and computes the Pearson correlation against the parabola and against the geometric progression, checking the central maximum, the zeros at the edges, and a growth factor of ≈4.\n**Analogy:** Just as a ball bounces off the floor instead of passing through it, the universe \"bounces\" at critical density instead of collapsing into a singularity — the smartphone reads the shape of both curves from screen brightness.\n**Metric:** Parabola correlation (corrParabola>0.9, central maximum) and Tolman 4^n correlation (corrExp>0.8); passes when both parts pass."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,33 @@
+{
+  "ru": {
+    "name": "Ёмкость кубитов (W-биты)",
+    "description": "Анализ корреляций между пространственно-разделенными оптическими зонами.",
+    "etap": "🔢",
+    "yomkost_wbit": "Ёмкость W-бит...",
+    "wbit": "{var0} W-бит...",
+    "wbit_1": "{var0} W-бит: {var1}% ({var2}/{var3})",
+    "maks_wbit": "Макс W-бит ≥75%: {var0}, ≥95%: {var1}",
+    "yomkost": "Ёмкость {var0}",
+    "dostatochno_kubitov": "✅ Достаточно кубитов",
+    "malo_kubitov": "⚠️ Мало кубитов",
+    "nedostatochno": "❌ Недостаточно",
+    "res_row0": "Кубитов ≥75% fidelity",
+    "description_all": "Ёмкость W-бит — оптический аналог регистра.\n\n**Физический принцип:** Классическая модель на экране телефона с зеркалом и камерой. Каждый W-бит кодируется полноэкранной яркостью (тёмный 40 / яркий 200); по тёмному и яркому экранам калибруется порог thresh = (dark+bright)/2.\n**Алгоритмическая суть:** Для числа битов nQ от 1 до 16 на экран последовательно выводятся тестовые паттерны (все нули, все единицы и чередование), regionMean считывает яркость и бит = (яркость > thresh). Для каждого nQ считается точность чтения accuracy = верные биты / всего битов; maxUsable — число уровней nQ, где accuracy ≥ 0.75 (maxPerfect — где ≥ 0.95).\n**Аналогия:** Сколько различимых «W-бит» удерживает оптический канал до того, как шум камеры разрушит надёжное чтение — оценка ёмкости регистра.\n**Метрика:** Число разрядов с надёжным чтением maxUsable (accuracy ≥ 0.75); прохождение при maxUsable ≥ 4."
+  },
+  "en": {
+    "name": "Qubit Capacity (W-bits)",
+    "description": "Readout-capacity test of an optical register, bit by bit.",
+    "etap": "🔢",
+    "yomkost_wbit": "W-bit capacity...",
+    "wbit": "{var0} W-bit...",
+    "wbit_1": "{var0} W-bit: {var1}% ({var2}/{var3})",
+    "maks_wbit": "Max W-bit ≥75%: {var0}, ≥95%: {var1}",
+    "yomkost": "Capacity {var0}",
+    "dostatochno_kubitov": "✅ Enough qubits",
+    "malo_kubitov": "⚠️ Few qubits",
+    "nedostatochno": "❌ Not enough",
+    "res_row0": "Qubits ≥75% fidelity",
+    "description_all": "W-bit capacity — optical register analog.\n\n**Physical principle:** A classical model on a phone screen with mirror and camera. Each W-bit is encoded as full-screen brightness (dark 40 / bright 200); a threshold thresh = (dark+bright)/2 is calibrated from dark and bright screens.\n**Algorithmic essence:** For bit counts nQ from 1 to 16, test patterns (all-zeros, all-ones and alternating) are shown sequentially, regionMean reads the brightness and bit = (brightness > thresh). For each nQ the readout accuracy = correct bits / total bits is computed; maxUsable is the number of levels nQ where accuracy ≥ 0.75 (maxPerfect where ≥ 0.95).\n**Analogy:** How many distinguishable 'W-bits' the optical channel holds before camera noise breaks reliable readout — a register-capacity estimate.\n**Metric:** Number of reliably-read digits maxUsable (accuracy ≥ 0.75); passes when maxUsable ≥ 4."
+  },
+  "mirrorless": false
+}

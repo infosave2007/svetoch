@@ -1,0 +1,21 @@
+{
+  "ru": {
+    "name": "🌀 Топологическое пересоединение вихрей",
+    "description": "Анализ топологического пересоединения двух сближающихся тепловых струй.",
+    "reconnection_start": "Старт эмуляции пересоединения вихрей",
+    "separation_dist": "Расстояние между центрами: d = {var0} px",
+    "success": "Топологическое пересоединение подтверждено. Падение дисперсии зафиксировано",
+    "fail": "Ошибка слежения: аннигиляция пары не подтверждена",
+    "description_all": "Топологическое пересоединение вихрей и коллапс (термооптический BOS-аналог).\n\n**Физический принцип:** (Без зеркала). Экран сводит пару вихрь (CW) — антивихрь (CCW), движущихся навстречу. При слиянии их противоположные конвективные хиральности аннигилируют, и локальное оптическое движение резко затухает — оптико-конвективный аналог коллапса волновой функции (θ-коллапс).\n**Алгоритмическая суть:** За 15 шагов разнос пары уменьшается от 1.1 до 0 (и их непрозрачность гаснет ∝ расстоянию). На каждом шаге по шахматному эталону методом BOS (оптический поток, SAD-сопоставление ±2) измеряется средняя величина смещения по двум сеткам 3×3 вокруг центров вихрей, масштабированная на остаточную долю расстояния. Сравниваются начальная и конечная величины движения.\n**Аналогия:** Настольная модель сложного плазменного явления (как вспышки на Солнце), где роль плазмы играет нагретый экраном воздух, а связь рвётся при пересоединении.\n**Метрика:** Отношение конечной к начальной величине смещения varRatio = finalVar/initialVar; зачёт при varRatio < 0.88."
+  },
+  "en": {
+    "name": "🌀 Topological Vortex Reconnection",
+    "description": "Analysis of topological reconnection of two approaching thermal jets.",
+    "reconnection_start": "Starting vortex reconnection emulation",
+    "separation_dist": "Separation distance: d = {var0} px",
+    "success": "Topological reconnection confirmed. Variance drop detected",
+    "fail": "Tracking error: pair annihilation not confirmed",
+    "description_all": "Topological vortex reconnection and collapse (a thermo-optic BOS analog).\n\n**Physical principle:** (Mirrorless). The screen brings together a vortex (CW) / antivortex (CCW) pair moving toward each other. As they merge, their opposing convective chiralities annihilate and the local optical motion suddenly drops — an optical-convective analog of wave-function collapse (θ-collapse).\n**Algorithmic essence:** Over 15 steps the pair's separation shrinks from 1.1 to 0 (and their opacity fades ∝ distance). At each step, against a checkerboard reference, BOS optical flow (SAD block matching over ±2) measures the mean displacement magnitude across two 3×3 grids around the vortex centers, scaled by the remaining distance fraction. The initial and final motion magnitudes are compared.\n**Analogy:** A tabletop model of a complex plasma phenomenon (like solar flares), where screen-heated air plays the role of plasma and the link breaks at reconnection.\n**Metric:** Ratio of final to initial displacement magnitude varRatio = finalVar/initialVar; passes when varRatio < 0.88."
+  },
+  "mirrorless": true
+}

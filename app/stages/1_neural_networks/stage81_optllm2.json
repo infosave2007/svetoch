@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "Оптический LLM v2 (RGB-мультиплекс)",
+    "description": "Двухпроходный расчет слоев LLM с динамическим контрастом для обхода лимитов камеры.",
+    "etap": "🧠",
+    "llm2_start": "Optical LLM v2: spatial multiplexing...",
+    "llm2_train": "Обучение d=16, MLP 16→32→16 (цифровое)...",
+    "llm2_inference": "⚡ ОПТИЧЕСКИЙ INFERENCE v2: 3 кадра/токен!",
+    "res_row0": "Generated text",
+    "res_row1": "Frames per token",
+    "description_all": "Оптический LLM v2 (RGB-пространственное мультиплексирование).\n\n**Физический принцип:** Все скалярные произведения одного слоя выводятся в одном кадре горизонтальными полосами, а байеровский RGB-фильтр кодирует знак: красный канал — положительные произведения, синий — отрицательные, зелёный канал работает как опорный якорь нормировки.\n**Алгоритмическая суть:** Цифрово обучается 2-слойная сеть со skip-связью (эмбеддинг 27→16, MLP 16→32→16, разэмбеддинг 16→27). Оптически выполняются три матричных умножения (MLP-up, MLP-down, разэмбеддинг) — каждое за кадр, где камера читает N усреднённых полос как N логитов; применяется bounce-активация против насыщения, по-полосная калибровка и гамма-коррекция. Итого 6 кадров на токен, генерируется 20 токенов; результат сравнивается с CPU.\n**Аналогия:** Вместо 27 отдельных снимков (как в v1) весь слой нейросети считывается за один цветной кадр, что даёт ~4.5× ускорение.\n**Метрика:** Сгенерированный текст, кадров на токен (6) и доля совпадений с CPU; прохождение, если оптический текст длиной ≥ 15 символов."
+  },
+  "en": {
+    "name": "Optical LLM v2 (RGB Multiplexing)",
+    "description": "RGB spatial-multiplexed LLM layers computing a whole layer per color frame.",
+    "etap": "🧠",
+    "llm2_start": "Optical LLM v2: spatial multiplexing...",
+    "llm2_train": "Training d=16, MLP 16→32→16 (digital)...",
+    "llm2_inference": "⚡ OPTICAL INFERENCE v2: 3 frames/token!",
+    "res_row0": "Generated text",
+    "res_row1": "Frames per token",
+    "description_all": "Optical LLM v2 (RGB spatial multiplexing).\n\n**Physical principle:** All dot products of one layer are emitted in a single frame as horizontal bands, and the camera's Bayer RGB filter encodes sign: the red channel holds positive products, the blue channel negative ones, and the green channel acts as a normalization anchor.\n**Algorithmic essence:** A 2-layer network with a skip connection (embedding 27→16, MLP 16→32→16, unembedding 16→27) is trained digitally. Three matrix multiplies (MLP-up, MLP-down, unembedding) run optically — one frame each, where the camera reads N averaged bands as N logits; a bounce activation prevents saturation, with per-band calibration and gamma correction. This totals 6 frames per token; 20 tokens are generated and compared against CPU.\n**Analogy:** Instead of 27 separate shots (as in v1), a whole network layer is read out in one color frame, giving a ~4.5× speedup.\n**Metric:** Generated text, frames per token (6) and match rate against CPU; passes when the optical text is ≥ 15 characters long."
+  },
+  "mirrorless": true
+}

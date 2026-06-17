@@ -1,0 +1,31 @@
+{
+  "ru": {
+    "name": "Опыт Аспе (🔔 Белл)",
+    "description": "Эмуляция теоремы Белла с использованием частоты обновления 120Гц.",
+    "etap": "🔔",
+    "podgotovka": "  Подготовка |Φ⁺⟩ = (|00⟩+|11⟩)/√2...",
+    "key": "  {var0}",
+    "aspect_chsh_iz_bell_state": "Aspect CHSH из Bell state...",
+    "bell": "  Bell {var0}",
+    "net": "нет",
+    "bell_narushenie_aspect_vosproi": "✅ Bell нарушение! Aspect 1982 воспроизведён!",
+    "bell_ne_narushen_s": "⚠️ Bell не нарушен (S<2)",
+    "res_row0": "corr(R,B)",
+    "description_all": "Эксперимент Аспекта / тест Белла (оптический аналог).\n\n**Физический принцип:** (С зеркалом). Нарушение неравенства Белла (CHSH) воспроизводится статистически на классическом экране и камере телефона, а не на настоящих запутанных кубитах.\n**Алгоритмическая суть:** Сначала выводится полосатый паттерн |Φ⁺⟩, камера снимает кадр (captureStable) и считается корреляция Пирсона между R-каналом («Алиса») и B-каналом («Боб»). Затем для 4 пар углов CHSH на экран выводятся косинусные интерференционные решётки cos(x+a)+cos(x+b); камера измеряет видность полос (measureVisibility), нормирует её на опорную видность и через знак cos(2(a−b)) формирует корреляторы E(a,b). Из них вычисляется S = |E₁−E₂+E₃+E₄|.\n**Аналогия:** Смартфон «проверяет квантовую телепатию», сравнивая контраст наложенных полосатых картинок под разными углами.\n**Метрика:** Успех (check) — bellViolation, то есть S > 2.0 (классический предел 2.0, квантовый максимум 2√2≈2.83); метрика выводит S."
+  },
+  "en": {
+    "name": "Aspect Experiment (🔔 Bell)",
+    "description": "Emulation of Bell's theorem using the 120Hz refresh rate.",
+    "etap": "🔔",
+    "podgotovka": "Preparation |Φ⁺⟩ = (|00⟩+|11⟩)/√2...",
+    "key": "{var0}",
+    "aspect_chsh_iz_bell_state": "Aspect CHSH from Bell state...",
+    "bell": "Bell {var0}",
+    "net": "no",
+    "bell_narushenie_aspect_vosproi": "✅ Bell violation! Aspect 1982 reproduced!",
+    "bell_ne_narushen_s": "⚠️ Bell is not broken (S<2)",
+    "res_row0": "corr(R,B)",
+    "description_all": "Aspect Experiment / Bell Test (optical analog).\n\n**Physical principle:** (With mirror). Violation of the Bell (CHSH) inequality is reproduced statistically on a classical phone screen and camera, not with real entangled qubits.\n**Algorithmic essence:** First a striped |Φ⁺⟩ pattern is shown; the camera captures a frame (captureStable) and the Pearson correlation between the R channel (\"Alice\") and B channel (\"Bob\") is computed. Then, for 4 CHSH angle pairs, cosine interference gratings cos(x+a)+cos(x+b) are displayed; the camera measures fringe visibility (measureVisibility), normalizes it by a reference visibility, and via the sign of cos(2(a−b)) forms correlators E(a,b). From these, S = |E₁−E₂+E₃+E₄| is computed.\n**Analogy:** The smartphone \"tests quantum telepathy\" by comparing the contrast of overlaid striped images at different angles.\n**Metric:** Pass (check) requires bellViolation, i.e. S > 2.0 (classical limit 2.0, quantum maximum 2√2≈2.83); the metric reports S."
+  },
+  "mirrorless": false
+}

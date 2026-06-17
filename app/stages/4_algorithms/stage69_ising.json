@@ -1,0 +1,23 @@
+{
+  "ru": {
+    "name": "Модель Изинга (фазовый переход)",
+    "description": "Аналоговый оптический симулятор фазовых переходов в модели Изинга.",
+    "etap": "🎯",
+    "ising_start": "1D модель Изинга...",
+    "ising_sim": "Metropolis MC + оптическая намагниченность...",
+    "res_row0": "Phase transition",
+    "res_row1": "Optical corr",
+    "description_all": "Модель Изинга и фазовый переход (Статистическая физика).\n\n**Физический принцип:** (С зеркалом). После симуляции спины выводятся столбцами: +1 — яркий, −1 — тёмный (γ-калибровка), и камера измеряет среднюю яркость — оптическая намагниченность m=(1/N)Σσᵢ.\n**Алгоритмическая суть:** CPU гоняет 1D-модель Изинга (N=40, J=1) алгоритмом Метрополиса по 200 свипов при 12 температурах T=0.1..8.0; для каждой считает намагниченность, оптическое m считывается камерой и сверяется (корреляция Пирсона). Сравниваются упорядоченная (низкая T) и разупорядоченная (высокая T) фазы.\n**Аналогия:** Экран — это полоска магнитиков, а камера — магнитометр, измеряющий их суммарную ориентацию одним взглядом.\n**Метрика:** Корреляция corr оптики и CPU; зачёт при phaseTransition — avg|m| > 0.5 при T≤1 И < 0.5 при T≥3."
+  },
+  "en": {
+    "name": "Ising Model (Phase Transition)",
+    "description": "1D Ising phase transition with the camera as an optical magnetometer.",
+    "etap": "🎯",
+    "ising_start": "1D Ising model...",
+    "ising_sim": "Metropolis MC + optical magnetization...",
+    "res_row0": "Phase transition",
+    "res_row1": "Optical corr",
+    "description_all": "Ising model and phase transition (Statistical physics).\n\n**Physical principle:** (With mirror). After simulation the spins are shown as columns: +1 bright, −1 dark (gamma-calibrated), and the camera measures the mean brightness — an optical magnetization m=(1/N)Σσᵢ.\n**Algorithmic essence:** The CPU runs a 1D Ising model (N=40, J=1) with the Metropolis algorithm for 200 sweeps at 12 temperatures T=0.1..8.0; for each it computes the magnetization while the optical m is read by the camera and compared (Pearson correlation). The ordered (low T) and disordered (high T) phases are contrasted.\n**Analogy:** The screen is a strip of little magnets and the camera is a magnetometer reading their net orientation at a glance.\n**Metric:** Correlation corr between optics and CPU; pass when phaseTransition — avg|m| > 0.5 for T≤1 AND < 0.5 for T≥3."
+  },
+  "mirrorless": false
+}

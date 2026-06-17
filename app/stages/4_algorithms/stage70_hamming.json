@@ -1,0 +1,23 @@
+{
+  "ru": {
+    "name": "Код Хэмминга (7,4)",
+    "description": "Аппаратная демонстрация коррекции оптических ошибок через код Хэмминга.",
+    "etap": "🎯",
+    "hamming_start": "Код Хэмминга через оптический канал...",
+    "hamming_transmit": "Передача 16 сообщений...",
+    "res_row0": "Raw BER",
+    "res_row1": "After ECC",
+    "description_all": "Код Хэмминга(7,4) через оптический канал (Теория информации).\n\n**Физический принцип:** (С зеркалом). 7-битное кодовое слово выводится как столбцы яркости с защитными полями по краям, проходит реальный канал экран→зеркало→камера (с учётом зеркального разворота) и считывается по порогу — реальный шум канала (PSF, гамма, квантование) даёт настоящие ошибки.\n**Алгоритмическая суть:** CPU кодирует все 16 четырёхбитных сообщений в Hamming(7,4); камера принимает кодовые слова, синдромное декодирование исправляет одиночные ошибки. Считаются сырой BER канала и BER после коррекции.\n**Аналогия:** Передача сообщения светофором сквозь туман: канал вносит помехи, а код Хэмминга исправляет «опечатки».\n**Метрика:** BER после коррекции correctedBER; зачёт при correctedBER < 10%."
+  },
+  "en": {
+    "name": "Hamming Code (7,4)",
+    "description": "Hardware demonstration of optical error correction via the Hamming code.",
+    "etap": "🎯",
+    "hamming_start": "Hamming code via optical channel...",
+    "hamming_transmit": "Transmitting 16 messages...",
+    "res_row0": "Raw BER",
+    "res_row1": "After ECC",
+    "description_all": "Hamming(7,4) code through an optical channel (Information theory).\n\n**Physical principle:** (With mirror). A 7-bit codeword is shown as brightness columns with guard bands at the edges, travels the real screen→mirror→camera channel (accounting for the mirror flip) and is threshold-decoded — real channel noise (PSF, gamma, quantization) produces genuine errors.\n**Algorithmic essence:** The CPU encodes all 16 four-bit messages into Hamming(7,4); the camera receives the codewords and syndrome decoding corrects single-bit errors. Raw channel BER and post-correction BER are measured.\n**Analogy:** Sending a message by traffic light through fog — the channel adds noise, and the Hamming code fixes the \"typos\".\n**Metric:** Post-correction BER correctedBER; pass when correctedBER < 10%."
+  },
+  "mirrorless": false
+}

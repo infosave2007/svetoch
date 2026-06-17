@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Скалярное произведение",
+    "description": "Аппаратное вычисление скалярного произведения векторов через оптическое суммирование.",
+    "etap": "✖️",
+    "referens_belyy": "Референс (белый)...",
+    "test": "Тест {var0}/{var1}: {var2}%",
+    "intensity_tracking_r_testov": "Intensity tracking: r={var0} ({var1} тестов)",
+    "intensity_tracking_otlichno": "✅ Intensity tracking отлично",
+    "chastichno": "⚠️ Частично",
+    "net_svyazi": "❌ Нет связи",
+    "res_row0": "Корр. интенсивности (10 тестов)",
+    "description_all": "Скалярное произведение (Dot Product).\n\n**Физический принцип:** (С зеркалом). Оптико-цифровой гибрид. Экран выводит однородную яркость, кодирующую число, а камера интегрирует пришедший свет за время экспозиции.\n**Алгоритмическая суть:** Сначала прогоняется 12 монотонных уровней серого (0.05…0.95): для каждого измеряется средняя яркость региона, нормируется по белому и гамма-корректируется, и считается корреляция Пирсона «цифровое значение ↔ оптическое». Затем для двух 4-элементных векторов произведение A·B выводится как 4 блока, суммарная яркость даёт оптическое скалярное произведение, сравниваемое с цифровым.\n**Аналогия:** Камера работает как физический интегратор: свет от пикселей сливается, аппаратно суммируя значения за такт O(1).\n**Метрика:** корреляция отслеживания интенсивности (порог r > 0.7)."
+  },
+  "en": {
+    "name": "Dot Product",
+    "description": "Hardware computation of the dot product of vectors via optical summation.",
+    "etap": "✖️",
+    "referens_belyy": "Reference (white)...",
+    "test": "Test {var0}/{var1}: {var2}%",
+    "intensity_tracking_r_testov": "Intensity tracking: r={var0} ({var1} tests)",
+    "intensity_tracking_otlichno": "✅ Intensity tracking is excellent",
+    "chastichno": "⚠️ Partially",
+    "net_svyazi": "❌ No connection",
+    "res_row0": "Intensity corr. (10 tests)",
+    "description_all": "Dot Product.\n\n**Physical principle:** (With mirror). An opto-digital hybrid. The screen emits a uniform brightness encoding a number, and the camera integrates the incoming light over the exposure time.\n**Algorithmic essence:** First, 12 monotonic gray levels (0.05…0.95) are swept: for each, the region's mean brightness is measured, normalized against white and gamma-corrected, and the Pearson correlation \"digital value ↔ optical value\" is computed. Then, for two 4-element vectors, the product A·B is shown as 4 blocks, whose total brightness yields the optical dot product compared against the digital one.\n**Analogy:** The camera acts as a physical integrator: light from pixels merges, summing values in hardware in one O(1) tick.\n**Metric:** intensity-tracking correlation (pass threshold r > 0.7)."
+  },
+  "mirrorless": false
+}

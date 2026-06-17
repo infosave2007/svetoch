@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "Оптический интегратор",
+    "description": "Аппаратное интегрирование 2D-функций за счет глобальной экспозиции камеры.",
+    "etap": "🎯",
+    "integral_start": "Оптические интегралы Римана...",
+    "kalib": "Gamma-калибровка...",
+    "integral_compute": "f(x) → яркость → камера интегрирует...",
+    "res_row0": "Close to exact",
+    "res_row1": "Optical corr",
+    "description_all": "Оптический интеграл Римана ∫f(x)dx (Численные методы).\n\n**Физический принцип:** (С зеркалом). Значения f(x) выводятся 40 столбцами яркости (кусочно-линейная 3-точечная калибровка f=0/0.5/1), и камера усредняет яркость окна — это и есть ∫₀¹f(x)dx как среднее по интервалу.\n**Алгоритмическая суть:** Для 8 функций с известными интегралами (x², sin(πx), e⁻ˣ, √x, 4x(1−x), x·sin(πx), 1/(1+x²), cos²(πx)) CPU считает сумму Римана, а оптический интеграл восстанавливается из средней яркости и сравнивается с точным значением (корреляция Пирсона).\n**Аналогия:** Площадь сложной фигуры измеряется не линейкой, а «взвешиванием» собранного света за один кадр.\n**Метрика:** Число интегралов с ошибкой <5% (closeCount из total=8); зачёт при closeCount ≥ половины (≥4)."
+  },
+  "en": {
+    "name": "Optical Integrator",
+    "description": "Optical Riemann integration: the camera averages brightness to compute definite integrals.",
+    "etap": "🎯",
+    "integral_start": "Optical Riemann integrals...",
+    "kalib": "Gamma calibration...",
+    "integral_compute": "f(x) → brightness → camera integrates...",
+    "res_row0": "Close to exact",
+    "res_row1": "Optical corr",
+    "description_all": "Optical Riemann integral ∫f(x)dx (Numerical methods).\n\n**Physical principle:** (With mirror). Values of f(x) are shown as 40 brightness columns (piecewise-linear 3-point calibration f=0/0.5/1), and the camera averages the window brightness — exactly ∫₀¹f(x)dx as the mean over the interval.\n**Algorithmic essence:** For 8 functions with known integrals (x², sin(πx), e⁻ˣ, √x, 4x(1−x), x·sin(πx), 1/(1+x²), cos²(πx)) the CPU computes a Riemann sum while the optical integral is recovered from the mean brightness and compared to the exact value (Pearson correlation).\n**Analogy:** The area of a complex shape is measured not with a ruler but by \"weighing\" the collected light in a single frame.\n**Metric:** Number of integrals within 5% error (closeCount of total=8); pass when closeCount ≥ half (≥4)."
+  },
+  "mirrorless": false
+}

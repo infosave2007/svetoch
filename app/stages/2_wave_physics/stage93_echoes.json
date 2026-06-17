@@ -1,0 +1,21 @@
+{
+  "ru": {
+    "name": "🕳️ Эхо ядра де Ситтера",
+    "description": "Измерение памяти воздушного канала (термического эха) после выключения источника тепла.",
+    "echoes_start": "Старт эмуляции резонансов регулярного ядра",
+    "sweep_freq": "Тестовая частота: f = {var0} Гц",
+    "success": "Резонансное эхо подтверждено. Пик зафиксирован на f_res = {var0} Гц",
+    "fail": "Ошибка анализа: резонансный пик ядра не выделен над уровнем шума",
+    "description_all": "Резонанс ядра де Ситтера (частотный свип).\n\n**Физический принцип:** (Без зеркала). Регулярное ядро чёрной дыры Хейворда моделируется как светящаяся линза де Ситтера с радиальным градиентом яркости, периодически модулируемым по гармоническому закону на ряде частот.\n**Алгоритмическая суть:** Экран прогоняет свип из частот [1, 2, 3, 4, 5] Гц, модулируя яркость ядра как 1 + 0.35·cos(2πft) на 12 шагах по 160 мс. Камера измеряет среднюю интенсивность в центральной зоне ядра, после чего на каждой частоте вычисляется амплитуда DFT (cos/sin-проекции) и находится резонансный пик.\n**Аналогия:** Раскачка стоячей волны: периодический «подогрев» возбуждает собственную моду ядра, которая откликается резонансным усилением интенсивности.\n**Метрика:** Резонансная частота f_res и отношение пик/фон. Зачёт при maxAmp > 1.25·avgAmp либо f_res в диапазоне 2.0–4.0 Гц."
+  },
+  "en": {
+    "name": "🕳️ de Sitter Core Echoes",
+    "description": "Measuring the air channel's memory (thermal echo) after heat source deactivation.",
+    "echoes_start": "Starting regular core resonance emulation",
+    "sweep_freq": "Test frequency: f = {var0} Hz",
+    "success": "Resonant echo confirmed. Peak detected at f_res = {var0} Hz",
+    "fail": "Analysis error: core resonant peak not resolved above noise",
+    "description_all": "de Sitter Core Resonance (frequency sweep).\n\n**Physical principle:** (Mirrorless). The Hayward regular black-hole core is modeled as a glowing de Sitter lens with a radial brightness gradient, harmonically modulated across a range of frequencies.\n**Algorithmic essence:** The screen sweeps frequencies [1, 2, 3, 4, 5] Hz, modulating the core brightness as 1 + 0.35·cos(2πft) over 12 steps of 160 ms. The camera measures the mean intensity in the central core region; at each frequency a DFT amplitude (cos/sin projections) is computed and the resonance peak is located.\n**Analogy:** Driving a standing wave: the periodic \"heating\" excites an eigenmode of the core, which responds with resonant amplification of intensity.\n**Metric:** Resonance frequency f_res and peak-to-background ratio. Pass when maxAmp > 1.25·avgAmp or f_res falls within 2.0–4.0 Hz."
+  },
+  "mirrorless": true
+}

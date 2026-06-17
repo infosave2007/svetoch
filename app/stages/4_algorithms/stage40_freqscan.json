@@ -1,0 +1,33 @@
+{
+  "ru": {
+    "name": "Частотное сканирование (MTF)",
+    "description": "Поиск частоты Найквиста и резонансов оптического тракта.",
+    "etap": "🔬",
+    "nvg_freq_scan_rezultaty": "── NVG Freq Scan результаты ──",
+    "eff_nm_teor_nm": "λ_eff ≈ {var0} нм (теор. 27–32 нм)",
+    "optimalnaya_chastota_freqdpr_c": "Оптимальная частота: freq={var0}×dpr (C={var1})",
+    "nvg_ostsillyatsii_obnaruzheny_": "✅ NVG осцилляции обнаружены! corr={var0}, λ_eff={var1} нм",
+    "slabye_ostsillyatsii_v_residua": "⚠️ Слабые осцилляции в residuals (corr={var0})",
+    "ostsillyatsii_ne_obnaruzheny_k": "❌ Осцилляции не обнаружены — классическая оптика",
+    "nvg_obnaruzhen": "✅ NVG обнаружен!",
+    "ne_obnaruzhen": "❌ Не обнаружен",
+    "res_row0": "Корреляция",
+    "description_all": "Частотное сканирование оптического тракта в поисках NVG-осцилляций.\n\n**Физический принцип:** (С зеркалом). Контраст синусоидальной решётки падает с частотой по гауссову закону (MTF тракта); сверхтонкая «рябь» поверх этого спада могла бы выдать новую длину волны λ_eff.\n**Алгоритмическая суть:** Для 9 пространственных частот экран делится на половины Алисы и Боба с CHSH-углами; камера снимает кадры, по фазовой когерентности полос считается C(f) и величина S. Кривая C(f) фитируется гауссианой C₀·exp(−f²/2σ²); остатки сканируются на скрытую осцилляцию корреляцией с cos(2πf/f_NVG), а по найденной f_NVG оценивается λ_eff.\n**Аналогия:** Проверка «слуха» оптики телефона: на фоне плавного затухания ищем тончайшую периодическую дрожь, которой не должно быть в классике.\n**Метрика:** максимальная корреляция остатков с осцилляцией corr; NVG считается обнаруженным при |corr| > 0.7 (и ≥ 5 точек остатков)."
+  },
+  "en": {
+    "name": "Frequency Scan (MTF)",
+    "description": "Searching for the Nyquist frequency and resonances of the optical channel.",
+    "etap": "🔬",
+    "nvg_freq_scan_rezultaty": "── NVG Freq Scan results ──",
+    "eff_nm_teor_nm": "λ_eff ≈ {var0} nm (theor. 27–32 nm)",
+    "optimalnaya_chastota_freqdpr_c": "Optimal frequency: freq={var0}×dpr (C={var1})",
+    "nvg_ostsillyatsii_obnaruzheny_": "✅ NVG oscillations detected! corr={var0}, λ_eff={var1} nm",
+    "slabye_ostsillyatsii_v_residua": "⚠️ Weak oscillations in residuals (corr={var0})",
+    "ostsillyatsii_ne_obnaruzheny_k": "❌ No oscillations detected - classic optics",
+    "nvg_obnaruzhen": "✅ NVG detected!",
+    "ne_obnaruzhen": "❌ Not detected",
+    "res_row0": "Correlation",
+    "description_all": "Frequency scan of the optical channel in search of NVG oscillations.\n\n**Physical principle:** (With mirror). The contrast of a sinusoidal grating decays with frequency along a Gaussian law (the channel MTF); a faint 'ripple' on top of that decay could betray a new effective wavelength λ_eff.\n**Algorithmic essence:** For 9 spatial frequencies the screen is split into Alice and Bob halves at CHSH angles; the camera captures frames, and the fringe phase coherence yields C(f) and the value S. The C(f) curve is fit to a Gaussian C₀·exp(−f²/2σ²); the residuals are scanned for a hidden oscillation by correlating with cos(2πf/f_NVG), and λ_eff is estimated from the found f_NVG.\n**Analogy:** A hearing test for the phone's optics: against a smooth decay we hunt for the faintest periodic tremor that classical optics should not produce.\n**Metric:** the peak correlation of the residuals with the oscillation, corr; NVG is deemed detected when |corr| > 0.7 (with ≥ 5 residual points)."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,23 @@
+{
+  "ru": {
+    "name": "Стоячие волны",
+    "description": "Визуализация интерференции встречных бегущих волн (пучности и узлы).",
+    "etap": "🎯",
+    "sw_start": "Стоячие волны...",
+    "sw_harmonics": "Гармоники n=1..5...",
+    "res_row0": "Nodes detected",
+    "res_row1": "Avg correlation",
+    "description_all": "Стоячие волны: узлы и пучности гармоник.\n\n**Физический принцип:** (С зеркалом). Стоячая волна y=2A·sin(kx)·cos(ωt) имеет узлы (всегда тёмные) и пучности (яркие). Для n-й гармоники внутри струны ровно n−1 узлов.\n**Алгоритмическая суть:** Для гармоник n=1…5 на экран выводится профиль яркости |sin(nπx/L)|. Камера снимает кадр, усредняет яркость по 40 вертикальным бинам, нормирует профиль и считает узлы как локальные минимумы ниже 0.2; параллельно вычисляется корреляция Пирсона измеренного и теоретического профилей.\n**Аналогия:** Как струна гитары на разных ладах даёт разное число пучностей, так каждая гармоника на экране даёт своё число тёмных узлов на матрице.\n**Метрика:** Число гармоник с верно подсчитанными узлами (допуск ±1); зачёт при nodesOK ≥ 3 из 5."
+  },
+  "en": {
+    "name": "Standing Waves",
+    "description": "Visualization of the interference of counter-propagating traveling waves (antinodes and nodes).",
+    "etap": "🎯",
+    "sw_start": "Standing waves...",
+    "sw_harmonics": "Harmonics n=1..5...",
+    "res_row0": "Nodes detected",
+    "res_row1": "Avg correlation",
+    "description_all": "Standing waves: nodes and antinodes of harmonics.\n\n**Physical principle:** (With mirror). A standing wave y=2A·sin(kx)·cos(ωt) has nodes (always dark) and antinodes (bright). The n-th harmonic of a bounded string has exactly n−1 interior nodes.\n**Algorithmic essence:** For harmonics n=1…5 the screen displays the brightness profile |sin(nπx/L)|. The camera captures a frame, averages brightness into 40 vertical bins, normalizes the profile, and counts nodes as local minima below 0.2; in parallel it computes the Pearson correlation between measured and theoretical profiles.\n**Analogy:** Just as a guitar string at different frets produces a different number of antinodes, each harmonic on screen yields its own count of dark nodes on the sensor.\n**Metric:** Number of harmonics with correctly counted nodes (±1 tolerance); passes when nodesOK ≥ 3 of 5."
+  },
+  "mirrorless": false
+}

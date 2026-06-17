@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Числа классов (числа Хегнера)",
+    "description": "Оптический анализ симметрии решеток квадратичных полей.",
+    "etap": "🎯",
+    "classnum_start": "Числа классов h(D)...",
+    "kalib": "Gamma-калибровка...",
+    "classnum_compute": "CPU: формула h(D) = -(1/|D|)Σn·χ(n)...",
+    "classnum_optical": "Optical: символы Кронекера χ_D(n)...",
+    "res_row0": "h(D) correct",
+    "res_row1": "Heegner numbers",
+    "description_all": "Числа классов h(D) мнимых квадратичных полей (Теория чисел).\n\n**Физический принцип:** (С зеркалом). Значения символа Кронекера χ_D(n)∈{−1,0,+1} выводятся столбцами как тёмный/средний/яркий уровни (γ-калибровка), и камера измеряет среднюю яркость — оптическая сумма характера Σχ_D(n).\n**Алгоритмическая суть:** CPU по формуле h(D)=−(1/|D|)·Σ n·χ_D(n) точно вычисляет число классов для 15 дискриминантов D от −3 до −47 и сверяет с эталоном; оптически Σχ_D(n) считывается камерой для |D|≤47 и сравнивается с CPU. Выделяются числа Хегнера (h(D)=1, UFD).\n**Аналогия:** «Отпечаток» характера поля в виде полосок света измеряет, насколько кольцо целых далеко от однозначного разложения.\n**Метрика:** Число точных оптических совпадений exactMatch; зачёт при allCorrect — все h(D) совпали с эталоном."
+  },
+  "en": {
+    "name": "Class Numbers (Heegner Numbers)",
+    "description": "Optical class numbers h(D) via Kronecker character sums of quadratic fields.",
+    "etap": "🎯",
+    "classnum_start": "Class numbers h(D)...",
+    "kalib": "Gamma calibration...",
+    "classnum_compute": "CPU: formula h(D) = -(1/|D|)Σn·χ(n)...",
+    "classnum_optical": "Optical: Kronecker symbols χ_D(n)...",
+    "res_row0": "h(D) correct",
+    "res_row1": "Heegner numbers",
+    "description_all": "Class numbers h(D) of imaginary quadratic fields (Number theory).\n\n**Physical principle:** (With mirror). Kronecker symbol values χ_D(n)∈{−1,0,+1} are shown as columns at dark/mid/bright levels (gamma-calibrated), and the camera measures the mean brightness — an optical character sum Σχ_D(n).\n**Algorithmic essence:** Using h(D)=−(1/|D|)·Σ n·χ_D(n) the CPU exactly computes the class number for 15 discriminants D from −3 to −47 and checks them against references; optically Σχ_D(n) is read by the camera for |D|≤47 and compared to the CPU. Heegner numbers (h(D)=1, UFD) are identified.\n**Analogy:** The field's character fingerprint, rendered as stripes of light, measures how far its ring of integers is from unique factorization.\n**Metric:** Number of exact optical matches exactMatch; pass when allCorrect — every h(D) matches its reference value."
+  },
+  "mirrorless": false
+}

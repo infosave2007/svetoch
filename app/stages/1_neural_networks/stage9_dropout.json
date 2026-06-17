@@ -1,0 +1,23 @@
+{
+  "ru": {
+    "name": "Прореживание (Dropout)",
+    "description": "Регуляризация сети через физическое отключение пикселей экрана.",
+    "etap": "🧊",
+    "ustoychiv_k_dropout": "✅ Устойчив к dropout!",
+    "chastichno_ustoychiv": "⚠️ Частично устойчив",
+    "neustoychiv_k_shumu": "❌ Неустойчив к шуму",
+    "res_row0": "Корр. при dropout 10%",
+    "description_all": "Оптический Dropout.\n\n**Физический принцип:** (С зеркалом). Случайные веса матрицы 4×4 «выключаются» (зануляются по маске Бернулли) и соответствующие блоки на OLED-экране гаснут.\n**Алгоритмическая суть:** Вычисляется эталонное MatVec W·x (4×4). Затем при уровнях прореживания 10/20/30% веса зануляются по маске Бернулли, прореженные строки выводятся блоками, камера измеряет оптический выход (нормировка по чёрному/белому, гамма-коррекция), и считается корреляция Пирсона прореженного оптического выхода с полным цифровым — оценка устойчивости к выпадению элементов.\n**Аналогия:** Регуляризация нейросети, где мы физически «выключаем лампочки» на экране и проверяем, насколько результат остаётся узнаваемым.\n**Метрика:** корреляция при dropout 10% (порог corr > 0.3)."
+  },
+  "en": {
+    "name": "Dropout Regularization",
+    "description": "Network regularization via physical deactivation of screen pixels.",
+    "etap": "🧊",
+    "ustoychiv_k_dropout": "✅ Resistant to dropout!",
+    "chastichno_ustoychiv": "⚠️ Partially resistant",
+    "neustoychiv_k_shumu": "❌ Not resistant to noise",
+    "res_row0": "Corr. at 10% dropout",
+    "description_all": "Optical Dropout.\n\n**Physical principle:** (With mirror). Random weights of a 4×4 matrix are \"switched off\" (zeroed by a Bernoulli mask) and the corresponding blocks on the OLED screen go dark.\n**Algorithmic essence:** A reference MatVec W·x (4×4) is computed. Then at dropout rates of 10/20/30% the weights are zeroed by a Bernoulli mask, the dropped rows are shown as blocks, the camera measures the optical output (black/white-normalized, gamma-corrected), and the Pearson correlation between the dropped optical output and the full digital one is computed — a measure of robustness to element dropout.\n**Analogy:** Neural-network regularization where we physically \"switch off lightbulbs\" on the screen and check how recognizable the result remains.\n**Metric:** correlation at 10% dropout (pass threshold corr > 0.3)."
+  },
+  "mirrorless": false
+}

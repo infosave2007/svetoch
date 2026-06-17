@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "Закон Малюса (поляризация)",
+    "description": "Проверка закона Малюса для поляризованного света смартфона.",
+    "etap": "🎯",
+    "malus_start": "Закон Малюса...",
+    "malus_measure": "I(θ) = I₀·cos²θ для θ=0°..90°...",
+    "malus_paradox": "Парадокс 3 поляризаторов...",
+    "res_row0": "cos²θ correlation",
+    "res_row1": "3-polarizer paradox",
+    "description_all": "Закон Малюса: кривая cos²θ и парадокс трёх поляризаторов.\n\n**Физический принцип:** (С зеркалом). Закон Малюса I(θ)=I₀·cos²θ описывает прохождение света через два поляризатора под углом θ; добавление третьего под 45° между скрещёнными восстанавливает I₀/4.\n**Алгоритмическая суть:** Сначала выполняется 3-точечная калибровка яркости (0/0.5/1) и строится кусочно-линейная обратная функция «камера→интенсивность». Затем для θ=0…90° экран показывает равномерную яркость, равную cos²θ; камера измеряет её, восстанавливает интенсивность и сравнивает с теорией. Отдельно показываются уровни cos²(90°)=0 и cos²(45°)²=0.25 для проверки парадокса трёх поляризаторов.\n**Аналогия:** Как поляризационные очки гасят блики при повороте, так калиброванная камера считывает закон затухания cos²θ по яркости экрана.\n**Метрика:** Корреляция Пирсона измеренной и теоретической cos²θ; зачёт при correlation > 0.8."
+  },
+  "en": {
+    "name": "Malus's Law (Polarization)",
+    "description": "Verification of Malus's law for the smartphone's polarized light.",
+    "etap": "🎯",
+    "malus_start": "Malus's law...",
+    "malus_measure": "I(θ) = I₀·cos²θ for θ=0°..90°...",
+    "malus_paradox": "Three-polarizer paradox...",
+    "res_row0": "cos²θ correlation",
+    "res_row1": "3-polarizer paradox",
+    "description_all": "Malus's law: cos²θ curve and the three-polarizer paradox.\n\n**Physical principle:** (With mirror). Malus's law I(θ)=I₀·cos²θ describes light passing through two polarizers at angle θ; inserting a third at 45° between crossed polarizers restores I₀/4.\n**Algorithmic essence:** A 3-point brightness calibration (0/0.5/1) builds a piecewise-linear camera→intensity inverse. Then for θ=0…90° the screen shows uniform brightness equal to cos²θ; the camera measures it, recovers the intensity, and compares to theory. Separately it shows the levels cos²(90°)=0 and cos²(45°)²=0.25 to test the three-polarizer paradox.\n**Analogy:** Just as polarized sunglasses dim glare as you rotate them, the calibrated camera reads off the cos²θ attenuation law from screen brightness.\n**Metric:** Pearson correlation of measured vs. theoretical cos²θ; passes when correlation > 0.8."
+  },
+  "mirrorless": false
+}

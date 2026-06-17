@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "🔐 BB84 с приманками (QKD)",
+    "description": "Защита оптического канала-распределения ключей через паттерны-приманки.",
+    "etap": "🔐",
+    "otpravleno_bit_sovpalo_bazisov": "  Отправлено: {var0} бит, совпало базисов: {var1}",
+    "rbazis_oshibok": "  R-базис: {var0}/{var1} ошибок ({var2}%)",
+    "dbazis_oshibok": "  D-базис: {var0}/{var1} ошибок ({var2}%)",
+    "bb": "BB84 {var0}",
+    "bit": " бит",
+    "bb_qber_klyuch_bezopasen": "✅ BB84: QBER={var0}% < 11% → ключ безопасен!",
+    "res_row0": "QBER",
+    "description_all": "Протокол BB84 — оптическое распределение ключа (32 бита).\n\n**Физический принцип:** (С зеркалом). Распределение секретного ключа через два «базиса» поляризации, эмулируемых на классическом экране и камере телефона, а не на одиночных фотонах.\n**Алгоритмическая суть:** Алиса генерирует 32 случайных бита и случайных базиса (R=прямой, D=диагональный). Каждый бит выводится как яркая половина экрана: в R-базисе левая/правая, в D-базисе верхняя/нижняя. Камера калибрует тёмный и яркий уровни, снимает каждый кадр (captureStable) и измеряет половины (measureNBins/средние областей), Боб «читает» бит в своём случайном базисе. После просева (sifting) по совпавшим базисам применяется коррекция ориентации и считается QBER (доля несовпавших бит).\n**Аналогия:** Два собеседника наугад крутят «фильтры» и оставляют только те посылки, где фильтры совпали, а долю ошибок используют как детектор подслушивания.\n**Метрика:** QBER (% ошибок в просеянном ключе); успех (check) — secure, то есть QBER < 0.11 (11%)."
+  },
+  "en": {
+    "name": "🔐 BB84 Decoy-State QKD",
+    "description": "Securing an optical key-distribution channel via the BB84 protocol.",
+    "etap": "🔐",
+    "otpravleno_bit_sovpalo_bazisov": "Sent: {var0} bits, matched bases: {var1}",
+    "rbazis_oshibok": "R-basis: {var0}/{var1} errors ({var2}%)",
+    "dbazis_oshibok": "D-basis: {var0}/{var1} errors ({var2}%)",
+    "bb": "BB84 {var0}",
+    "bit": "bit",
+    "bb_qber_klyuch_bezopasen": "✅ BB84: QBER={var0}% < 11% → the key is safe!",
+    "res_row0": "QBER",
+    "description_all": "BB84 Protocol — optical key distribution (32 bits).\n\n**Physical principle:** (With mirror). Distribution of a secret key through two polarization \"bases\", emulated on a classical phone screen and camera rather than on single photons.\n**Algorithmic essence:** Alice generates 32 random bits and random bases (R=rectilinear, D=diagonal). Each bit is shown as a bright half-screen: in the R basis left/right, in the D basis top/bottom. The camera calibrates dark and bright levels, captures each frame (captureStable) and measures the halves (measureNBins / region means); Bob \"reads\" the bit in his own random basis. After sifting on matching bases, an orientation correction is applied and the QBER (fraction of mismatched bits) is computed.\n**Analogy:** Two parties randomly rotate \"filters\" and keep only the transmissions where the filters matched, using the error rate as an eavesdropping detector.\n**Metric:** QBER (% errors in the sifted key); pass (check) requires secure, i.e. QBER < 0.11 (11%)."
+  },
+  "mirrorless": false
+}

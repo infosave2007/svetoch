@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Шлирен-интерферометр (BOS)",
+    "description": "Спекл-Шлирен интерферометр (термооптический замер фазы).",
+    "etap": "🌀",
+    "start_schlieren": "Запуск Шлирен-анализа...",
+    "schlieren_res": "BOS {var0}",
+    "rezonans_nayden": "✅ Оптический сдвиг фазы обнаружен!",
+    "slabyy_rezonans": "⚠️ Слабый сдвиг (мало времени на нагрев)",
+    "net_rezonansa": "❌ Нет фазового сдвига (нет конвекции)",
+    "res_row0": "Фазовый сдвиг (SAD)",
+    "description_all": "Активный Спекл-Шлирен Интерферометр (BOS).\n\n**Физический принцип:** (Без зеркала). Background Oriented Schlieren. Смартфон освещает потолок высокочастотным паттерном, который служит опорным спекл-полем для камеры.\n**Алгоритмическая суть:** В центре экрана в круглой области рисуется высокочастотная решётка (полосы 4 px), работающая как тепловой насос и опорное поле. После 4 с прогрева снимается холодный опорный кадр; затем в течение 20 с каждые 500 мс камера захватывает кадр и считает фазовый сдвиг как среднюю SAD-разность яркости относительно опорного кадра, отслеживая максимум.\n**Аналогия:** Оптический аналог марева над горячим асфальтом, только измеряемый с точностью до долей пикселя.\n**Метрика:** Максимальный фазовый сдвиг maxSAD. Зачёт при maxSAD > 0.8."
+  },
+  "en": {
+    "name": "Schlieren Interferometer (BOS)",
+    "description": "Speckle-Schlieren interferometer (thermo-optical phase measurement).",
+    "etap": "🌀",
+    "start_schlieren": "Starting Schlieren analysis...",
+    "schlieren_res": "BOS {var0}",
+    "rezonans_nayden": "✅ Optical phase shift detected!",
+    "slabyy_rezonans": "⚠️ Weak shift (insufficient heating time)",
+    "net_rezonansa": "❌ No phase shift (no convection)",
+    "res_row0": "Phase Shift (SAD)",
+    "description_all": "Active Speckle-Schlieren Interferometer (BOS).\n\n**Physical principle:** (Mirrorless). Background Oriented Schlieren. The smartphone illuminates the ceiling with a high-frequency pattern, which serves as a reference speckle field for the camera.\n**Algorithmic essence:** A high-frequency grating (4 px stripes) is drawn inside a central circular region that acts both as the thermal pump and the reference field. After a 4 s warm-up a cold baseline frame is captured; then for 20 s the camera grabs a frame every 500 ms and computes the phase shift as the mean SAD brightness difference relative to the baseline, tracking the maximum.\n**Analogy:** An optical equivalent of the mirage above hot asphalt, but measured with sub-pixel precision.\n**Metric:** Peak phase shift maxSAD. Pass when maxSAD > 0.8."
+  },
+  "mirrorless": true
+}

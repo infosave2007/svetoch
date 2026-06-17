@@ -1,0 +1,35 @@
+{
+  "ru": {
+    "name": "Поворотное кодирование позиций (RoPE)",
+    "description": "Аппаратное позиционное кодирование за счет оптической дисперсии.",
+    "etap": "🌈",
+    "fraktsii_r_g_b": "Фракции: R={var0} G={var1} B={var2}",
+    "poloski_px_rgb": "Полоски {var0}px (RGB)",
+    "poloski_px": "Полоски {var0}px...",
+    "rg_sdvig_sredn_gb_sdvig_sredn": "RG сдвиг: средн={var0} GB сдвиг: средн={var1}",
+    "dispersiya_unikalnost": "Дисперсия: {var0}, Уникальность: {var1}%",
+    "chromatic_rope": "Chromatic RoPE {var0}",
+    "chromatic_rope_rabotaet": "✅ Chromatic RoPE работает!",
+    "slabaya_dispersiya": "⚠️ Слабая дисперсия",
+    "net_khromaticheskoy_raznitsy": "❌ Нет хроматической разницы",
+    "res_row0": "Фазовый сдвиг R/G",
+    "description_all": "Хроматическое Ротационное Кодирование (RoPE).\n\n**Физический принцип:** (С зеркалом). Хроматическая аберрация и эффект Тальбота: для пиксельного шага OLED рассчитываются дистанции Тальбота z_T(λ) по R/G/B, так что разные длины волн по-разному передают пространственную частоту.\n**Алгоритмическая суть:** Выводятся белые вертикальные полосы 6 пространственных частот (32…6 px); для каждой камера отдельно меряет контраст в каналах R, G, B. По ним считаются отношения контрастов R/G и G/B на каждой частоте, дисперсия = √(var(R/G)+var(G/B)) и «уникальность» — доля пар частот, чьи (R/G, G/B)-векторы различимы (> 0.05). Эта хроматическая подпись кодирует позицию без синусов/косинусов.\n**Аналогия:** Использование «оптического недостатка» линз и дифракции для аппаратного, бесплатного вычисления позиционных эмбеддингов LLM.\n**Метрика:** хроматическая дисперсия отношений контрастов (порог dispersion > 0.005)."
+  },
+  "en": {
+    "name": "Rotary Positional Encoding (RoPE)",
+    "description": "Hardware positional encoding via optical dispersion.",
+    "etap": "🌈",
+    "fraktsii_r_g_b": "Fractions: R={var0} G={var1} B={var2}",
+    "poloski_px_rgb": "Stripes {var0}px (RGB)",
+    "poloski_px": "Stripes {var0}px...",
+    "rg_sdvig_sredn_gb_sdvig_sredn": "RG shift: avg={var0} GB shift: avg={var1}",
+    "dispersiya_unikalnost": "Variance: {var0}, Uniqueness: {var1}%",
+    "chromatic_rope": "Chromatic RoPE {var0}",
+    "chromatic_rope_rabotaet": "✅ Chromatic RoPE works!",
+    "slabaya_dispersiya": "⚠️ Weak dispersion",
+    "net_khromaticheskoy_raznitsy": "❌ No chromatic difference",
+    "res_row0": "Phase shift R/G",
+    "description_all": "Chromatic Rotary Position Encoding (RoPE).\n\n**Physical principle:** (With mirror). Chromatic aberration and the Talbot effect: for the OLED pixel pitch the Talbot distances z_T(λ) are computed per R/G/B, so different wavelengths transfer spatial frequency differently.\n**Algorithmic essence:** White vertical stripes at 6 spatial frequencies (32…6 px) are shown; for each, the camera separately measures the contrast in the R, G, B channels. From these the R/G and G/B contrast ratios per frequency are computed, plus the dispersion = √(var(R/G)+var(G/B)) and a \"uniqueness\" — the fraction of frequency pairs whose (R/G, G/B) vectors are distinguishable (> 0.05). This chromatic signature encodes position without computing sines/cosines.\n**Analogy:** Using the lens \"optical flaw\" and diffraction to compute LLM positional embeddings in hardware, for free.\n**Metric:** chromatic dispersion of the contrast ratios (pass threshold dispersion > 0.005)."
+  },
+  "mirrorless": false
+}

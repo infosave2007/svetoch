@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Алгоритм Шора (мульти-факторизация)",
+    "description": "Параллельный поиск множителей за счет пространственного разделения экрана.",
+    "etap": "🔢",
+    "shor_faktorizatsiya_n": "Shor: факторизация N=15,21,35,77...",
+    "kalibrovka_qpe": "  Калибровка QPE...",
+    "n_shor_a_ozhidaemyy_r": "\\n  ── Shor {var0}, a={var1}, ожидаемый r={var2} ──",
+    "faktorizatsiya_ne_udalas": "    {var0}: факторизация не удалась",
+    "ne_udalos": "  {var0}: не удалось ✗",
+    "shor_faktorizovano": "Shor: {var0}/{var1} факторизовано",
+    "shor_faktorizovano_1": "⚠️ Shor: {var0}/{var1} факторизовано",
+    "description_all": "Мульти-факторизация Шора (оптический аналог, 8 чисел).\n\n**Физический принцип:** (С зеркалом). Период функции a^x mod N извлекается через оценку фазы (QPE) на пространственных частотах решёток; это классическая модель на экране и камере телефона, а не настоящий квантовый процессор.\n**Алгоритмическая суть:** Один раз калибруется частотный масштаб freqScale. Затем по очереди для 8 чисел (N=15,21,35,77,143,221,323,1001) на экран выводятся косинусные решётки с частотой φ·16 для фаз φ=s/r; камера снимает кадр (captureStable), тонким DFT находит пик, корректирует его на freqScale и округляет до ближайшего из 16 бинов. Из измеренных φ восстанавливаются кандидаты периода r (через дроби s/r, удвоение и НОК), и факторы ищутся как gcd(a^(r/2)±1, N).\n**Аналогия:** Несколько чисел по очереди «раскладываются» по тому, как часто повторяются полоски на фото каждой решётки.\n**Метрика:** Число факторизованных чисел factored/total; успех (check) — pass, то есть факторизовано ≥ 4 из 8."
+  },
+  "en": {
+    "name": "Shor's Algorithm (Multi-Factoring)",
+    "description": "Sequential factoring of several numbers via optical phase estimation.",
+    "etap": "🔢",
+    "shor_faktorizatsiya_n": "Shor: factorization N=15,21,35,77...",
+    "kalibrovka_qpe": "Calibration QPE...",
+    "n_shor_a_ozhidaemyy_r": "\\n ── Shor {var0}, a={var1}, expected r={var2} ──",
+    "faktorizatsiya_ne_udalas": "{var0}: factorization failed",
+    "ne_udalos": "{var0}: failed ✗",
+    "shor_faktorizovano": "Shor: {var0}/{var1} factored",
+    "shor_faktorizovano_1": "⚠️ Shor: {var0}/{var1} factored",
+    "description_all": "Shor Multi-Factorization (optical analog, 8 numbers).\n\n**Physical principle:** (With mirror). The period of a^x mod N is extracted via phase estimation (QPE) on the spatial frequencies of gratings; this is a classical model on a phone screen and camera, not a real quantum processor.\n**Algorithmic essence:** The frequency scale freqScale is calibrated once. Then, one number at a time (N=15,21,35,77,143,221,323,1001), cosine gratings at frequency φ·16 are displayed for phases φ=s/r; the camera captures a frame (captureStable), a fine DFT finds the peak, corrects it by freqScale and rounds to the nearest of 16 bins. From the measured φ, period candidates r are reconstructed (via fractions s/r, doubling and LCM), and factors are sought as gcd(a^(r/2)±1, N).\n**Analogy:** Several numbers are \"factored\" in turn from how frequently the stripes repeat in a photo of each grating.\n**Metric:** Count of factored numbers factored/total; pass (check) requires pass, i.e. at least 4 of 8 factored."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "VMF: фазовый переход (плавление)",
+    "description": "Оптическое восстановление кривой плавления вакуумного конденсата W(ρ)=√(1−ρ/ρ_c) по яркости.",
+    "etap": "🔬",
+    "vmf_melting_start": "VMF: плавление вакуумного конденсата...",
+    "vmf_measuring": "Измерение W(ρ) в 11 точках...",
+    "vmf_analysis": "Анализ формы кривой...",
+    "res_row0": "√(1-x) correlation",
+    "res_row1": "√ better than linear",
+    "description_all": "VMF: кривая плавления вакуумного конденсата W(ρ)=√(1−ρ/ρ_c).\n\n**Физический принцип:** (С зеркалом). Центральное уравнение NVG W(ρ)=W₀·√(1−ρ/ρ_c) описывает таяние вакуумного конденсата: при ρ=0 W=W₀, при критической плотности ρ_c=M_Ω⁴/(ℏc)³ конденсат полностью плавится (W→0). Опора — единственный QCD-параметр M_Ω=859 МэВ.\n**Алгоритмическая суть:** После 3-точечной калибровки яркости (0/0.5/1) и построения обратной функции «камера→интенсивность» для 11 точек плотности ρ/ρ_c=0…1 экран показывает равномерную яркость, равную W(ρ)=√(1−ρ/ρ_c). Камера измеряет каждую, восстанавливает интенсивность и сравнивает с теорией: считается корреляция Пирсона с √(1−x) и с линейной моделью, проверяются граничные условия W(0)≈1, W(ρ_c)≈0 и выпуклость кривой.\n**Аналогия:** Как лёд тает в воду при нагреве, так вакуумный конденсат «плавится» при росте плотности — смартфон считывает форму этой кривой по затуханию яркости экрана.\n**Метрика:** Корреляция Пирсона измеренной кривой с √(1−x) и её превосходство над линейной моделью; зачёт при corrSqrt > 0.9 и sqrtBetter."
+  },
+  "en": {
+    "name": "VMF: Phase Transition (Melting)",
+    "description": "Optical recovery of the vacuum-condensate melting curve W(ρ)=√(1−ρ/ρ_c) from brightness.",
+    "etap": "🔬",
+    "vmf_melting_start": "VMF: vacuum condensate melting...",
+    "vmf_measuring": "Measuring W(ρ) at 11 points...",
+    "vmf_analysis": "Analyzing curve shape...",
+    "res_row0": "√(1-x) correlation",
+    "res_row1": "√ better than linear",
+    "description_all": "VMF: vacuum-condensate melting curve W(ρ)=√(1−ρ/ρ_c).\n\n**Physical principle:** (With mirror). The central NVG equation W(ρ)=W₀·√(1−ρ/ρ_c) describes the melting of the vacuum condensate: at ρ=0, W=W₀; at the critical density ρ_c=M_Ω⁴/(ℏc)³ the condensate fully melts (W→0). It rests on the single QCD parameter M_Ω=859 MeV.\n**Algorithmic essence:** After a 3-point brightness calibration (0/0.5/1) and building a camera→intensity inverse, for 11 density points ρ/ρ_c=0…1 the screen shows uniform brightness equal to W(ρ)=√(1−ρ/ρ_c). The camera measures each, recovers the intensity, and compares to theory: it computes the Pearson correlation against √(1−x) and against a linear model, and checks the boundary conditions W(0)≈1, W(ρ_c)≈0 and the downward curvature.\n**Analogy:** Just as ice melts into water when heated, the vacuum condensate \"melts\" as density rises — the smartphone reads the shape of this curve from the falloff of screen brightness.\n**Metric:** Pearson correlation of the measured curve with √(1−x) and its superiority over the linear model; passes when corrSqrt > 0.9 and sqrtBetter."
+  },
+  "mirrorless": false
+}

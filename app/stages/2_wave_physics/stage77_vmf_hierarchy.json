@@ -1,0 +1,21 @@
+{
+  "ru": {
+    "name": "VMF: иерархия масс",
+    "description": "Оптическое измерение иерархии сдвигов масс мезонов в плотной среде через сдвиг частоты полос.",
+    "etap": "🔬",
+    "vmf_hierarchy_start": "VMF: иерархия мезонов M_Ω=859 МэВ...",
+    "res_row0": "Hierarchy correct",
+    "res_row1": "Correlation",
+    "description_all": "VMF: иерархия сдвигов масс мезонов при 2n₀.\n\n**Физический принцип:** (С зеркалом). По модели VMF/NVG связь с W-полем даёт Δm/m = −VMF·(1 − m_quarks/m_meson): чем тяжелее кварковый состав, тем меньше сдвиг. Отсюда иерархия ρ(−20%) > K*(−7.8%) > φ(−2.9%) > J/ψ(−0.4%) при опоре на единственный QCD-якорь M_Ω=859 МэВ.\n**Алгоритмическая суть:** Каждый мезон кодируется синусоидальным паттерном яркости cos(2π·f·x) на своей частоте f₀. Для каждого: показывается «вакуумная» частота, затем «средовая» f*=f₀(1+shift); камера снимает оба кадра, точная DFT (k=1…30) находит пики k₀ и k₁, и измеряется сдвиг Δk/k₀. Проверяется убывающая иерархия |сдвигов| и корреляция Пирсона предсказанных и измеренных значений.\n**Аналогия:** Четыре струны разной «тяжести» по-разному понижают тон в плотной среде — спектрометр смартфона измеряет эту лестницу сдвигов по сдвигу частоты полос.\n**Метрика:** Корректность иерархии и число мезонов с |ошибкой|<0.08; зачёт при hierarchyOK и passCount ≥ 2."
+  },
+  "en": {
+    "name": "VMF: Mass Hierarchy",
+    "description": "Optical measurement of the meson mass-shift hierarchy in a dense medium via fringe-frequency shift.",
+    "etap": "🔬",
+    "vmf_hierarchy_start": "VMF: meson hierarchy M_Ω=859 MeV...",
+    "res_row0": "Hierarchy correct",
+    "res_row1": "Correlation",
+    "description_all": "VMF: hierarchy of meson mass shifts at 2n₀.\n\n**Physical principle:** (With mirror). In the VMF/NVG model, coupling to the W-field gives Δm/m = −VMF·(1 − m_quarks/m_meson): the heavier the quark content, the smaller the shift. This yields the hierarchy ρ(−20%) > K*(−7.8%) > φ(−2.9%) > J/ψ(−0.4%), anchored to the single QCD parameter M_Ω=859 MeV.\n**Algorithmic essence:** Each meson is encoded as a sinusoidal brightness pattern cos(2π·f·x) at its own frequency f₀. For each one the \"vacuum\" frequency is shown, then the \"in-medium\" f*=f₀(1+shift); the camera captures both frames, a fine DFT (k=1…30) locates the peaks k₀ and k₁, and the shift Δk/k₀ is measured. The code verifies the decreasing hierarchy of |shifts| and the Pearson correlation between predicted and measured values.\n**Analogy:** Four strings of differing \"heaviness\" lower their pitch differently in a dense medium — the smartphone spectrometer reads off this ladder of shifts from the shift in fringe frequency.\n**Metric:** Correctness of the hierarchy and number of mesons with |error|<0.08; passes when hierarchyOK and passCount ≥ 2."
+  },
+  "mirrorless": false
+}

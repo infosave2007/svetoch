@@ -1,0 +1,28 @@
+{
+  "strings": {
+    "ru": {
+      "etap": "🔵 Этап 83",
+      "holo_start": "3D глобус в аэрозоле"
+    },
+    "en": {
+      "etap": "🔵 Stage 83",
+      "holo_start": "Aerosol-visible 3D Globe"
+    }
+  },
+  "meta": {
+    "name": "Aerosol3DGlobe",
+    "description": "Real aerosol 3D globe: dry-control baseline, 120Hz OLED volume slices, camera statistics, and BOS shift tracking"
+  },
+  "html": "<div class='stage'><h3>🔵 Aerosol 3D Globe</h3><p>Глобус над экраном: dry-control без аэрозоля, затем 120 Гц OLED-срезы сферы в аэрозоле + статистика прироста камерой</p><div class='rv'><span class='rl'>Срезы над dry</span><span id='rv-holo-opd' class='rval'>—</span></div><div class='rv'><span class='rl'>Peak Δ</span><span id='rv-holo-phase' class='rval'>—</span></div><div class='rv'><span class='rl'>Mean Δ</span><span id='rv-holo-lens' class='rval'>—</span></div><div class='rv'><span class='rl'>Отклонение</span><span id='rv-holo-fresnel' class='rval'>—</span></div><div class='rv'><span class='rl'>Корреляция</span><span id='rv-d2nn-phase' class='rval'>—</span></div><div class='rv'><span class='rl'>BOS</span><span id='rv-d2nn-focus' class='rval'>—</span></div><canvas id='holo-globe-canvas' style='width: 100%; height: 180px; margin-top: 15px; border-radius: 8px; background: #000; box-shadow: 0 0 20px rgba(0, 200, 255, 0.22);'></canvas><p id='g-s83' class='grade'>…</p></div>",
+  "ru": {
+    "name": "🔵 3D-глобус в аэрозоле",
+    "description_all": "Реальный 3D-глобус в аэрозоле со статистикой камеры.\n\n**Физический принцип:** (Без зеркала). OLED-экран на 120 Гц выводит 24 контрастных среза сферы (радиус z по √(1−z²)); тонкий слой водяного аэрозоля в 1–4 см над стеклом рассеивает свет, делая объём видимым. Камера сравнивает аэрозольный проход с «сухим» контролем без аэрозоля.\n**Алгоритмическая суть:** Сначала снимается тёмный кадр и «сухой» контроль 24 срезов (базовый шум экрана/отражений). Затем для аэрозольного прохода камера по ROI считает для каждого среза контраст, SNR, центроид, радиус и яркую долю, а относительно сухого контроля — приросты пика/среднего/яркой доли. Радиус сравнивается с √(1−z²) через корреляцию; 60 с ведётся живое отслеживание, и финальный BOS-сдвиг по шахматному паттерну меряется методом SAD до и после.\n**Аналогия:** Экран «печатает» невидимую 3D-модель глобуса в воздухе светом, аэрозоль проявляет её как объём, а камера статистически подтверждает, что свечение выше пустого контроля.\n**Метрика:** Видимых срезов над сухим контролем; зачёт при visibleSlices ≥ 8, приросте пика Δ>2.5, среднего Δ>0.35 и корреляции радиуса > 0.15.",
+    "description": "Реальный 3D-глобус в аэрозоле: 120-Гц OLED-срезы сферы, сухой контроль и статистика прироста по камере с BOS-сдвигом."
+  },
+  "en": {
+    "name": "🔵 Aerosol-Visible 3D Globe",
+    "description_all": "Real aerosol-visible 3D globe with camera statistics.\n\n**Physical principle:** (Mirrorless). A 120 Hz OLED screen renders 24 high-contrast sphere slices (slice radius following √(1−z²)); a thin water-aerosol layer 1–4 cm above the glass scatters the light into a visible volume. The camera compares the aerosol pass against a \"dry\" control with no aerosol.\n**Algorithmic essence:** A dark frame and a dry control of the 24 slices are captured first (the screen/reflection/noise baseline). For the aerosol pass the camera computes, per slice within the ROI, contrast, SNR, centroid, radius and bright fraction, and — relative to the dry control — the peak/mean/bright-fraction gains. The measured radius is correlated against √(1−z²); a 60 s live tracking pass runs, and a final BOS shift on a checkerboard reference is measured by SAD block matching before and after.\n**Analogy:** The screen \"prints\" an invisible 3D globe in the air with light, the aerosol reveals it as a volume, and the camera statistically confirms the glow rises above the empty control.\n**Metric:** Slices visible above the dry control; passes when visibleSlices ≥ 8, peak gain Δ>2.5, mean gain Δ>0.35 and radius correlation > 0.15.",
+    "description": "Real aerosol 3D globe: 120 Hz OLED sphere slices, a dry control, and camera gain statistics with a BOS shift."
+  },
+  "mirrorless": true
+}

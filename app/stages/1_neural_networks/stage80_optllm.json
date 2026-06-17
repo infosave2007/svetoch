@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "Оптический LLM",
+    "description": "Полный гибридный пайплайн слоев LLM на оптическом сопроцессоре.",
+    "etap": "🧠",
+    "llm_start": "Optical LLM: фотонное умножение матриц...",
+    "llm_train": "Обучение на английских биграммах (цифровое)...",
+    "llm_inference": "⚡ ОПТИЧЕСКИЙ INFERENCE: камера вычисляет dot products...",
+    "res_row0": "Generated text",
+    "res_row1": "CPU match rate",
+    "description_all": "Оптический LLM (символьная языковая модель).\n\n**Физический принцип:** Камера за один кадр суммирует яркость 8 столбцов экрана, физически выполняя скалярное произведение — операцию matrix-vector умножения в выходном слое нейросети.\n**Алгоритмическая суть:** Цифрово обучается символьная модель (эмбеддинг 27→8, разэмбеддинг 8→27) методом SGD на английском корпусе биграмм (80 эпох). Затем выполняется оптический инференс: для каждого из 8 генерируемых символов экран показывает по 27 паттернов из 8 яркостных столбцов (∝ embed[k]·U[k][j]), камера усредняет их, по 3-точечной калибровке восстанавливает 27 логитов, далее softmax с температурой 1.2 и сэмплирование. Результат сравнивается с эталонной CPU-генерацией.\n**Аналогия:** Смартфон с экраном и камерой становится аналоговым оптическим NPU, где умножение матриц выполняют фотоны.\n**Метрика:** Сгенерированный текст и доля совпадений с CPU (matchRate); прохождение, если оптический текст длиной ≥ 6 символов."
+  },
+  "en": {
+    "name": "Optical LLM",
+    "description": "Full hybrid pipeline of LLM layers on an optical coprocessor.",
+    "etap": "🧠",
+    "llm_start": "Optical LLM: photonic matrix multiplication...",
+    "llm_train": "Training on English bigrams (digital)...",
+    "llm_inference": "⚡ OPTICAL INFERENCE: camera computes dot products...",
+    "res_row0": "Generated text",
+    "res_row1": "CPU match rate",
+    "description_all": "Optical LLM (character-level language model).\n\n**Physical principle:** In a single frame the camera sums the brightness of 8 screen columns, physically performing the dot product — the matrix-vector multiply of the network's output layer.\n**Algorithmic essence:** A character model (embedding 27→8, unembedding 8→27) is trained digitally with SGD on an English bigram corpus (80 epochs). Optical inference then runs: for each of the 8 generated characters the screen shows 27 patterns of 8 brightness columns (∝ embed[k]·U[k][j]); the camera averages them, a 3-point calibration recovers the 27 logits, followed by softmax at temperature 1.2 and sampling. The result is compared against a reference CPU generation.\n**Analogy:** A smartphone with a screen and camera becomes an analog optical NPU where matrix multiplication is performed by photons.\n**Metric:** Generated text and the match rate against CPU; passes when the optical text is ≥ 6 characters long."
+  },
+  "mirrorless": false
+}

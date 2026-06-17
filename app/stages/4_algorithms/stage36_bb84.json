@@ -1,0 +1,33 @@
+{
+  "ru": {
+    "name": "Протокол BB84 (QKD)",
+    "description": "Симуляция распределения ключа и выявления перехватчика (BB84).",
+    "etap": "🔐",
+    "bit": "Бит {var0}/{var1}",
+    "bb_bit_sovpalo_bazisov": "BB84: {var0} бит, совпало базисов: {var1} ({var2}%)",
+    "qber_oshibki": "  QBER={var0}% (ошибки: {var1}/{var2})",
+    "klyuch": "  Ключ: [{var0}]",
+    "bb": "BB84 {var0}",
+    "bit_1": " бит",
+    "bb_bezopasen": "✅ BB84 безопасен!",
+    "qber_slishkom_vysok": "❌ QBER слишком высок",
+    "res_row0": "QBER",
+    "description_all": "Протокол квантового распределения ключа BB84.\n\n**Физический принцип:** (С зеркалом). Два базиса кодируются разными способами свечения экрана: прямолинейный базис — уровнем яркости (тёмный/светлый), диагональный — ориентацией полос (вертикальные/горизонтальные).\n**Алгоритмическая суть:** Для 16 бит «Алиса» случайно выбирает бит и базис и выводит соответствующий паттерн; «Боб» (камера) измеряет в случайном базисе — порогом яркости или сравнением горизонтального/вертикального градиента. После просеивания по совпавшим базисам считается QBER (доля ошибок) и длина ключа.\n**Аналогия:** Оптическая игра в шифровку, где несовпадение базисов и шум камеры порождают ошибки, как при перехвате.\n**Метрика:** QBER; канал считается безопасным при QBER < 0.11 и длине просеянного ключа ≥ 4 бит."
+  },
+  "en": {
+    "name": "BB84 Protocol (QKD)",
+    "description": "Simulation of key distribution and eavesdropper detection (BB84).",
+    "etap": "🔐",
+    "bit": "Bit {var0}/{var1}",
+    "bb_bit_sovpalo_bazisov": "BB84: {var0} bits, matched bases: {var1} ({var2}%)",
+    "qber_oshibki": "QBER={var0}% (errors: {var1}/{var2})",
+    "klyuch": "Key: [{var0}]",
+    "bb": "BB84 {var0}",
+    "bit_1": "bit",
+    "bb_bezopasen": "✅ BB84 is safe!",
+    "qber_slishkom_vysok": "❌ QBER is too high",
+    "res_row0": "QBER",
+    "description_all": "BB84 quantum key distribution protocol.\n\n**Physical principle:** (With mirror). Two bases are encoded by different ways the screen glows: the rectilinear basis by brightness level (dark/bright), the diagonal basis by stripe orientation (vertical/horizontal).\n**Algorithmic essence:** For 16 bits 'Alice' randomly picks a bit and a basis and displays the corresponding pattern; 'Bob' (the camera) measures in a random basis — via brightness threshold or by comparing horizontal/vertical gradients. After sifting on matching bases the QBER (error fraction) and key length are computed.\n**Analogy:** An optical cipher game where basis mismatches and camera noise produce errors, as an eavesdropper would.\n**Metric:** QBER; the channel is deemed secure when QBER < 0.11 and the sifted key length ≥ 4 bits."
+  },
+  "mirrorless": false
+}

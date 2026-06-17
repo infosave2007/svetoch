@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "Коррекция квантовых ошибок (QEC)",
+    "description": "Моделирование защиты от ошибок через оптическую избыточность.",
+    "etap": "🛡️",
+    "qec": "QEC {var0}",
+    "qec_vosstanovil": "✅ QEC восстановил!",
+    "chastichnaya_korrektsiya": "⚠️ Частичная коррекция",
+    "qec_ne_rabotaet": "❌ QEC не работает",
+    "res_row0": "Fidelity до ошибки",
+    "description_all": "Квантовая коррекция ошибок (QEC) — оптический аналог.\n\n**Физический принцип:** Классическая модель на экране телефона с зеркалом и камерой. Используется 3-битный код повторения: логический |0⟩ — три ярких бита, логический |1⟩ — три тёмных. Сначала по тёмному (40) и яркому (200) экранам калибруется порог thresh = (dark+bright)/2.\n**Алгоритмическая суть:** Каждый из 3 физических битов последовательно выводится на экран и считывается regionMean, бит = (яркость > thresh). В каждое из двух логических состояний по очереди вносится одиночная ошибка (инверсия одного бита из трёх), после чего применяется мажоритарное голосование: восстановленный бит = 1, если ≥2 измеренных бита равны 1. recoveryRate — доля испытаний, где голосование вернуло исходный бит.\n**Аналогия:** Избыточность трёх копий и голосование по большинству гасят одиночный шум камеры так же, как код повторения исправляет одиночную ошибку.\n**Метрика:** Доля восстановлений recoveryRate по всем испытаниям с одиночной ошибкой; прохождение при recoveryRate ≥ 0.6."
+  },
+  "en": {
+    "name": "Quantum Error Correction (QEC)",
+    "description": "Modeling error protection via optical redundancy.",
+    "etap": "🛡️",
+    "qec": "QEC {var0}",
+    "qec_vosstanovil": "✅ QEC recovered!",
+    "chastichnaya_korrektsiya": "⚠️ Partial correction",
+    "qec_ne_rabotaet": "❌ QEC does not work",
+    "res_row0": "Fidelity before error",
+    "description_all": "Quantum error correction (QEC) — optical analog.\n\n**Physical principle:** A classical model on a phone screen with mirror and camera. A 3-bit repetition code is used: logical |0⟩ is three bright bits, logical |1⟩ is three dark ones. A threshold thresh = (dark+bright)/2 is first calibrated from dark (40) and bright (200) screens.\n**Algorithmic essence:** Each of the 3 physical bits is shown in turn and read with regionMean, bit = (brightness > thresh). A single error (one-bit flip out of three) is injected into each of the two logical states, after which majority voting is applied: recovered bit = 1 if ≥2 measured bits equal 1. recoveryRate is the fraction of trials where the vote returned the original bit.\n**Analogy:** Three-copy redundancy plus majority voting suppress single camera noise just as a repetition code fixes a single error.\n**Metric:** Recovery fraction recoveryRate over all single-error trials; passes when recoveryRate ≥ 0.6."
+  },
+  "mirrorless": false
+}

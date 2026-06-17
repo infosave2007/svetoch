@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "Точность состояния ×10 (Fidelity)",
+    "description": "Аппаратное вычисление метрики перекрытия двух квантовых состояний.",
+    "etap": "🔄",
+    "teleport": "Телепорт {var0}/{var1}...",
+    "vyshe_kvpredela": "Выше кв.предела (2/3): {var0}/{var1}",
+    "invertirovan": "Инвертирован: {var0}/{var1}",
+    "fidelity": "Fidelity {var0}",
+    "vysokaya_fidelity": "✅ Высокая fidelity",
+    "nizkaya_fidelity": "❌ Низкая fidelity",
+    "res_row0": "Средняя fidelity",
+    "description_all": "Квантовое сходство (Fidelity) ×10 — оптический аналог.\n\n**Физический принцип:** Классическая модель на экране телефона с зеркалом и камерой. «Состояния» |0⟩,|1⟩,|+⟩,|−⟩ задаются цветными блоками: вход Алисы — красный канал, выход Боба — синий, зелёный фиксирован как канал-посредник.\n**Алгоритмическая суть:** В каждом из 10 испытаний показываются 4 цветовых блока, regionMeanRGB снимает средние R и B, считается корреляция Пирсона r между R (Алиса) и B (Боб), и F = (1+|r|)/2. По 10 испытаниям берутся среднее meanF, σ и число прогонов с F > 2/3.\n**Аналогия:** Многократная оценка «перекрытия» состояний через цветовую корреляцию — оптический аналог достоверности (fidelity) переноса состояния с учётом реального шума.\n**Метрика:** Средняя достоверность meanF = ⟨(1+|r|)/2⟩ по 10 испытаниям; прохождение при meanF > 0.667."
+  },
+  "en": {
+    "name": "State Fidelity ×10",
+    "description": "Hardware computation of the overlap metric between two quantum states.",
+    "etap": "🔄",
+    "teleport": "Teleport {var0}/{var1}...",
+    "vyshe_kvpredela": "Above quantum limit (2/3): {var0}/{var1}",
+    "invertirovan": "Inverted: {var0}/{var1}",
+    "fidelity": "Fidelity {var0}",
+    "vysokaya_fidelity": "✅ High fidelity",
+    "nizkaya_fidelity": "❌ Low fidelity",
+    "res_row0": "Mean fidelity",
+    "description_all": "Quantum fidelity ×10 — optical analog.\n\n**Physical principle:** A classical model on a phone screen with mirror and camera. The 'states' |0⟩, |1⟩, |+⟩, |−⟩ are set by colored blocks: Alice's input is the red channel, Bob's output the blue, with green fixed as a mediator channel.\n**Algorithmic essence:** In each of 10 trials four color blocks are shown, regionMeanRGB reads the mean R and B, the Pearson correlation r between R (Alice) and B (Bob) is computed, and F = (1+|r|)/2. Over the 10 trials the mean meanF, σ and the count of runs with F > 2/3 are taken.\n**Analogy:** Repeated estimation of state 'overlap' via color correlation — an optical analog of state-transfer fidelity under real noise.\n**Metric:** Mean fidelity meanF = ⟨(1+|r|)/2⟩ over 10 trials; passes when meanF > 0.667."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,29 @@
+{
+  "ru": {
+    "name": "🎲 Квантовый генератор случайных чисел (QRNG)",
+    "description": "Генерация криптографической случайности из физического шума камеры.",
+    "etap": "🎲",
+    "generatsiya_sluchaynykh_bit_iz": "Генерация 100 случайных бит из оптического шума...",
+    "bit": "Бит {var0}/100",
+    "bity": "Биты: {var0}...",
+    "qrng_testov_proydeno": "QRNG: {var0}/4 тестов пройдено",
+    "qrng_rabotaet": "✅ QRNG работает",
+    "qrng_ne_proshyol": "❌ QRNG не прошёл",
+    "res_row0": "NIST тесты",
+    "description_all": "Аппаратный генератор случайных чисел (QRNG) — оптический аналог.\n\n**Физический принцип:** Классическая модель на экране телефона с зеркалом и камерой. Источник энтропии — временной шум CMOS-матрицы (тепловой и дробовой shot-noise) при съёмке равномерного серого экрана.\n**Алгоритмическая суть:** Снимаются 100 пар кадров; для каждой пары сравнивается суммарная яркость центрального окна 5×5: бит = 1, если кадр B ярче кадра A, иначе 0. К полученной строке из 100 бит применяются 4 NIST-подобных теста — частотный (monobit, |1−0|/√N < 1.96), серий (runs), последовательной корреляции (< 0.1) и длиннейшей серии единиц (< 12). testsPass — число пройденных тестов.\n**Аналогия:** Неизбежный физический шум цифровой камеры используется как источник криптографической случайности, проверяемой стандартной статистикой.\n**Метрика:** Число пройденных NIST-тестов testsPass из 4; прохождение при testsPass ≥ 3."
+  },
+  "en": {
+    "name": "🎲 Quantum RNG (QRNG)",
+    "description": "Generating cryptographic randomness from the camera's physical noise.",
+    "etap": "🎲",
+    "generatsiya_sluchaynykh_bit_iz": "Generating 100 random bits from optical noise...",
+    "bit": "Bit {var0}/100",
+    "bity": "Bits: {var0}...",
+    "qrng_testov_proydeno": "QRNG: {var0}/4 tests passed",
+    "qrng_rabotaet": "✅ QRNG works",
+    "qrng_ne_proshyol": "❌ QRNG failed",
+    "res_row0": "NIST tests",
+    "description_all": "Hardware random number generator (QRNG) — optical analog.\n\n**Physical principle:** A classical model on a phone screen with mirror and camera. The entropy source is the temporal noise of the CMOS sensor (thermal and shot noise) captured against a uniform gray screen.\n**Algorithmic essence:** 100 frame pairs are captured; for each pair the summed brightness of a central 5×5 window is compared: bit = 1 if frame B is brighter than frame A, else 0. The resulting 100-bit string is run through 4 NIST-like tests — frequency (monobit, |1−0|/√N < 1.96), runs, serial correlation (< 0.1) and longest run of ones (< 12). testsPass is the number of tests passed.\n**Analogy:** The unavoidable physical noise of a digital camera is used as a source of cryptographic randomness, validated by standard statistics.\n**Metric:** Number of passed NIST tests testsPass out of 4; passes when testsPass ≥ 3."
+  },
+  "mirrorless": false
+}

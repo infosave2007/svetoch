@@ -1,0 +1,21 @@
+{
+  "ru": {
+    "name": "Неравенство Белла (CHSH)",
+    "description": "Оптическая симуляция проверки квантовой нелокальности (CHSH).",
+    "etap": "🔬",
+    "svmf_narushenie_bella": "✅ S_VMF = {var0} > 2 — НАРУШЕНИЕ БЕЛЛА!",
+    "net_znachimogo_narusheniya": "❌ Нет значимого нарушения",
+    "res_row0": "S (VMF) = 2√2·C",
+    "description_all": "Неравенства Белла (CHSH), оптический аналог.\n\n**Физический принцип:** (С зеркалом). Эмуляция проверки CHSH через пространственный угловой коррелятор: левая половина экрана = Алиса (полосы под углом 45°−Δθ/2), правая = Боб (45°+Δθ/2), зеркало отражает обе в камеру. Это классический оптический прокси, а не реальная квантовая запутанность.\n**Алгоритмическая суть:** Сканируются 13 точек Δθ=0..30°. По зелёному каналу для каждой половины измеряется разность фаз полос, когерентность C и корреляция E(Δθ). Алгоритм подгоняет косинус E=A·cos(4Δθ+B)+D против гауссианы (сравнение R²) и выводит S=2√2·|A|, затем нормирует S_norm=S/C̄.\n**Аналогия:** Настольная эмуляция знаменитого эксперимента по запутанности, где «частицы» — это полосовые маски на экране.\n**Метрика:** Нарушение засчитано при S (S_vmf=S/C̄, иначе S) > 2; отображается S."
+  },
+  "en": {
+    "name": "Bell Inequality (CHSH)",
+    "description": "Optical simulation of a quantum non-locality test (CHSH).",
+    "etap": "🔬",
+    "svmf_narushenie_bella": "✅ S_VMF = {var0} > 2 - BELL VIOLATION!",
+    "net_znachimogo_narusheniya": "❌ No significant violation",
+    "res_row0": "S (VMF) = 2√2·C",
+    "description_all": "Bell inequality (CHSH), optical analog.\n\n**Physical principle:** (With mirror). CHSH-style test via a spatial angle correlator: the LEFT screen half = Alice (stripes at 45°−Δθ/2), RIGHT = Bob (45°+Δθ/2), the mirror reflects both into the camera. This is a classical optical proxy, not genuine quantum entanglement.\n**Algorithmic essence:** It scans 13 points Δθ=0..30°. For each half it measures, on the green channel, the stripe phase difference, coherence C, and correlation E(Δθ). The algorithm fits a cosine E=A·cos(4Δθ+B)+D against a Gaussian (comparing R²) and derives S=2√2·|A|, then normalizes S_norm=S/C̄.\n**Analogy:** A tabletop emulation of the famous entanglement experiment where the 'particles' are stripe masks on a screen.\n**Metric:** A violation is counted when S (S_vmf=S/C̄, else S) > 2; the reported quantity is S."
+  },
+  "mirrorless": false
+}

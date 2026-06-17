@@ -1,0 +1,31 @@
+{
+  "ru": {
+    "name": "Логические вентили (AND/OR/XOR)",
+    "description": "Реализация булевой логики через пороговое оптическое считывание.",
+    "etap": "🧪",
+    "lineynaya_klassifikatsiya": "Линейная классификация...",
+    "vkhod": "Вход ({var0},{var1})",
+    "andornand_rabotayut_xor_korrek": "✓ AND/OR/NAND работают, XOR корректно ≤75%!",
+    "neozhidannyy_rezultat": "Неожиданный результат",
+    "minskiypeypert_podtverzhdyon": "✅ Минский-Пейперт подтверждён!",
+    "andor_rabotayut_xor_neozhidann": "⚠️ AND/OR работают, XOR неожиданно решается",
+    "lineynye_geyty_ne_rabotayut": "❌ Линейные гейты не работают",
+    "res_row0": "AND accuracy",
+    "description_all": "Логические вентили (Logic Gates).\n\n**Физический принцип:** (С зеркалом). Пара булевых входов кодируется одной яркостью, равной их среднему ((x₁+x₂)/2), и выводится на экран как уровень серого.\n**Алгоритмическая суть:** Для 4 входных комбинаций камера один раз измеряет оптическую яркость (нормировка по белому, гамма-коррекция). Затем для каждого вентиля подбирается оптимальный порог отсечки (с возможной инверсией) и считается точность: линейно разделимые AND/OR/NAND должны давать ≥75%, а XOR — оставаться ≤75% (теорема Минского–Пейперта о неразделимости одним линейным слоем).\n**Аналогия:** Оптическая реализация линейного классификатора, где 1+1 светят ярче, а софт решает порогом, сработал ли вентиль — и честно проваливается на XOR.\n**Метрика:** подтверждение Минского–Пейперта (AND/OR/NAND ≥ 75% и XOR ≤ 75%)."
+  },
+  "en": {
+    "name": "Logic Gates (AND/OR/XOR)",
+    "description": "Implementation of boolean logic via thresholded optical readout.",
+    "etap": "🧪",
+    "lineynaya_klassifikatsiya": "Linear classification...",
+    "vkhod": "Input ({var0},{var1})",
+    "andornand_rabotayut_xor_korrek": "✓ AND/OR/NAND work, XOR is correct ≤75%!",
+    "neozhidannyy_rezultat": "Unexpected result",
+    "minskiypeypert_podtverzhdyon": "✅ Minsky-Papert confirmed!",
+    "andor_rabotayut_xor_neozhidann": "⚠️ AND/OR work, XOR is unexpectedly solved",
+    "lineynye_geyty_ne_rabotayut": "❌ Linear gates do not work",
+    "res_row0": "AND accuracy",
+    "description_all": "Logic Gates.\n\n**Physical principle:** (With mirror). A pair of boolean inputs is encoded as a single brightness equal to their mean ((x₁+x₂)/2) and shown on the screen as a gray level.\n**Algorithmic essence:** For the 4 input combinations the camera measures the optical brightness once (white-normalized, gamma-corrected). Then for each gate an optimal cutoff threshold (with possible inversion) is fitted and the accuracy computed: linearly separable AND/OR/NAND should reach ≥75%, while XOR must stay ≤75% (the Minsky–Papert result that a single linear layer cannot separate XOR).\n**Analogy:** An optical realization of a linear classifier where 1+1 shines brighter and the software decides via a threshold whether the gate fired — honestly failing on XOR.\n**Metric:** Minsky–Papert confirmation (AND/OR/NAND ≥ 75% and XOR ≤ 75%)."
+  },
+  "mirrorless": false
+}

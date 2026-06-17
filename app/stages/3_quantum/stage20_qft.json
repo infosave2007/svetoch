@@ -1,0 +1,25 @@
+{
+  "ru": {
+    "name": "Квантовое преобразование Фурье (QFT)",
+    "description": "Симуляция QFT через пространственный Фурье-спектр изображения.",
+    "etap": "🌀",
+    "qft": "QFT {var0}",
+    "qft_rabotaet": "✅ QFT работает!",
+    "chastichnyy_qft": "⚠️ Частичный QFT",
+    "qft_ne_rabotaet": "❌ QFT не работает",
+    "res_row0": "Фурье-корреляция",
+    "description_all": "Квантовое преобразование Фурье (QFT) — оптический аналог для N=4.\n\n**Физический принцип:** Классическая модель на экране телефона с зеркалом и камерой. Для каждого входного базисного состояния |k⟩ на экран выводится ряд из 4 полос, яркость которых задана интенсивностью cos²(φ/2)=(1+cos(2πkn/N))/2 — это амплитуды строки матрицы QFT, закодированные в яркость.\n**Алгоритмическая суть:** Для каждого k камера снимает кадр, measureCalibratedBins/measureNBins считывает 4 пространственных бина яркости. Строки нормируются на бины входа k=0 (компенсация виньетирования), затем сравниваются с теоретическими cos²-строками QFT через коэффициент Пирсона; усредняется корреляция по k=1..3 (avgCorr). Дополнительно оцениваются равномерность строки |0⟩ и фазовая чёткость строки |2⟩.\n**Аналогия:** Линзы камеры и пространственная развёртка полос играют роль «оптического» Фурье-преобразователя, в котором результат QFT считывается как набор интенсивностей бинов.\n**Метрика:** Средняя корреляция Пирсона измеренных бинов с матрицей QFT avgCorr; прохождение при avgCorr > 0.3."
+  },
+  "en": {
+    "name": "Quantum Fourier Transform (QFT)",
+    "description": "QFT simulation via the spatial Fourier spectrum of the image.",
+    "etap": "🌀",
+    "qft": "QFT {var0}",
+    "qft_rabotaet": "✅ QFT works!",
+    "chastichnyy_qft": "⚠️ Partial QFT",
+    "qft_ne_rabotaet": "❌ QFT does not work",
+    "res_row0": "Fourier correlation",
+    "description_all": "Quantum Fourier Transform (QFT) — optical analog for N=4.\n\n**Physical principle:** A classical model on a phone screen with mirror and camera. For each input basis state |k⟩ a row of 4 bars is displayed, with brightness set by intensity cos²(φ/2)=(1+cos(2πkn/N))/2 — the QFT matrix-row amplitudes encoded into brightness.\n**Algorithmic essence:** For each k the camera captures a frame, measureCalibratedBins/measureNBins reads 4 spatial brightness bins. Rows are normalized against the k=0 input bins (vignetting compensation) and then compared to the theoretical cos² QFT rows via the Pearson coefficient; the correlation is averaged over k=1..3 (avgCorr). Row |0⟩ uniformity and row |2⟩ phase sharpness are also evaluated.\n**Analogy:** The camera lens and the spatial layout of the bars act as an 'optical' Fourier transformer in which the QFT result is read out as a set of bin intensities.\n**Metric:** Mean Pearson correlation of measured bins with the QFT matrix, avgCorr; passes when avgCorr > 0.3."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Вентиль CNOT",
+    "description": "Двухкубитная операция через пространственное пиксельное наложение.",
+    "etap": "🔗",
+    "proverka_cnot_vykhodov": "Проверка CNOT выходов...",
+    "cnot": "CNOT {var0}",
+    "cnot_rabotaet": "✅ CNOT работает!",
+    "chastichnyy_cnot": "⚠️ Частичный CNOT",
+    "cnot_ne_rabotaet": "❌ CNOT не работает",
+    "res_row0": "|00⟩→|00⟩",
+    "description_all": "Вентиль CNOT (Controlled-NOT) — оптический аналог.\n\n**Физический принцип:** Классическая модель на экране телефона с зеркалом и камерой. Биты управления и цели задаются яркостью полноэкранной заливки (тёмный 40 / яркий 200); по тёмному и яркому экранам калибруется порог thresh = (dark+bright)/2.\n**Алгоритмическая суть:** Для всех 4 строк таблицы истинности |c,t⟩→|c, c⊕t⟩ последовательно выводятся управляющий и целевой биты, regionMean считывает яркость и бит = (яркость > thresh). Сравнением измеренных битов входа и ожидаемого выхода с эталоном считаются inputAcc и outputAcc, а totalAcc = (inputAcc+outputAcc)/2.\n**Аналогия:** Управляемый оптический переключатель на уровне пикселей экрана, где состояние «контроля» определяет инверсию «цели».\n**Метрика:** Средняя точность таблицы истинности totalAcc = (inputAcc+outputAcc)/2; прохождение при totalAcc ≥ 0.625."
+  },
+  "en": {
+    "name": "CNOT Gate",
+    "description": "Two-qubit operation via spatial pixel overlay.",
+    "etap": "🔗",
+    "proverka_cnot_vykhodov": "Checking CNOT outputs...",
+    "cnot": "CNOT {var0}",
+    "cnot_rabotaet": "✅ CNOT works!",
+    "chastichnyy_cnot": "⚠️ Partial CNOT",
+    "cnot_ne_rabotaet": "❌ CNOT does not work",
+    "res_row0": "|00⟩→|00⟩",
+    "description_all": "CNOT (Controlled-NOT) gate — optical analog.\n\n**Physical principle:** A classical model on a phone screen with mirror and camera. Control and target bits are set by full-screen fill brightness (dark 40 / bright 200); a threshold thresh = (dark+bright)/2 is calibrated from dark and bright screens.\n**Algorithmic essence:** For all 4 rows of the truth table |c,t⟩→|c, c⊕t⟩ the control and target bits are shown in turn, regionMean reads the brightness and bit = (brightness > thresh). Comparing measured input bits and the expected output against the reference gives inputAcc and outputAcc, and totalAcc = (inputAcc+outputAcc)/2.\n**Analogy:** A controlled optical switch at the screen-pixel level, where the 'control' state determines whether the 'target' is inverted.\n**Metric:** Mean truth-table accuracy totalAcc = (inputAcc+outputAcc)/2; passes when totalAcc ≥ 0.625."
+  },
+  "mirrorless": false
+}

@@ -1,0 +1,35 @@
+{
+  "ru": {
+    "name": "Коллапс волновой функции",
+    "description": "Эмуляция квантового измерения через аппаратную бинаризацию кадра.",
+    "etap": "📉",
+    "kollaps": "θ-Коллапс...",
+    "pokaz_neravnovesnogo_patterna_": "Показ неравновесного паттерна (острый пик)...",
+    "izmerenie": "Измерение {var0}/{var1}",
+    "rannyaya_spatial_pozdnyaya_spa": "Ранняя σ²_spatial={var0}, Поздняя σ²_spatial={var1}",
+    "skhodimost_ms": "Сходимость: {var0}, τ={var1}ms",
+    "kollaps_1": "Коллапс {var0}",
+    "kollaps_podtverzhdyon": "✅ θ-коллапс подтверждён!",
+    "chastichnaya_dekogerentsiya": "⚠️ Частичная декогеренция",
+    "net_skhodimosti": "❌ Нет сходимости",
+    "res_row0": "τ_decoherence",
+    "description_all": "Коллапс волновой функции.\n\n**Физический принцип:** (С зеркалом). Экран выводит резко неравновесный паттерн — узкий яркий пик (10% ширины) на тёмном фоне с высокой начальной пространственной дисперсией.\n**Алгоритмическая суть:** Камера снимает 30 кадров подряд; для каждого по 8 бинам считается пространственная дисперсия σ². Алгоритм сравнивает позднюю дисперсию с ранней (сходимость = lateVar/earlyVar), оценивает время спада τ (первый кадр с σ²<0.5·earlyVar) и обратное воздействие (back-action) — отклонение первого среднего от остальных.\n**Аналогия:** Акт измерения (серия съёмок) работает как «коллапс»: разброс яркости по сцене со временем спадает к одному устойчивому состоянию.\n**Метрика:** Коллапс подтверждён при сходимости conv = lateVar/earlyVar < 0.8; отображается conv."
+  },
+  "en": {
+    "name": "Wavefunction Collapse",
+    "description": "Emulation of quantum measurement via hardware binning of the frame.",
+    "etap": "📉",
+    "kollaps": "θ-Collapse...",
+    "pokaz_neravnovesnogo_patterna_": "Showing a disequilibrium pattern (sharp peak)...",
+    "izmerenie": "Measurement {var0}/{var1}",
+    "rannyaya_spatial_pozdnyaya_spa": "Early σ²_spatial={var0}, Late σ²_spatial={var1}",
+    "skhodimost_ms": "Convergence: {var0}, τ={var1}ms",
+    "kollaps_1": "Collapse {var0}",
+    "kollaps_podtverzhdyon": "✅ θ-collapse confirmed!",
+    "chastichnaya_dekogerentsiya": "⚠️ Partial decoherence",
+    "net_skhodimosti": "❌ No convergence",
+    "res_row0": "τ_decoherence",
+    "description_all": "Wavefunction collapse.\n\n**Physical principle:** (With mirror). The screen shows a sharply non-equilibrium pattern — a narrow bright spike (10% of width) on a dark background, with high initial spatial variance.\n**Algorithmic essence:** The camera grabs 30 consecutive frames; for each, the spatial variance σ² is computed over 8 bins. The algorithm compares late vs early variance (convergence = lateVar/earlyVar), estimates a decay time τ (first frame with σ²<0.5·earlyVar) and a back-action term (deviation of the first mean from the rest).\n**Analogy:** The act of measurement (a series of captures) acts like a 'collapse': the brightness spread across the scene decays over time toward a single stable state.\n**Metric:** Collapse is confirmed when convergence conv = lateVar/earlyVar < 0.8; the reported quantity is conv."
+  },
+  "mirrorless": false
+}

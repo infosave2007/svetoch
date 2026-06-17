@@ -1,0 +1,27 @@
+{
+  "ru": {
+    "name": "Произведение матрицы на вектор",
+    "description": "Параллельное оптическое умножение матрицы на вектор.",
+    "etap": "🧠",
+    "matvec_stroka": "MatVec строка {var0}/{var1}",
+    "matvec": "MatVec {var0}",
+    "matvec_rabotaet": "✅ MatVec работает",
+    "chastichno": "⚠️ Частично",
+    "nuzhna_kalibrovka": "❌ Нужна калибровка",
+    "res_row0": "MatVec корреляция",
+    "description_all": "Умножение матрицы на вектор (Matrix-Vector Multiplication).\n\n**Физический принцип:** (С зеркалом). Экран проецирует строку поэлементных произведений W·x как сетку 4×4 блоков, по одному набору на каждый из RGB-каналов параллельно.\n**Алгоритмическая суть:** Для матрицы 16×16 (отдельные веса в R, G, B) каждая из 16 строк выводится блоками; камера измеряет средние яркости блоков, нормирует их по белому и гамма-корректирует, суммирует в оптический выход строки, аффинно масштабирует под цифровой диапазон и считает корреляцию Пирсона по трём каналам, усредняя её.\n**Аналогия:** Параллельное аппаратное сложение множества независимых каналов (строк матрицы) за счёт оптики камеры.\n**Метрика:** средняя корреляция оптического и цифрового выхода (порог r > 0.4)."
+  },
+  "en": {
+    "name": "Matrix–Vector Product",
+    "description": "Parallel optical matrix-vector multiplication.",
+    "etap": "🧠",
+    "matvec_stroka": "MatVec row {var0}/{var1}",
+    "matvec": "MatVec {var0}",
+    "matvec_rabotaet": "✅ MatVec works",
+    "chastichno": "⚠️ Partially",
+    "nuzhna_kalibrovka": "❌ Needs calibration",
+    "res_row0": "MatVec correlation",
+    "description_all": "Matrix-Vector Multiplication.\n\n**Physical principle:** (With mirror). The screen projects a row of element-wise products W·x as a 4×4 grid of blocks, one set per RGB channel in parallel.\n**Algorithmic essence:** For a 16×16 matrix (separate weights in R, G, B) each of the 16 rows is shown as blocks; the camera measures block mean brightness, normalizes against white and gamma-corrects, sums into the optical row output, affine-scales it to the digital range, and computes the Pearson correlation across the three channels, then averages it.\n**Analogy:** Parallel hardware summation of many independent channels (matrix rows) via the camera optics.\n**Metric:** average correlation of optical vs digital output (pass threshold r > 0.4)."
+  },
+  "mirrorless": false
+}
