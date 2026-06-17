@@ -51,7 +51,7 @@ Entanglement witness · multi‑mirror cavity · quantum random walk · Bernstei
 
 | Next step | d_model | Cost | Payoff |
 |-----------|--------:|-----:|--------|
-| Samsung S24 Ultra | 1440 | $3 | More parameters |
+| Samsung S24 Ultra | 1440 | minimal | More parameters |
 | + macro lens (7.5 mm) | 1080 | $8 | SNR > 10,000 |
 | Optical RFC (OPA chip) | 6144 | $5,000 | 100+ tokens/s |
 

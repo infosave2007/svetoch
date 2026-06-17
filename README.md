@@ -2,7 +2,7 @@
 
 # ⚡ Svetoch — Optical Neural Computer
 
-**Turn a phone, a $3 mirror, and the front camera into a working optical computer.**
+**Turn a phone, an everyday mirror, and the front camera into a working optical computer.**
 
 🇷🇺 [Русская версия](README.ru.md) · 📖 [Setup guide](docs/SETUP.md) · 🧪 [All 101 experiments](docs/EXPERIMENTS.md) · 🗺️ [Roadmap](docs/ROADMAP.md)
 
@@ -18,7 +18,7 @@ The phone's OLED screen displays the operands as patterns of brightness. The lig
 
 On top of this one optical primitive the project builds a tower of **101 experiments**: from a calibrated optical channel and dot products, up through full transformer layers and autoregressive text generation, and further into wave‑physics, quantum‑gate, and classical‑algorithm analogues.
 
-> **Cost:** ~$3 (a mirror). **Hardware:** any modern phone with an OLED/AMOLED screen and a front camera. **Reference device:** Xiaomi 12 Lite.
+> **Cost:** Minimal — just an everyday mirror. **Hardware:** any modern phone with an OLED/AMOLED screen and a front camera. **Reference device:** Xiaomi 12 Lite.
 
 ```
     ┌────────────────────────────────────┐
@@ -26,7 +26,7 @@ On top of this one optical primitive the project builds a tower of **101 experim
     └────────────────────────────────────┘
                     │  ~5 cm
     ╔════════════════════════════════════╗
-    ║         MIRROR  10×10 cm  ($3)      ║  ← lying on the table
+    ║          MIRROR  10×10 cm          ║  ← lying on the table
     ╚════════════════════════════════════╝
 ```
 

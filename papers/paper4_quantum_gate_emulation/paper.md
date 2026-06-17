@@ -1,6 +1,6 @@
 # Classical Wave-Optical Emulation of Quantum-Gate Algebra on a Smartphone, with a Falsification Protocol
 
-**Author:** Oleg Yurevich (GitHub [@infosave2007](https://github.com/infosave2007)) — *confirm name, affiliation and ORCID before publication*
+**Author:** Oleg Urevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
 **Series:** Svetoch, Paper IV of V
 **Date:** 17 June 2026 · **Status:** preprint / defensive publication (not patented)
 **Code & data:** [github.com/infosave2007/svetoch](https://github.com/infosave2007/svetoch) (project, code, 101 experiments) · [github.com/infosave2007/vmf](https://github.com/infosave2007/vmf) (VMF/NVG theory)
@@ -11,7 +11,7 @@
 
 We describe a family of smartphone experiments that **emulate the linear algebra of quantum
 gates using classical wave optics**, and we frame them with deliberate honesty. The Svetoch
-platform — an unmodified phone whose OLED screen displays patterns, a $3 flat mirror, and the
+platform — an unmodified phone whose OLED screen displays patterns, an inexpensive flat mirror, and the
 front camera — has been used to implement procedures labelled "Hadamard", "QFT", "Grover",
 "Deutsch–Jozsa", "CNOT", "teleportation", Hong–Ou–Mandel (HOM), CHSH/Bell, and BB84. We state
 plainly that **none of these is quantum computation**. There are no single photons, no
@@ -267,7 +267,7 @@ by `papers/scripts/make_figures.py` (`numpy`, `matplotlib`).
 The value of these experiments is as a **teaching and analogue platform**, not as a quantum
 computer. They let a student build the algebra of Hadamard, QFT, Grover and Deutsch–Jozsa from
 brightness patterns and interference on hardware they already own, and — crucially — to *test*
-whether the apparatus is doing anything physical at all by removing a $3 mirror. The discipline
+whether the apparatus is doing anything physical at all by removing the mirror. The discipline
 of the falsification control is, we believe, transferable well beyond this project: any claim
 that "a physical substrate computes X" should come with a null configuration in which the
 substrate is removed and the metric is shown to collapse.
@@ -289,7 +289,7 @@ open validation shared with the rest of the series.
 ## 8. Conclusion
 
 A smartphone and a mirror can faithfully **emulate the linear algebra of quantum gates with
-classical wave optics** — and just as importantly, a $3 control proves these are classical
+classical wave optics** — and just as importantly, a mirror-removal control proves these are classical
 optical effects, not CPU theatre and not quantum computation. We have set out exactly what is
 and is not being computed, retained the one defensible measurement primitive (a classical
 lock-in correlator) on honest terms, noted the real-but-prior-art shot-noise TRNG, and given

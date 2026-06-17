@@ -1,6 +1,6 @@
 # Optical Neural Computation on a Commodity Smartphone: the OLED–Mirror–Camera Channel as an Analog Matrix Engine
 
-**Author:** Oleg Yurevich (GitHub [@infosave2007](https://github.com/infosave2007)) — *confirm name, affiliation and ORCID before publication*
+**Author:** Oleg Urevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
 **Series:** Svetoch, Paper I of V
 **Date:** 17 June 2026 · **Status:** preprint / defensive publication (not patented)
 **Code & data:** [github.com/infosave2007/svetoch](https://github.com/infosave2007/svetoch) (project, code, 101 experiments) · [github.com/infosave2007/vmf](https://github.com/infosave2007/vmf) (VMF/NVG theory)
@@ -9,7 +9,7 @@
 
 ## Abstract
 
-We show that an unmodified consumer smartphone, together with a flat $3 mirror, performs
+We show that an unmodified consumer smartphone, together with a flat, inexpensive mirror, performs
 real analog computation **in light**. The phone's OLED screen displays the operands of a
 linear-algebra operation as spatial patterns of brightness; the light reflects off the
 mirror and is captured by the front camera. Because a camera photosite *integrates*
@@ -238,7 +238,7 @@ curve (Figure 3), and stripe contrasts (Figure 4); these define the per-run norm
 The contribution is not a fast accelerator — at $\sim\!0.4$ tokens/s it is far slower than
 silicon. The contribution is a **demonstration and a method**: that a faithful analog matrix
 engine, accurate enough to run a Transformer layer to within $1\%$, can be assembled from
-hardware everyone owns plus a $3 mirror, and that its outputs can be *proven* optical by a
+hardware everyone owns plus an inexpensive mirror, and that its outputs can be *proven* optical by a
 simple falsification control. This makes optical computing reproducible on any desk and
 useful for teaching, for low-cost in-sensor preprocessing, and as a platform for the
 device-physics primitives and sensing applications in the companion papers.

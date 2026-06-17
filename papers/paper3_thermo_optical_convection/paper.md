@@ -1,6 +1,6 @@
 # A Thermo-Optical Convection Layer above an OLED Display as a Programmable Analog Medium
 
-**Author:** Oleg Yurevich (GitHub [@infosave2007](https://github.com/infosave2007)) — *confirm name, affiliation and ORCID before publication*
+**Author:** Oleg Urevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
 **Series:** Svetoch, Paper III of V
 **Date:** 17 June 2026 · **Status:** preprint / defensive publication (not patented)
 **Code & data:** [github.com/infosave2007/svetoch](https://github.com/infosave2007/svetoch) (project, code, 101 experiments) · [github.com/infosave2007/vmf](https://github.com/infosave2007/vmf) (VMF/NVG theory)
@@ -38,7 +38,7 @@ index, Edlén equation, phase SLM, OLED, thermo-optics, smartphone sensing, anal
 
 ## 1. Introduction
 
-Paper I of this series showed that an OLED screen, a $3 flat mirror, and a front camera form a
+Paper I of this series showed that an OLED screen, an inexpensive flat mirror, and a front camera form a
 self-contained analog matrix engine. The mirror is the one component that is *not* already in
 the phone. This paper asks whether it can be eliminated by letting a physical field in the
 air — rather than a reflective surface — carry the optical signal back to the camera.

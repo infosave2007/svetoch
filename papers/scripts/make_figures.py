@@ -90,7 +90,7 @@ def fig_device_schematic():
 
     # Mirror
     ax.add_patch(Rectangle((1.5, 1.0), 7.0, 0.5, fc="#cfe8ff", ec="#3b82f6", lw=2))
-    ax.text(5.0, 1.25, "MIRROR  10×10 cm  ($3)", ha="center", va="center", fontsize=9)
+    ax.text(5.0, 1.25, "MIRROR  10×10 cm", ha="center", va="center", fontsize=9)
     ax.add_patch(Rectangle((1.5, 0.7), 7.0, 0.3, fc="#9bbbd6", ec="none"))
 
     # gap arrow

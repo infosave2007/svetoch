@@ -11,7 +11,7 @@ the OLED--Mirror--Camera Channel as an Analog Matrix Engine}\\[4pt]
 \maketitle
 
 \begin{abstract}
-\noindent We show that an unmodified consumer smartphone, together with a flat \$3 mirror,
+\noindent We show that an unmodified consumer smartphone, together with a flat, inexpensive mirror,
 performs real analog computation \emph{in light}. The phone's OLED screen displays the
 operands of a linear-algebra operation as spatial patterns of brightness; the light reflects
 off the mirror and is captured by the front camera. Because a camera photosite
@@ -176,7 +176,7 @@ a reference run (2026-06-06), model figures are labelled as such.
 \section{Discussion}
 The contribution is not speed ($\sim\!0.4$ tokens/s) but a demonstration and a method: a
 faithful analog matrix engine, accurate to within $1\%$ for a Transformer layer, assembled
-from ubiquitous hardware plus a \$3 mirror, with outputs \emph{provably} optical via a simple
+from ubiquitous hardware plus an inexpensive mirror, with outputs \emph{provably} optical via a simple
 control. \textbf{Limitations:} low throughput, poor scaling in $d_\text{model}$, sensitivity
 to ambient light/vibration/mirror quality, and device-specific thresholds; cross-device
 reproducibility (does $z_T \propto \text{pitch}^2$?) is the key open test.

@@ -1,6 +1,6 @@
 # Hardware Neural-Network Primitives from Commodity Display Physics
 
-**Author:** Oleg Yurevich (GitHub [@infosave2007](https://github.com/infosave2007)) — *confirm name, affiliation and ORCID before publication*
+**Author:** Oleg Urevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
 **Series:** Svetoch, Paper II of V
 **Date:** 17 June 2026 · **Status:** preprint / defensive publication (not patented)
 **Code & data:** [github.com/infosave2007/svetoch](https://github.com/infosave2007/svetoch) (project, code, 101 experiments) · [github.com/infosave2007/vmf](https://github.com/infosave2007/vmf) (VMF/NVG theory)
@@ -9,7 +9,7 @@
 
 ## Abstract
 
-Paper I of this series showed that an unmodified smartphone plus a $3 mirror evaluates a
+Paper I of this series showed that an unmodified smartphone plus an inexpensive mirror evaluates a
 multiply–accumulate in light. Here we make a complementary observation: the *same* commodity
 display and sensor hardware that carries the operands also supplies, for free, several of the
 non-linear and stateful operators a neural network needs around its matrix multiplications.

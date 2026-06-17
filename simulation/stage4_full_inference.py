@@ -536,7 +536,6 @@ Each layer is one optical bounce."""
     print(f"  ║  ★ LLM НА ЗЕРКАЛЕ ГЕНЕРИРУЕТ ТЕКСТ!                              ║")
     print(f"  ║    Все MatMul = OLED → зеркало → камера                           ║")
     print(f"  ║    На CPU: только argmax, softmax, LayerNorm                       ║")
-    print(f"  ║    Стоимость: $3 (зеркало)                                        ║")
     print(f"  ║                                                                    ║")
     print(f"  ╚════════════════════════════════════════════════════════════════════╝")
     
