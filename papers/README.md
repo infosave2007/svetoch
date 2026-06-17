@@ -22,7 +22,7 @@ figures, graphs and diagrams.
 
 ## ⚠️ Before publishing on Zenodo
 
-1. **Author block.** The papers list the author as *Oleg Urevich Kirichenko*
+1. **Author block.** The papers list the author as *Oleg Yuryevich Kirichenko*
    (urevich55@gmail.com, GitHub @infosave2007). Optionally add an affiliation and an
    [ORCID](https://orcid.org/) iD.
 2. **Pick a license** for the text (e.g. CC BY 4.0 is standard for Zenodo preprints; the
@@ -65,7 +65,7 @@ Both links are cited in every paper's header and "Data and code" section.
 
 ## How to cite (placeholder)
 
-> Kirichenko, O. U. (2026). *Svetoch: Optical Neural Computation on Commodity Smartphone
+> Kirichenko, O. Yu. (2026). *Svetoch: Optical Neural Computation on Commodity Smartphone
 > Hardware* (Series I–V). Zenodo. https://doi.org/XX.XXXX/zenodo.XXXXXXX
 
 Fill in the DOI after the first Zenodo upload.

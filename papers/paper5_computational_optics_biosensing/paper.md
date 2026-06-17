@@ -1,6 +1,6 @@
 # Computational Optics for Liquid Microsampling: a Multi-Channel Smartphone Sensing Platform
 
-**Author:** Oleg Urevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
+**Author:** Oleg Yuryevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
 **Series:** Svetoch, Paper V of V
 **Date:** 17 June 2026 · **Status:** preprint / defensive publication (not patented)
 **Code & data:** [github.com/infosave2007/svetoch](https://github.com/infosave2007/svetoch) (project, code, 101 experiments) · [github.com/infosave2007/vmf](https://github.com/infosave2007/vmf) (VMF/NVG theory)

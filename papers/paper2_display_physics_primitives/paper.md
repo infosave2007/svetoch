@@ -1,6 +1,6 @@
 # Hardware Neural-Network Primitives from Commodity Display Physics
 
-**Author:** Oleg Urevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
+**Author:** Oleg Yuryevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
 **Series:** Svetoch, Paper II of V
 **Date:** 17 June 2026 · **Status:** preprint / defensive publication (not patented)
 **Code & data:** [github.com/infosave2007/svetoch](https://github.com/infosave2007/svetoch) (project, code, 101 experiments) · [github.com/infosave2007/vmf](https://github.com/infosave2007/vmf) (VMF/NVG theory)
