@@ -164,6 +164,8 @@ Keep new code consistent with the existing modules in the same category.
 
 ## License
 
-Released under the [MIT License](LICENSE).
+Released under the **[Apache License 2.0](LICENSE)** (see also [NOTICE](NOTICE)). Apache 2.0 is permissive and includes an explicit **patent grant**, which makes it well suited to a project with novel optical‑computing methods.
+
+**Using this commercially or in an institution?** Apache 2.0 already permits free commercial and educational use. If you need a separate **commercial license** — for support guarantees, indemnification, or terms beyond the Apache grant — contact the author to arrange dual licensing.
 
 This is a research proof‑of‑concept. Pass thresholds are calibrated for the reference device and conditions; your numbers will vary with phone model, mirror quality, ambient light, and geometry.
