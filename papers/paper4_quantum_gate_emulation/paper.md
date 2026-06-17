@@ -320,7 +320,7 @@ protection.
 3. J. F. Clauser, M. A. Horne, A. Shimony, R. A. Holt, "Proposed experiment to test local
    hidden-variable theories," *Phys. Rev. Lett.* **23**, 880 (1969).
 4. H. F. Talbot, "Facts relating to optical science No. IV," *Phil. Mag.* **9**, 401 (1836).
-5. M. Stipčević, B. M. Rogina, "Quantum random number generator based on photonic emission in
+5. M. Stipčević, B. Medved Rogina, "Quantum random number generator based on photonic emission in
    semiconductors," *Rev. Sci. Instrum.* **78**, 045104 (2007).
 6. D. R. Solli, B. Jalali, "Analog optical computing," *Nature Photonics* **9**, 704 (2015).
 
