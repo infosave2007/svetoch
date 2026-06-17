@@ -94,6 +94,23 @@ On first launch the server generates a self‑signed certificate and prints two 
 3. Watch the metrics stream in live. Each finished run is saved to `logs/nvg_poc_v3_<timestamp>.json` and can be downloaded from the dashboard.
 4. **For a classroom / audience (optional):** open the *Student* URL on a projector or second screen — it mirrors the run read‑only (screen, progress, results, explanations) without any controls.
 
+### ⚠️ Two things that are mandatory on the phone
+
+**1. Fullscreen is required.** The experiments draw patterns edge‑to‑edge on the OLED. If the browser's address bar / toolbars are visible, the geometry and contrast break and metrics will fail. On the *Phone* page **tap the screen to enter fullscreen** (if the run is started from the admin, a "tap to start" overlay appears for exactly this — fullscreen can only be triggered by a tap). Also disable auto‑lock so the screen never sleeps mid‑run.
+
+**2. Add your phone (so the optics are calibrated for it).** The geometry depends on your phone's OLED pixel pitch. Pick your device from the dropdown on the *Phone* page; if it isn't listed, add it to [`app/devices.json`](app/devices.json):
+
+```json
+"my_phone": {
+  "name": "My Phone",
+  "oled_pitch_um": 60.0,        // OLED pixel pitch in µm  ≈ 25400 / display_PPI
+  "sensor_pitch_um": 0.8,       // front-camera pixel size in µm (from the spec sheet)
+  "recommended_dist_mm": 35.0   // start gap; ~ scales with pitch² (Talbot) — fine-tune for max contrast
+}
+```
+
+Reload the *Phone* page and your device appears in the dropdown (the choice is remembered). The `recommended_dist_mm` is the gap to set between phone and mirror — start there and nudge it for the sharpest fringes. No phone in the list is wrong, it just won't be calibrated; the reference profiles (Xiaomi, iPhone, Samsung, Pixel, …) are already included.
+
 **No mirror / no phone handy?** Run the pure‑software validation instead — see [`simulation/`](simulation/):
 
 ```bash
