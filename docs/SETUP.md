@@ -35,15 +35,16 @@ On the first launch the server:
 
 1. Generates a self‑signed TLS certificate (`cert.pem` / `key.pem`) — HTTPS is **mandatory** because browsers only grant camera access on secure origins.
 2. Detects your LAN IP and starts listening on `0.0.0.0:8443`.
-3. Prints the phone and admin URLs.
+3. Prints the phone, admin and student URLs.
 
 ```
 ==================================================
   NVG Optical Computer — Server
 ==================================================
 
-📱 Phone: https://192.168.x.x:8443/
-🖥️  Admin: https://192.168.x.x:8443/admin
+📱 Phone:   https://192.168.x.x:8443/
+🖥️  Admin:   https://192.168.x.x:8443/admin
+🎓 Student: https://192.168.x.x:8443/student
 
 Everything on one port 8443 — no WebSocket!
 ==================================================

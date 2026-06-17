@@ -3,6 +3,7 @@
 **Author:** Oleg Yuryevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
 **Series:** Svetoch, Paper II of VI
 **Date:** 17 June 2026
+**Published:** Zenodo — DOI [10.5281/zenodo.20730065](https://doi.org/10.5281/zenodo.20730065)
 **Code & data:** [github.com/infosave2007/svetoch](https://github.com/infosave2007/svetoch) (project, code, 101 experiments) · [github.com/infosave2007/vmf](https://github.com/infosave2007/vmf) (VMF/NVG theory)
 
 ---

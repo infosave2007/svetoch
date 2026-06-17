@@ -3,7 +3,8 @@
 This folder contains the scientific write-ups of the methods and results behind the
 **Svetoch** optical-neural-computer project. They are written to **establish public
 authorship and priority** of the ideas (defensive publication) and are formatted for
-upload to **[Zenodo](https://zenodo.org/)**, which mints a citable DOI and a timestamp.
+**[Zenodo](https://zenodo.org/)**, where each is published with a citable DOI and a timestamp
+(see the table at the bottom).
 
 > The author has chosen **not to patent** these ideas. Publishing them here, with a
 > Zenodo DOI and timestamp, places them in the public record as **prior art** and
@@ -20,17 +21,15 @@ figures, graphs and diagrams.
 
 ---
 
-## ⚠️ Before publishing on Zenodo
+## Notes for updates / re-use
 
-1. **Author block.** The papers list the author as *Oleg Yuryevich Kirichenko*
-   (urevich55@gmail.com, GitHub @infosave2007). Optionally add an affiliation and an
-   [ORCID](https://orcid.org/) iD.
-2. **Pick a license** for the text (e.g. CC BY 4.0 is standard for Zenodo preprints; the
-   code stays under Apache 2.0).
-3. **Regenerate figures if needed:** `python scripts/make_figures.py` (needs `numpy`,
-   `matplotlib`).
-4. Upload each paper's PDF (compiled from `paper.tex`) plus the `.md`/`.tex` sources.
-   Group them as a Zenodo *series* or one record per paper.
+- **Author:** *Oleg Yuryevich Kirichenko* (urevich55@gmail.com, GitHub @infosave2007).
+  An affiliation and [ORCID](https://orcid.org/) iD can be added to a new Zenodo version.
+- **Text license:** CC BY 4.0 is standard for Zenodo preprints; the code stays under
+  Apache 2.0.
+- **Regenerate figures:** `python scripts/make_figures.py` (needs `numpy`, `matplotlib`).
+- **New versions:** edit the `paper.tex`, recompile, and upload as a new version of the same
+  Zenodo record (the DOI auto-versions).
 
 ---
 
@@ -39,11 +38,11 @@ figures, graphs and diagrams.
 | # | Title | Theme | Figures |
 |---|-------|-------|---------|
 | **I** | [Optical Neural Computation on a Commodity Smartphone: the OLED–Mirror–Camera Channel](paper1_optical_neural_computation/paper.md) — [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20729632.svg)](https://doi.org/10.5281/zenodo.20729632) | The core method: light as an analog matrix engine; channel calibration; dot product → MatVec → a full transformer layer; the falsification control | 1–9 |
-| **II** | [Hardware Neural-Network Primitives from Commodity Display Physics](paper2_display_physics_primitives/paper.md) | "Free" ML operators from device physics: γ-curve activation, OLED-persistence recurrent memory, Bayer attention multiplexing, chromatic positional encoding | 3, 6, 12 |
-| **III** | [A Thermo-Optical Convection Layer above an OLED Display as a Programmable Analog Medium](paper3_thermo_optical_convection/paper.md) | The mirror-less thermal channel: boundary-layer theory, schlieren/BOS read-out, thermo-optical matrix multiply, convective actuation of aerosols | 1, 10, 11 |
-| **IV** | [Classical Wave-Optical Emulation of Quantum-Gate Algebra on a Smartphone, with a Falsification Protocol](paper4_quantum_gate_emulation/paper.md) | Honest framing of the "quantum" stages as **classical** wave-optical analogues; a rigorous mirror-less control that separates optical effects from software artifacts | 5, 9, 13 |
-| **V** | [Computational Optics for Liquid Microsampling: a Multi-Channel Smartphone Sensing Platform](paper5_computational_optics_biosensing/paper.md) | The MicroLab application: refractive + polarization + absorption sensor fusion, a confidence engine, and validation discipline | 14 |
-| **VI** | [Camera-in-the-Loop Optical Training: Gradient Descent and the Perceptron Rule on a Smartphone Display–Camera Channel](paper6_optical_training/paper.md) | Closing the loop: on-device optical **training** — camera-in-the-loop gradient descent, single-shot inverted-overlay loss, and an optically-evaluated perceptron | 15–18 |
+| **II** | [Hardware Neural-Network Primitives from Commodity Display Physics](paper2_display_physics_primitives/paper.md) — [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20730065.svg)](https://doi.org/10.5281/zenodo.20730065) | "Free" ML operators from device physics: γ-curve activation, OLED-persistence recurrent memory, Bayer attention multiplexing, chromatic positional encoding | 3, 6, 12 |
+| **III** | [A Thermo-Optical Convection Layer above an OLED Display as a Programmable Analog Medium](paper3_thermo_optical_convection/paper.md) — [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20730198.svg)](https://doi.org/10.5281/zenodo.20730198) | The mirror-less thermal channel: boundary-layer theory, schlieren/BOS read-out, thermo-optical matrix multiply, convective actuation of aerosols | 1, 10, 11 |
+| **IV** | [Classical Wave-Optical Emulation of Quantum-Gate Algebra on a Smartphone, with a Falsification Protocol](paper4_quantum_gate_emulation/paper.md) — [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20730267.svg)](https://doi.org/10.5281/zenodo.20730267) | Honest framing of the "quantum" stages as **classical** wave-optical analogues; a rigorous mirror-less control that separates optical effects from software artifacts | 5, 9, 13 |
+| **V** | [Computational Optics for Liquid Microsampling: a Multi-Channel Smartphone Sensing Platform](paper5_computational_optics_biosensing/paper.md) — [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20730337.svg)](https://doi.org/10.5281/zenodo.20730337) | The MicroLab application: refractive + polarization + absorption sensor fusion, a confidence engine, and validation discipline | 14 |
+| **VI** | [Camera-in-the-Loop Optical Training: Gradient Descent and the Perceptron Rule on a Smartphone Display–Camera Channel](paper6_optical_training/paper.md) — [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20730393.svg)](https://doi.org/10.5281/zenodo.20730393) | Closing the loop: on-device optical **training** — camera-in-the-loop gradient descent, single-shot inverted-overlay loss, and an optically-evaluated perceptron | 15–18 |
 
 ---
 
@@ -66,14 +65,19 @@ Both links are cited in every paper's header and "Data and code" section.
 
 ## Published records & how to cite
 
-Papers are being deposited on Zenodo (citable DOI + timestamp). Published so far:
+All six papers are published on Zenodo, each with a citable DOI and timestamp:
 
 | Paper | DOI |
 |-------|-----|
 | **I** — Optical Neural Computation on a Commodity Smartphone | [10.5281/zenodo.20729632](https://doi.org/10.5281/zenodo.20729632) |
+| **II** — Hardware Neural-Network Primitives from Commodity Display Physics | [10.5281/zenodo.20730065](https://doi.org/10.5281/zenodo.20730065) |
+| **III** — A Thermo-Optical Convection Layer above an OLED Display | [10.5281/zenodo.20730198](https://doi.org/10.5281/zenodo.20730198) |
+| **IV** — Classical Wave-Optical Emulation of Quantum-Gate Algebra | [10.5281/zenodo.20730267](https://doi.org/10.5281/zenodo.20730267) |
+| **V** — Computational Optics for Liquid Microsampling | [10.5281/zenodo.20730337](https://doi.org/10.5281/zenodo.20730337) |
+| **VI** — Camera-in-the-Loop Optical Training | [10.5281/zenodo.20730393](https://doi.org/10.5281/zenodo.20730393) |
+
+Example citation (Paper I):
 
 > Kirichenko, O. Yu. (2026). *Optical Neural Computation on a Commodity Smartphone: the
 > OLED–Mirror–Camera Channel as an Analog Matrix Engine* (Svetoch, Paper I). Zenodo.
 > https://doi.org/10.5281/zenodo.20729632
-
-DOIs for Papers II–VI will be added to this table as they are deposited.

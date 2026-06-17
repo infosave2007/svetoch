@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """NVG PoC — HTTPS server with HTTP-based remote control.
 
-Phone opens https://<ip>:8443/ → runs tests, POSTs updates
-Admin opens https://<ip>:8443/admin → polls for updates, sends commands
+Phone opens   https://<ip>:8443/        → runs tests, POSTs updates
+Admin opens   https://<ip>:8443/admin   → polls for updates, sends commands
+Student opens https://<ip>:8443/student → read-only live view of the session
 No WebSocket needed — everything on one port!
 """
 import json, ssl, os, pathlib, datetime, threading
@@ -381,6 +382,7 @@ if __name__ == "__main__":
     print(f"{'='*50}")
     print(f"\n📱 Телефон: https://{ip}:8443/")
     print(f"🖥️  Админка: https://{ip}:8443/admin")
+    print(f"🎓 Студент: https://{ip}:8443/student")
     print(f"\nВсё на одном порту 8443 — без WebSocket!")
     print(f"{'='*50}\n")
 

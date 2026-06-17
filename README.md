@@ -54,7 +54,7 @@ The system has three roles that talk over a single HTTPS port:
 |------|-----|--------------|
 | **Phone** | `https://<ip>:8443/` | Renders patterns on the OLED, captures camera frames, runs the experiments, posts results. |
 | **Admin** | `https://<ip>:8443/admin` | Picks which experiments to run, presses Start/Stop, watches live logs and charts, downloads result JSON. |
-| **Student** | `https://<ip>:8443/student` | A guided, classroom‑friendly read‑only view of a running session. |
+| **Student** | `https://<ip>:8443/student` | Read‑only classroom view of the live session: a mirror of the phone's screen, the current stage with a progress bar, the full experiment map, streaming logs, a pass/fail results table, and tap‑a‑stage explanations. It cannot start or stop a run — that stays with the admin. |
 
 ```
    Admin dashboard  ──HTTP──►  server.py  ◄──HTTP poll──  Phone
@@ -84,13 +84,15 @@ python3 server.py
 On first launch the server generates a self‑signed certificate and prints two URLs:
 
 ```
-📱 Phone: https://192.168.x.x:8443/
-🖥️  Admin: https://192.168.x.x:8443/admin
+📱 Phone:   https://192.168.x.x:8443/
+🖥️  Admin:   https://192.168.x.x:8443/admin
+🎓 Student: https://192.168.x.x:8443/student
 ```
 
 1. **On the phone:** open the *Phone* URL, accept the self‑signed certificate warning, grant **camera** access, and allow the screen to stay on. Lay the phone screen‑down ~5 cm above the mirror.
 2. **On your computer:** open the *Admin* URL, choose the experiments (or "all"), and press **Start**.
 3. Watch the metrics stream in live. Each finished run is saved to `logs/nvg_poc_v3_<timestamp>.json` and can be downloaded from the dashboard.
+4. **For a classroom / audience (optional):** open the *Student* URL on a projector or second screen — it mirrors the run read‑only (screen, progress, results, explanations) without any controls.
 
 **No mirror / no phone handy?** Run the pure‑software validation instead — see [`simulation/`](simulation/):
 
@@ -137,6 +139,7 @@ svetoch/
 ├── simulation/                   ← pure-software validation (numpy only)
 ├── examples/logs/                ← a sample saved run
 ├── docs/                         ← setup, experiment catalog, roadmap (EN + RU)
+├── papers/                       ← 6 scientific papers (Markdown + LaTeX + PDF, Zenodo DOIs)
 └── scripts/gen_experiments.py    ← regenerates the experiment catalog
 ```
 
