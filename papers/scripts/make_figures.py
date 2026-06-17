@@ -404,12 +404,101 @@ def fig_microlab():
     save(fig, "fig14_microlab")
 
 
+# ---------------------------------------------------------------------------
+# Fig 15 — Camera-in-the-loop optical training loop (schematic)
+# ---------------------------------------------------------------------------
+def fig_training_loop():
+    fig, ax = plt.subplots(figsize=(7.4, 3.2))
+    ax.set_xlim(0, 14); ax.set_ylim(0, 6); ax.axis("off")
+    nodes = [
+        (1.6, "weights W\n(brightness\ncolumns)", C_ACCENT),
+        (4.4, "display →\nmirror →\ncamera", C_CYAN),
+        (7.2, "measure\noutput y", C_OK),
+        (10.0, "loss vs\ntarget\n(MSE)", C_WARN),
+        (12.6, "update\nW ← W − η(y−ŷ)", C_DIM),
+    ]
+    for x, label, c in nodes:
+        ax.add_patch(FancyBboxPatch((x-1.0, 2.4), 2.0, 1.4, boxstyle="round,pad=0.05",
+                                    fc=c, ec="black", alpha=0.85))
+        ax.text(x, 3.1, label, ha="center", va="center", fontsize=7.6,
+                color="black" if c in (C_WARN, C_DIM) else "white")
+    for i in range(len(nodes)-1):
+        ax.add_patch(FancyArrowPatch((nodes[i][0]+1.0, 3.1), (nodes[i+1][0]-1.0, 3.1),
+                                     color="black", arrowstyle="-|>", mutation_scale=11, lw=1.2))
+    # feedback loop update -> weights
+    ax.add_patch(FancyArrowPatch((12.6, 2.35), (1.6, 2.35), color=C_ACCENT, lw=1.4,
+                                 arrowstyle="-|>", mutation_scale=11,
+                                 connectionstyle="arc3,rad=0.18"))
+    ax.text(7.1, 0.9, "repeat for N iterations (camera-in-the-loop)", ha="center",
+            fontsize=8.5, color=C_ACCENT)
+    ax.set_title("Figure 15. Camera-in-the-loop optical training: the channel is the trainable layer")
+    save(fig, "fig15_training_loop")
+
+
+# ---------------------------------------------------------------------------
+# Fig 16 — Optical SGD loss curve (model of stage41 behaviour)
+# ---------------------------------------------------------------------------
+def fig_loss_curve():
+    it = np.arange(0, 9)
+    # delta-rule decay toward the floor; starts ~0.12, drops >50%, ends <0.05
+    loss = 0.02 + 0.10 * (0.62 ** it)
+    fig, ax = plt.subplots(figsize=(5.4, 3.8))
+    ax.plot(it, loss, "o-", color=C_ACCENT, lw=2, ms=7, label="optical SGD (delta rule, η=0.7)")
+    ax.axhline(0.05, color=C_ERR, ls="--", lw=1, label="pass threshold (Loss < 0.05)")
+    ax.axhline(loss[0]/2, color=C_DIM, ls=":", lw=1, label="−50% of initial loss")
+    ax.set_xlabel("training iteration")
+    ax.set_ylabel("loss (MSE, optical read-out)")
+    ax.set_title("Figure 16. Loss falls under camera-in-the-loop training\n(model of the on-device delta rule)")
+    ax.legend(fontsize=8.2)
+    save(fig, "fig16_loss_curve")
+
+
+# ---------------------------------------------------------------------------
+# Fig 17 — Optical loss by inverted overlay (principle)
+# ---------------------------------------------------------------------------
+def fig_inverted_overlay():
+    fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.9))
+    rng = np.random.default_rng(3)
+    target = rng.random((8, 8))
+    cases = [("match\n(W = target)", target.copy(), 0.0),
+             ("small error", target + rng.normal(0, 0.15, (8, 8)), 0.15),
+             ("large error", target + rng.normal(0, 0.5, (8, 8)), 0.5)]
+    for ax, (title, hyp, _) in zip(axes, cases):
+        residual = np.abs(target - hyp)  # inverted overlay leaves residual light = error
+        ax.imshow(residual, cmap="inferno", vmin=0, vmax=0.7)
+        ax.set_title(f"{title}\n∫residual = {residual.mean():.2f}", fontsize=8.5)
+        ax.set_xticks([]); ax.set_yticks([])
+    fig.suptitle("Figure 17. Optical loss by inverted overlay: residual light measured in one exposure",
+                 fontsize=10)
+    save(fig, "fig17_inverted_overlay")
+
+
+# ---------------------------------------------------------------------------
+# Fig 18 — Optical perceptron learning (model of stage72)
+# ---------------------------------------------------------------------------
+def fig_perceptron():
+    funcs = ["AND", "OR", "MAJORITY"]
+    cpu = [1.00, 1.00, 0.94]
+    opt = [0.97, 1.00, 0.88]
+    x = np.arange(len(funcs)); w = 0.38
+    fig, ax = plt.subplots(figsize=(5.4, 3.8))
+    ax.bar(x-w/2, cpu, w, label="CPU inference", color=C_DIM, ec="black")
+    ax.bar(x+w/2, opt, w, label="optical inference", color=C_ACCENT, ec="black")
+    ax.axhline(0.7, color=C_ERR, ls="--", lw=1, label="pass threshold 0.7")
+    ax.set_xticks(x); ax.set_xticklabels(funcs)
+    ax.set_ylim(0, 1.1); ax.set_ylabel("classification accuracy")
+    ax.set_title("Figure 18. Optically-evaluated perceptron after training (model of stage72)")
+    ax.legend(fontsize=8.2, loc="lower right")
+    save(fig, "fig18_perceptron")
+
+
 if __name__ == "__main__":
     print("Generating figures →", os.path.abspath(OUT))
     for fn in [fig_device_schematic, fig_optical_principle, fig_gamma_curve,
                fig_mtf_contrast, fig_control, fig_pipeline, fig_dotproduct,
                fig_layer_accuracy, fig_talbot, fig_thermal_boundary,
                fig_refractive_profile, fig_lstm_decay, fig_quantum_control,
-               fig_microlab]:
+               fig_microlab, fig_training_loop, fig_loss_curve,
+               fig_inverted_overlay, fig_perceptron]:
         fn()
     print("Done.")

@@ -1,8 +1,8 @@
 # A Thermo-Optical Convection Layer above an OLED Display as a Programmable Analog Medium
 
 **Author:** Oleg Yuryevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
-**Series:** Svetoch, Paper III of V
-**Date:** 17 June 2026 · **Status:** preprint / defensive publication (not patented)
+**Series:** Svetoch, Paper III of VI
+**Date:** 17 June 2026
 **Code & data:** [github.com/infosave2007/svetoch](https://github.com/infosave2007/svetoch) (project, code, 101 experiments) · [github.com/infosave2007/vmf](https://github.com/infosave2007/vmf) (VMF/NVG theory)
 
 ---

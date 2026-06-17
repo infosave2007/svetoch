@@ -1,8 +1,8 @@
 # Classical Wave-Optical Emulation of Quantum-Gate Algebra on a Smartphone, with a Falsification Protocol
 
 **Author:** Oleg Yuryevich Kirichenko — [urevich55@gmail.com](mailto:urevich55@gmail.com) · GitHub [@infosave2007](https://github.com/infosave2007)
-**Series:** Svetoch, Paper IV of V
-**Date:** 17 June 2026 · **Status:** preprint / defensive publication (not patented)
+**Series:** Svetoch, Paper IV of VI
+**Date:** 17 June 2026
 **Code & data:** [github.com/infosave2007/svetoch](https://github.com/infosave2007/svetoch) (project, code, 101 experiments) · [github.com/infosave2007/vmf](https://github.com/infosave2007/vmf) (VMF/NVG theory)
 
 ---
