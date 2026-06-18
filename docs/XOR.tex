@@ -1,0 +1,416 @@
+\documentclass[11pt]{article}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+
+\setmainfont{Georgia}
+\setsansfont{PT Sans}
+\setmonofont{Menlo}[Scale=0.85]
+
+% Georgia/PT Sans/Menlo carry Cyrillic glyphs but don't declare the OT "Cyrl"
+% script tag, so polyglossia needs these explicit Cyrillic families.
+\newfontfamily\cyrillicfont{Georgia}
+\newfontfamily\cyrillicfontsf{PT Sans}
+\newfontfamily\cyrillicfonttt{Menlo}[Scale=0.85]
+
+\usepackage{amsmath}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{positioning,arrows.meta,backgrounds,calc,fit}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{microtype}
+
+% ---- palette ----
+\definecolor{accent}{HTML}{0B6FA4}
+\definecolor{accent2}{HTML}{C0392B}
+\definecolor{ok}{HTML}{1E8449}
+\definecolor{ink}{HTML}{1A1A1A}
+\definecolor{soft}{HTML}{F4F7FA}
+\definecolor{softline}{HTML}{D6E1EA}
+\definecolor{screen}{HTML}{2C3E50}
+\definecolor{sensor}{HTML}{8E44AD}
+
+\color{ink}
+
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {1.5ex \@plus 1ex \@minus .2ex}{0.7ex \@plus.2ex}%
+  {\sffamily\Large\bfseries\color{accent}}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {1.2ex \@plus 1ex \@minus .2ex}{0.5ex \@plus.2ex}%
+  {\sffamily\large\bfseries\color{ink}}}
+\renewcommand\@seccntformat[1]{\csname the#1\endcsname.\quad}
+\makeatother
+
+\newsavebox{\keybuf}
+\newenvironment{keybox}
+ {\begin{lrbox}{\keybuf}\begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule}}
+ {\end{minipage}\end{lrbox}%
+  \par\smallskip\noindent
+  \setlength{\fboxsep}{9pt}\setlength{\fboxrule}{0.9pt}%
+  \fcolorbox{accent}{soft}{\usebox{\keybuf}}\par\smallskip}
+
+\renewcommand{\arraystretch}{1.25}
+
+\begin{document}
+
+% ====================== TITLE ======================
+\begin{center}
+{\sffamily\bfseries\fontsize{22}{26}\selectfont\color{accent}
+XOR на свету}\\[4pt]
+{\sffamily\large почему один слой не может — и как обратная связь это чинит}\\[10pt]
+{\itshape\small Подробный разбор: от того, почему одно усреднённое число не способно
+вычислить XOR, до пошаговой двухслойной схемы через обратную связь экран\,$\to$\,камера.}\\[2pt]
+{\small Проект \textbf{«Светоч»} — оптический нейрокомпьютер на телефоне, зеркале и фронтальной камере.}
+\end{center}
+
+\vspace{0.4em}
+\hrule height 0.8pt
+\vspace{0.9em}
+
+\noindent Эта заметка отвечает на два частых вопроса по эксперименту
+\textbf{«Логические вентили»} (\texttt{stage4\_logic}):
+
+\begin{enumerate}
+\item Камера интегрирует по всему кадру — или есть варианты?
+\item Можно ли через обратную связь экран\,$\to$\,камера проэмулировать двухслойную
+сеть и получить XOR?
+\end{enumerate}
+
+\begin{keybox}
+\textbf{Короткий ответ.} При считывании \textbf{одним числом} XOR невозможен в
+принципе (и это честно показано в эксперименте). При \textbf{поблочном}
+считывании петля экран\,$\to$\,камера превращается в полноценный второй слой —
+и XOR появляется.
+\end{keybox}
+
+% ====================== 1 ======================
+\section{Что такое XOR и почему он «трудный»}
+
+Четыре логические функции от двух входов. Нас интересует последний столбец:
+
+\begin{center}
+\begin{tabular}{cc|cccc}
+\toprule
+$x_1$ & $x_2$ & AND & OR & NAND & \textbf{XOR}\\
+\midrule
+0 & 0 & 0 & 0 & 1 & \textbf{0}\\
+0 & 1 & 0 & 1 & 1 & \textbf{\color{accent2}1}\\
+1 & 0 & 0 & 1 & 1 & \textbf{\color{accent2}1}\\
+1 & 1 & 1 & 1 & 0 & \textbf{0}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Нарисуем входы как четыре точки на плоскости $(x_1,x_2)$ и раскрасим по ответу.
+Слева — OR (и любой «обычный» вентиль), справа — XOR.
+
+\begin{center}
+\begin{tikzpicture}[scale=2.4,font=\small]
+% ---------- LEFT: OR separable ----------
+\begin{scope}
+  \draw[->,softline,line width=1pt] (-0.15,0)--(1.25,0) node[right,black]{$x_1$};
+  \draw[->,softline,line width=1pt] (0,-0.15)--(0,1.25) node[above,black]{$x_2$};
+  % separating line x1+x2=0.5
+  \draw[accent,line width=1.4pt,dashed] (0.65,-0.12)--(-0.12,0.65);
+  % points
+  \fill[ok] (0,0) circle (1.6pt) node[below left]{\scriptsize 0};
+  \fill[accent2] (0,1) circle (1.6pt) node[above left]{\scriptsize 1};
+  \fill[accent2] (1,0) circle (1.6pt) node[below right]{\scriptsize 1};
+  \fill[accent2] (1,1) circle (1.6pt) node[above right]{\scriptsize 1};
+  \node[align=center,font=\sffamily\bfseries] at (0.55,1.42){OR};
+  \node[align=center,font=\scriptsize\itshape,accent] at (0.55,-0.42)
+       {одна прямая\\ разделяет};
+\end{scope}
+% ---------- RIGHT: XOR not separable ----------
+\begin{scope}[xshift=2.5cm]
+  \draw[->,softline,line width=1pt] (-0.15,0)--(1.25,0) node[right,black]{$x_1$};
+  \draw[->,softline,line width=1pt] (0,-0.15)--(0,1.25) node[above,black]{$x_2$};
+  % two lines needed
+  \draw[accent,line width=1.2pt,dashed] (0.35,-0.12)--(-0.12,0.35);
+  \draw[accent,line width=1.2pt,dashed] (1.12,0.65)--(0.65,1.12);
+  \fill[ok] (0,0) circle (1.6pt) node[below left]{\scriptsize 0};
+  \fill[accent2] (0,1) circle (1.6pt) node[above left]{\scriptsize 1};
+  \fill[accent2] (1,0) circle (1.6pt) node[below right]{\scriptsize 1};
+  \fill[ok] (1,1) circle (1.6pt) node[above right]{\scriptsize 0};
+  \node[align=center,font=\sffamily\bfseries] at (0.55,1.42){XOR};
+  \node[align=center,font=\scriptsize\itshape,accent2] at (0.55,-0.42)
+       {нужны \textbf{две}\\ прямые};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+\item \textbf{AND, OR, NAND}: единицы (\textcolor{accent2}{$\bullet$}) и нули
+(\textcolor{ok}{$\bullet$}) разделяются \textbf{одной прямой} — это
+\emph{линейно разделимые} функции.
+\item \textbf{XOR}: единицы стоят по одной диагонали, нули — по другой.
+\textbf{Никакая одна прямая} их не разделит (Минский–Пейперт, 1969).
+\end{itemize}
+
+\noindent\textbf{Запомните:} «одна прямая» $=$ «один линейный слой» $=$ «одно
+решающее правило». XOR требует \textbf{двух} прямых (двух скрытых нейронов) и ещё
+одного правила поверх них.
+
+% ====================== 2 ======================
+\section{Как «Светоч» считает на свету}
+
+Сенсор камеры за время экспозиции \textbf{складывает падающие фотоны}. Если на
+экране показать яркости, то яркость на сенсоре — это физическая сумма (а с
+весами — скалярное произведение). Сложение и скалярное произведение — базовая
+операция любой нейросети, и здесь она происходит «бесплатно», за один оптический
+такт. Ключевой вопрос — \textbf{как мы это сложение считываем}.
+
+% ====================== 3 ======================
+\section{Почему текущий XOR-эксперимент честно проваливается}
+
+В \texttt{stage4\_logic.js} выбрана \textbf{самая простая} схема считывания:
+оба входа кодируются \emph{суммарной яркостью} $(x_1+x_2)/2$ на весь экран, а
+функция \texttt{regionMean} усредняет центральную область кадра (25–75\,\% по
+обеим осям) в \textbf{один скаляр}.
+
+\begin{center}
+\begin{minipage}{0.46\textwidth}
+\begin{tikzpicture}
+\begin{axis}[
+  width=\textwidth,height=5.2cm,
+  ybar,bar width=14pt,
+  ymin=0,ymax=1.15,
+  ylabel={яркость на сенсоре},
+  ylabel style={font=\footnotesize},
+  symbolic x coords={(0{,}0),(0{,}1),(1{,}0),(1{,}1)},
+  xtick=data,
+  x tick label style={font=\footnotesize},
+  ytick={0,0.5,1},
+  nodes near coords,
+  nodes near coords style={font=\scriptsize},
+  every axis plot/.append style={draw=accent,fill=accent!25},
+  axis lines=left,
+]
+\addplot coordinates {((0{,}0),0) ((1{,}1),1)};
+\addplot[draw=accent2,fill=accent2!30] coordinates {((0{,}1),0.5) ((1{,}0),0.5)};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+\small
+\textbf{Коллапс яркости.} Вход $(x_1,x_2)$ превращается в одно число $(x_1+x_2)/2$:
+\smallskip
+
+\begin{tabular}{c|c}
+$(x_1,x_2)$ & яркость \\
+\midrule
+$(0,0)$ & $0.0$ \\
+$(0,1)$ & \textcolor{accent2}{$\mathbf{0.5}$} \\
+$(1,0)$ & \textcolor{accent2}{$\mathbf{0.5}$} \\
+$(1,1)$ & $1.0$ \\
+\end{tabular}
+\smallskip
+
+Случаи \textcolor{accent2}{$(0,1)$ и $(1,0)$ дают одинаковый отсчёт $0.5$}.
+Камера видит «сколько всего света», а не «откуда» — и различить их \emph{не может}.
+\end{minipage}
+\end{center}
+
+\noindent А ведь XOR требует, чтобы «средние» яркости ($0.5$) дали \textbf{1}, а
+«крайние» ($0.0$ и $1.0$) — \textbf{0}. Это два порога (снизу и сверху), один
+порог так не умеет. Поэтому эксперимент \textbf{специально} объявляет успехом
+\emph{низкую} точность XOR — провал здесь запланирован и доказывает теорему
+Минского–Пейперта на реальном железе, а не в симуляции. AND/OR/NAND при этом
+проходят на 100\,\%.
+
+\begin{keybox}
+\textbf{Вывод по вопросу №1.} Да, в этом эксперименте камера интегрирует по всему
+(центральному) кадру в одно число. Но это \textbf{выбор схемы считывания}, а не
+предел железа. И при таком считывании обратная связь действительно почти
+бесполезна — комментатор прав.
+\end{keybox}
+
+% ====================== 4 ======================
+\section{Вариант есть: поблочное считывание}
+
+Камера \textbf{не обязана} давать одно число. В \texttt{index.html} есть
+инструменты пространственного показа и считывания:
+
+\begin{itemize}
+\item \texttt{showBlockPattern(values, gridSize)} — показать на экране
+\textbf{сетку} разных яркостей (а не одну заливку);
+\item \texttt{blockMeans(frame, gridSize)} — считать кадр как \textbf{сетку
+регионов} и вернуть массив средних по каждой клетке.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[font=\footnotesize]
+  % screen grid
+  \foreach \x in {0,1,2,3}{\foreach \y in {0,1,2,3}{
+    \pgfmathsetmacro{\b}{20+18*mod(\x+2*\y,5)}
+    \fill[screen!\b] (\x*0.42,\y*0.42) rectangle ++(0.4,0.4);
+    \draw[white,line width=0.6pt] (\x*0.42,\y*0.42) rectangle ++(0.4,0.4);
+  }}
+  \node[below=2pt,font=\sffamily\bfseries\footnotesize] at (0.84,0) {ЭКРАН: сетка яркостей};
+  % arrow
+  \draw[-{Stealth[length=4mm]},accent,line width=1.4pt] (2.1,0.84)--(3.2,0.84)
+       node[midway,above,font=\scriptsize]{свет};
+  % sensor grid with numbers
+  \begin{scope}[xshift=3.4cm]
+  \foreach \x in {0,1,2,3}{\foreach \y in {0,1,2,3}{
+    \draw[sensor,line width=0.7pt,fill=sensor!10] (\x*0.42,\y*0.42) rectangle ++(0.4,0.4);
+  }}
+  \node[below=2pt,font=\sffamily\bfseries\footnotesize] at (0.84,0) {СЕНСОР: массив скаляров};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\noindent Так уже работают «взрослые» эксперименты — скалярное произведение
+(\texttt{stage2}), MatVec (\texttt{stage3}) и слой трансформера
+(\texttt{stage5}): разные участки экрана и сенсора \textbf{параллельно} считают
+разные скалярные произведения — десятки независимых «нейронов» за один кадр. Как
+только мы умеем считывать \textbf{несколько чисел}, у нас появляется несколько
+скрытых нейронов — ровно то, чего не хватало для XOR.
+
+% ====================== 5 ======================
+\section{XOR как двухслойная сеть через обратную связь}
+
+XOR раскладывается в классику:
+\[
+\text{XOR}(x_1,x_2)=\text{AND}\big(\,\text{OR}(x_1,x_2),\ \text{NAND}(x_1,x_2)\,\big)
+\]
+
+\begin{center}
+\begin{tabular}{cc|ccc}
+\toprule
+$x_1$ & $x_2$ & OR & NAND & AND(OR,NAND) $=$ XOR\\
+\midrule
+0 & 0 & 0 & 1 & 0\\
+0 & 1 & 1 & 1 & \textbf{\color{accent2}1}\\
+1 & 0 & 1 & 1 & \textbf{\color{accent2}1}\\
+1 & 1 & 1 & 0 & 0\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent OR и NAND \textbf{по отдельности линейно разделимы} (их «Светоч» уже
+берёт на 100\,\%). Значит, нужен \textbf{слой 1} (посчитать OR и NAND),
+\textbf{нелинейность} между слоями и \textbf{слой 2} (посчитать AND). Оптически —
+два такта с обратной связью экран\,$\to$\,камера.
+
+\subsection*{Архитектура: два оптических такта}
+
+\begin{center}
+\begin{tikzpicture}[font=\footnotesize,
+  box/.style={rounded corners=3pt,draw,line width=1pt,minimum height=1.1cm,
+              minimum width=2.2cm,align=center},
+  scr/.style={box,fill=screen!12,draw=screen},
+  sen/.style={box,fill=sensor!12,draw=sensor},
+  ->/.default,
+  ar/.style={-{Stealth[length=3mm]},line width=1.2pt},
+]
+% layer 1
+\node[scr] (s1) {ЭКРАН · такт 1\\\scriptsize зона OR $\;|\;$ зона NAND};
+\node[sen,right=1.5cm of s1] (d1) {СЕНСОР\\\scriptsize $h_1{=}$OR\ \ $h_2{=}$NAND};
+\draw[ar,accent] (s1)--(d1) node[midway,above,font=\scriptsize]{свет};
+% nonlinearity
+\node[below=0.7cm of d1,box,fill=ok!10,draw=ok,minimum width=2.6cm] (nl)
+     {нелинейность\\\scriptsize отклик сенсора $+$ порог};
+\draw[ar,sensor] (d1)--(nl);
+% layer 2
+\node[scr,below=0.7cm of s1,minimum width=2.6cm] (s2)
+     {ЭКРАН · такт 2\\\scriptsize зона AND};
+\draw[ar,accent2] (nl) -- node[above,font=\scriptsize]{$h_1,h_2$ обратно на экран} (s2);
+% output
+\node[sen,left=1.5cm of s2,minimum width=2.0cm] (out)
+     {ВЫХОД\\\scriptsize $y=$ XOR};
+\draw[ar,accent] (s2)--(out) node[midway,above,font=\scriptsize]{свет};
+% loop label
+\node[font=\scriptsize\itshape,accent2,align=center] at ($(nl)!0.5!(s2)+(0,0.0)$){};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Слой 1 — два скрытых нейрона в двух зонах (один такт).} Через
+\texttt{showBlockPattern} показываем входы так, что левая половина экрана
+настроена на OR, правая — на NAND (разные веса/смещения). Камера через
+\texttt{blockMeans} считывает \emph{два} числа $h_1,h_2$.
+
+\textbf{Нелинейность — даётся самим железом.} Между слоями обязательно нужна
+нелинейность (иначе два линейных слоя схлопываются в один). Её \emph{не нужно
+добавлять отдельно} — её дают отклик сенсора (гамма $+$ насыщение, кривая
+сигмоидной формы) и порог $\texttt{opt} > \texttt{thresh}$, который в
+\texttt{stage4} и так применяется.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=8.5cm,height=4.4cm,
+  xlabel={сумма света (вход слоя)}, ylabel={отсчёт сенсора},
+  xlabel style={font=\footnotesize},ylabel style={font=\footnotesize},
+  xmin=0,xmax=1,ymin=0,ymax=1,
+  xtick={0,0.5,1},ytick={0,0.5,1},
+  tick label style={font=\scriptsize},
+  axis lines=left,
+  domain=0:1,samples=80,
+]
+\addplot[accent,line width=1.6pt]{1/(1+exp(-11*(x-0.5)))};
+\draw[dashed,softline] (axis cs:0.5,0)--(axis cs:0.5,0.5)--(axis cs:0,0.5);
+\node[font=\scriptsize,accent,align=center] at (axis cs:0.74,0.30){сигмоидоподобный\\[-2pt]отклик};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\textbf{Слой 2 — обратная связь (второй такт).} Считанные $h_1$ (OR) и $h_2$
+(NAND) \textbf{показываем обратно на экране} — это и есть петля
+камера\,$\to$\,экран — и настраиваем зону на AND. Камера считывает финальный
+скаляр; порог по нему даёт $0$ для $(0,0)$ и $(1,1)$, $1$ для $(0,1)$ и $(1,0)$.
+\textbf{Это XOR, вычисленный на свету двумя оптическими проходами:} двухслойный
+перцептрон, развёрнутый во времени.
+
+% ====================== 6 ======================
+\section{Две формы обратной связи в проекте}
+
+\begin{itemize}
+\item \textbf{Пространственно-временная петля} (описана выше): посчитали в
+регионах $\to$ считали $\to$ подали назад $\to$ ещё слой. Даёт \emph{глубину}.
+\item \textbf{Послесвечение OLED как память} (\texttt{stage37\_lstm}): пиксели
+OLED и тракт «экран$\to$камера» физически удерживают остаточный образ после
+погасания — ячейка памяти с «забыванием» (forget gate) и постоянной времени
+$\tau$. Настоящая рекуррентность, где состояние хранится в затухающем свете.
+\item \textbf{Camera-in-the-loop обучение} (статья VI): замыкание петли
+экран$\to$камера позволяет не только считать, но и \emph{обучать} физический
+оптический канал, подстраивая паттерны по тому, что увидел сенсор.
+\end{itemize}
+
+\noindent «Канал обратной связи», про который спрашивал комментатор, — это не
+экзотика, а несущая идея: статичный канал считает один слой, а \textbf{замкнутый}
+канал даёт глубину (пространственную) и память (временную).
+
+% ====================== 7 ======================
+\section{Итоги одним абзацем}
+
+\begin{keybox}
+\begin{itemize}
+\item В демо-XOR камера усредняет кадр в \textbf{одно число} $\Rightarrow$ $(0,1)$
+и $(1,0)$ неразличимы $\Rightarrow$ XOR честно проваливается (Минский–Пейперт на
+железе).
+\item Это ограничение \textbf{схемы считывания}, а не оптики: поблочное
+считывание даёт \textbf{много} скаляров — несколько скрытых нейронов за такт.
+\item $\text{XOR}=\text{AND}(\text{OR},\text{NAND})$. OR и NAND берутся слоем 1 в
+двух зонах; нелинейность даёт сенсор $+$ порог; AND берётся слоем 2.
+\item \textbf{Обратная связь экран\,$\to$\,камера} $=$ подать результат слоя 1
+обратно на экран для слоя 2. При считывании одним числом — бесполезна; при
+поблочном — это полноценный второй слой, и XOR появляется.
+\end{itemize}
+\end{keybox}
+
+\vspace{0.6em}
+\noindent\footnotesize\textit{Примечание.} Двухслойная версия — это проектное
+предложение (следующий эксперимент): в коде \texttt{stage4\_logic.js} сейчас один
+проход с \texttt{regionMean}. Реализация $=$ \texttt{showBlockPattern} на двух
+зонах $+$ \texttt{blockMeans} для считывания $h_1,h_2$ $+$ второй проход с подачей
+$h_1,h_2$ обратно.
+
+\end{document}
