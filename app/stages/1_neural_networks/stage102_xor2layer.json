@@ -1,0 +1,41 @@
+{
+  "ru": {
+    "name": "Двухслойный XOR (обратная связь экран→камера)",
+    "description": "XOR, нерешаемый одним оптическим слоем, решается вторым проходом через обратную связь.",
+    "etap": "🔁",
+    "dvukhsloynyy_xor": "Двухслойный XOR через обратную связь...",
+    "sloy1_vkhod": "Слой 1 · вход ({var0},{var1})",
+    "sloy2_obratno": "Слой 2 · обратно на экран ({var0},{var1})",
+    "sloy1_skrytye": "Слой 1: скрытые нейроны OR / NAND",
+    "sloy2_xor": "Слой 2: AND(OR,NAND) = XOR",
+    "odin_sloy": "один слой",
+    "dva_sloya": "два слоя",
+    "obratnaya_svyaz_reshila_xor": "✅ Обратная связь дала второй слой — XOR решён, один слой честно провалился!",
+    "neozhidannyy_rezultat": "Неожиданный результат",
+    "xor_cherez_obratnuyu_svyaz": "✅ XOR через обратную связь!",
+    "dva_sloya_reshayut": "⚠️ Два слоя решают, но контроль не провалился",
+    "ne_reshilos": "❌ Двухслойный XOR не решился",
+    "res_row0": "XOR: 1 слой → 2 слоя",
+    "description_all": "Двухслойный XOR через обратную связь экран→камера (Two-layer XOR via feedback).\n\n**Физический принцип:** (С зеркалом). Этап продолжает «Логические вентили» (stage4): одиночный оптический линейный слой не способен разделить XOR (теорема Минского–Пейперта). Здесь петля замыкается — оптический выход первого слоя выводится обратно на экран и измеряется второй раз, давая физически второй слой сети.\n**Алгоритмическая суть:** XOR = AND(OR, NAND). Слой 1: для каждой из 4 входных пар на экран выводится яркость (x₁+x₂)/2, камера её измеряет (нормировка по белому, гамма-коррекция), и порогом получаются два скрытых нейрона — OR и NAND (оба линейно разделимы). Затем обратная связь: пара [OR, NAND] показывается на экране двумя блоками, камера интегрирует их в (h₁+h₂)/2, и порог реализует AND — то есть XOR. Нелинейность между слоями даёт сам сенсор (гамма + насыщение) плюс порог. Контроль: лучший одиночный линейный порог, подогнанный прямо под XOR на тех же измерениях, не может превысить 75 % — контраст «один слой против двух» и есть суть демонстрации.\n**Аналогия:** Двухслойный перцептрон, развёрнутый во времени: посчитали слой → считали камерой → подали результат назад на экран → посчитали второй слой. «Канал обратной связи» превращает статический оптический умножитель в сеть с глубиной.\n**Метрика:** прохождение, когда двухслойная точность XOR ≥ 75 % И контрольный одиночный слой ≤ 75 % (обратная связь добавила слой, которого не хватало)."
+  },
+  "en": {
+    "name": "Two-layer XOR (screen→camera feedback)",
+    "description": "XOR, unsolvable by one optical layer, is solved by a second pass through the feedback loop.",
+    "etap": "🔁",
+    "dvukhsloynyy_xor": "Two-layer XOR via feedback...",
+    "sloy1_vkhod": "Layer 1 · input ({var0},{var1})",
+    "sloy2_obratno": "Layer 2 · back to screen ({var0},{var1})",
+    "sloy1_skrytye": "Layer 1: hidden units OR / NAND",
+    "sloy2_xor": "Layer 2: AND(OR,NAND) = XOR",
+    "odin_sloy": "one layer",
+    "dva_sloya": "two layers",
+    "obratnaya_svyaz_reshila_xor": "✅ Feedback added a second layer — XOR solved, single layer honestly failed!",
+    "neozhidannyy_rezultat": "Unexpected result",
+    "xor_cherez_obratnuyu_svyaz": "✅ XOR via feedback!",
+    "dva_sloya_reshayut": "⚠️ Two layers solve it, but the control did not fail",
+    "ne_reshilos": "❌ Two-layer XOR not solved",
+    "res_row0": "XOR: 1 layer → 2 layers",
+    "description_all": "Two-layer XOR via screen→camera feedback.\n\n**Physical principle:** (With mirror). This stage continues the Logic Gates experiment (stage4): a single optical linear layer cannot separate XOR (Minsky–Papert). Here the loop is closed — the optical output of the first layer is shown back on the screen and measured a second time, physically forming a second network layer.\n**Algorithmic essence:** XOR = AND(OR, NAND). Layer 1: for each of the 4 input pairs the screen shows brightness (x₁+x₂)/2, the camera measures it (white-normalized, gamma-corrected), and a threshold yields two hidden units — OR and NAND (both linearly separable). Then feedback: the pair [OR, NAND] is shown on screen as two blocks, the camera integrates them into (h₁+h₂)/2, and a threshold realizes AND — i.e. XOR. The inter-layer nonlinearity comes from the sensor itself (gamma + saturation) plus the threshold. Control: the best single linear threshold fitted directly to XOR on the same measurements cannot exceed 75 % — the contrast 'one layer vs two' is the point of the demo.\n**Analogy:** A two-layer perceptron unrolled in time: compute a layer → read it with the camera → feed the result back to the screen → compute the second layer. The 'feedback channel' turns a static optical multiplier into a network with depth.\n**Metric:** passes when the two-layer XOR accuracy ≥ 75 % AND the control single layer ≤ 75 % (feedback supplied the missing layer)."
+  },
+  "mirrorless": false
+}

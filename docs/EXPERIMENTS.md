@@ -2,13 +2,13 @@
 
 # Experiment Catalog
 
-This repository ships **101 optical-computing experiments** grouped into four families. Every experiment runs on the phone (`index.html`), is launched from the admin dashboard (`/admin`), and reports a pass/fail metric back to the server, which stores the full run as JSON in `logs/`.
+This repository ships **102 optical-computing experiments** grouped into four families. Every experiment runs on the phone (`index.html`), is launched from the admin dashboard (`/admin`), and reports a pass/fail metric back to the server, which stores the full run as JSON in `logs/`.
 
 Each entry below lists the short description and the detailed physical / algorithmic explanation taken directly from the experiment's metadata. A 🪞 marker means the experiment **requires the mirror**; a 📵 marker means it also works **without the mirror** (used as a control / device-only test).
 
 ## Contents
 
-- [Neural Networks & Transformers](#neural-networks-transformers) — 22 experiments
+- [Neural Networks & Transformers](#neural-networks-transformers) — 23 experiments
 - [Wave Physics & Foundations](#wave-physics-foundations) — 29 experiments
 - [Quantum Gates & Computing](#quantum-gates-computing) — 24 experiments
 - [Mathematical Algorithms & Applications](#mathematical-algorithms-applications) — 26 experiments
@@ -302,6 +302,19 @@ Vortex Mirrorless LLM.
 **Algorithmic essence:** A character model is trained digitally, then inference runs: for each of the 8 generated characters, 4 batches of 8 parallel vortex channels are launched, and via optical flow the camera computes the curl of the displacement vector fields as logits. Curl is invariant to scale and global phone tilts, making the sums resilient to environmental noise. Softmax and sampling follow, with comparison against CPU.
 **Analogy:** The matrix multiplication of an LLM layer is performed by 8 independent thermal "cores", and the camera reads the computation results straight out of the air, frame by frame.
 **Metric:** Generated text and match rate against CPU; passes when the optical text is ≥ 6 characters long.
+
+### 102. Two-layer XOR (screen→camera feedback)
+
+`stage102_xor2layer` · 🪞 requires mirror
+
+*XOR, unsolvable by one optical layer, is solved by a second pass through the feedback loop.*
+
+Two-layer XOR via screen→camera feedback.
+
+**Physical principle:** (With mirror). This stage continues the Logic Gates experiment (stage4): a single optical linear layer cannot separate XOR (Minsky–Papert). Here the loop is closed — the optical output of the first layer is shown back on the screen and measured a second time, physically forming a second network layer.
+**Algorithmic essence:** XOR = AND(OR, NAND). Layer 1: for each of the 4 input pairs the screen shows brightness (x₁+x₂)/2, the camera measures it (white-normalized, gamma-corrected), and a threshold yields two hidden units — OR and NAND (both linearly separable). Then feedback: the pair [OR, NAND] is shown on screen as two blocks, the camera integrates them into (h₁+h₂)/2, and a threshold realizes AND — i.e. XOR. The inter-layer nonlinearity comes from the sensor itself (gamma + saturation) plus the threshold. Control: the best single linear threshold fitted directly to XOR on the same measurements cannot exceed 75 % — the contrast 'one layer vs two' is the point of the demo.
+**Analogy:** A two-layer perceptron unrolled in time: compute a layer → read it with the camera → feed the result back to the screen → compute the second layer. The 'feedback channel' turns a static optical multiplier into a network with depth.
+**Metric:** passes when the two-layer XOR accuracy ≥ 75 % AND the control single layer ≤ 75 % (feedback supplied the missing layer).
 
 ---
 
